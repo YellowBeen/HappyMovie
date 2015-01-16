@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cinemas>
+
+    <cinema id="1">
+        <name>Major Ratchayothin</name>
+        <brand>Major</brand>
+        <group>Major Cineplex</group>
+        <latitude>13.828246</latitude>
+        <longtitude>100.568408</longtitude>
+    </cinema>
+
+    <cinema id="2">
+        <name>Major Nonthaburi</name>
+        <brand>Major</brand>
+        <group>Major Cineplex</group>
+        <latitude>13.832077</latitude>
+        <longtitude>100.500722</longtitude>
+    </cinema>
+
+    <cinema id="3">
+        <name>Major Fashion Island</name>
+        <brand>Major</brand>
+        <group>Major Cineplex</group>
+        <latitude>13.826412</latitude>
+        <longtitude>100.678732</longtitude>
+    </cinema>
+
+    <cinema id="4">
+        <name>Major Rangsit</name>
+        <brand>Major</brand>
+        <group>Major Cineplex</group>
+        <latitude>13.987218</latitude>
+        <longtitude>100.616660</longtitude>
+    </cinema>
+
+    <cinema id="5">
+        <name>Major Central Bangna</name>
+        <brand>Major</brand>
+        <group>Major Cineplex</group>
+        <latitude>13.668382</latitude>
+        <longtitude>100.62951</longtitude>
+    </cinema>
+
+    <cinema id="6">
+        <name>Major Sukhumvit</name>
+        <brand>Major</brand>
+        <group>Major Cineplex</group>
+        <latitude>13.721271</latitude>
+        <longtitude>100.583482</longtitude>
+    </cinema>
+
+    <cinema id="7">
+        <name>Grand EGV Seacon Bangkae</name>
+        <brand>EGV</brand>
+        <group>Grand EGV</group>
+        <latitude>13.720</latitude>
+        <longtitude>100.432</longtitude>
+    </cinema>
+
+    <cinema id="8">
+        <name>Grand EGV Seacon Srinakarin</name>
+        <brand>EGV</brand>
+        <group>Grand EGV</group>
+        <latitude>13.694256</latitude>
+        <longtitude>100.647595</longtitude>
+    </cinema>
+
+    <cinema id="9">
+        <name>Major Cineplex Central Rama 3</name>
+        <brand>Major</brand>
+        <group>Major</group>
+        <latitude>13.696155</latitude>
+        <longtitude>100.532537</longtitude>
+    </cinema>
+
+    <cinema id="10">
+        <name>Paragon Cineplex</name>
+        <brand>Major</brand>
+        <group>Paragon</group>
+        <latitude>13.745459</latitude>
+        <longtitude>100.535349</longtitude>
+    </cinema>
+
+    <cinema id="11">
+        <name>Mega Cineplex</name>
+        <brand>Major</brand>
+        <group>Mega</group>
+        <latitude>13.648155</latitude>
+        <longtitude>100.680399</longtitude>
+    </cinema>
+
+    <cinema id="12">
+        <name>EGV Ladprao</name>
+        <brand>EGV</brand>
+        <group>EGV</group>
+        <latitude>13.785612</latitude>
+        <longtitude>100.612342</longtitude>
+    </cinema>
+
+    <cinema id="13">
+        <name>SFX Central Rama 9</name>
+        <brand>SF</brand>
+        <group>SFX</group>
+        <latitude>13.758357</latitude>
+        <longtitude>100.566093</longtitude>
+    </cinema>
+
+    <cinema id="14">
+        <name>SFX Central Ladprao</name>
+        <brand>SF</brand>
+        <group>SFX</group>
+        <latitude>13.8169</latitude>
+        <longtitude>100.5600</longtitude>
+    </cinema>
+
+    <cinema id="15">
+        <name>SFC The mall Ngamwongwan</name>
+        <brand>SF</brand>
+        <group>SFC</group>
+        <latitude>13.8553</latitude>
+        <longtitude>100.5422</longtitude>
+    </cinema>
+
+    <cinema id="16">
+        <name>SFC The mall Bangkapi</name>
+        <brand>SF</brand>
+        <group>SFC</group>
+        <latitude>13.766027</latitude>
+        <longtitude>100.642609</longtitude>
+    </cinema>
+
+    <cinema id="17">
+        <name>SFX Terminal 21</name>
+        <brand>SF</brand>
+        <group>SFX</group>
+        <latitude>13.44237</latitude>
+        <longtitude>100.33621</longtitude>
+    </cinema>
+
+</cinemas>
+
