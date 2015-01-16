@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity{
         tabSpec.setContent(intentMovie);
         tabHost.addTab(tabSpec);
 
-        intentCinema = new Intent().setClass(this, CinemaActivity.class);
+        intentCinema = new Intent().setClass(this, ViewPagerActivity.class);
         tabSpec = tabHost.newTabSpec("cinemas");
         tabSpec.setIndicator("Cinemas");
         tabSpec.setContent(intentCinema);
