@@ -105,37 +105,38 @@
         <longtitude>100.566093</longtitude>
     </cinema>
 
-    <cinema id="14">
-        <name>SFX Central Ladprao</name>
-        <brand>SF</brand>
-        <group>SFX</group>
-        <latitude>13.8169</latitude>
-        <longtitude>100.5600</longtitude>
-    </cinema>
+        <cinema id="14">
+            <name>SFX Central Ladprao</name>
+            <brand>SF</brand>
+            <group>SFX</group>
+            <latitude>13.8169</latitude>
+            <longtitude>100.5600</longtitude>
+        </cinema>
+    <!--
+        <cinema id="15">
+            <name>SFC The mall Ngamwongwan</name>
+            <brand>SF</brand>
+            <group>SFC</group>
+            <latitude>13.8553</latitude>
+            <longtitude>100.5422</longtitude>
+        </cinema>
 
-    <cinema id="15">
-        <name>SFC The mall Ngamwongwan</name>
-        <brand>SF</brand>
-        <group>SFC</group>
-        <latitude>13.8553</latitude>
-        <longtitude>100.5422</longtitude>
-    </cinema>
+        <cinema id="16">
+            <name>SFC The mall Bangkapi</name>
+            <brand>SF</brand>
+            <group>SFC</group>
+            <latitude>13.766027</latitude>
+            <longtitude>100.642609</longtitude>
+        </cinema>
 
-    <cinema id="16">
-        <name>SFC The mall Bangkapi</name>
-        <brand>SF</brand>
-        <group>SFC</group>
-        <latitude>13.766027</latitude>
-        <longtitude>100.642609</longtitude>
-    </cinema>
-
-    <cinema id="17">
-        <name>SFX Terminal 21</name>
-        <brand>SF</brand>
-        <group>SFX</group>
-        <latitude>13.44237</latitude>
-        <longtitude>100.33621</longtitude>
-    </cinema>
+        <cinema id="17">
+            <name>SFX Terminal 21</name>
+            <brand>SF</brand>
+            <group>SFX</group>
+            <latitude>13.44237</latitude>
+            <longtitude>100.33621</longtitude>
+        </cinema>
+    -->
 
 </cinemas>
 
