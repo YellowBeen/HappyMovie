@@ -24,9 +24,10 @@ public class FavFragment extends ListFragment {
         if (cinemaList == null) {
             addCinemaData();
         }
-
-        setupCinemaAdapter();
-
+        
+        if (cinemaList != null) {
+            setupCinemaAdapter();
+        }
 
     }
 

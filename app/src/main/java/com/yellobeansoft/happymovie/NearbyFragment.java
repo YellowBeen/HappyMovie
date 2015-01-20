@@ -20,9 +20,13 @@ public class NearbyFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        addCinemaData();
-        setupCinemaAdapter();
+        if (cinemaList == null) {
+            addCinemaData();
+        }
 
+        if (cinemaList != null) {
+            setupCinemaAdapter();
+        }
 
     }
 

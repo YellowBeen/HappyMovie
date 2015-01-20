@@ -6,6 +6,8 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,28 +58,37 @@ public class CinemaTABLE {
         ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
 
         GPSTracker gps;
-        gps = new GPSTracker(objContext.getContext());
 
+        try {
 
-        if (gps.canGetLocation()) {
+            gps = new GPSTracker(objContext.getContext());
+            if (gps.canGetLocation()) {
+                this.updateDistance(gps.getLocation());
+                allCinemaList = this.getAll("NEAR");
 
-            this.updateDistance(gps.getLocation());
-            allCinemaList = this.getAll("NEAR");
+                for (int i = 0; i < allCinemaList.size(); i++) {
+                    Cinema objCinema = (Cinema) allCinemaList.get(i);
+                    cinemaList.add(objCinema);
 
-            for (int i = 0; i < allCinemaList.size(); i++) {
-                Cinema objCinema = (Cinema) allCinemaList.get(i);
-                cinemaList.add(objCinema);
-
-                if (i == 4) {
-                    i = allCinemaList.size() + 1;
+                    if (i == 4) {
+                        i = allCinemaList.size() + 1;
+                    }
                 }
+
+                return cinemaList;
+
+            } else {
+//            gps.showSettingsAlert();
+                cinemaList = null;
+                return cinemaList;
             }
 
-        } //else {
-//            gps.showSettingsAlert();
-//        }
+        } catch (Exception e) {
+            Log.d("CINEMA", "Error from getNearByCinemas => " + e.toString());
+            cinemaList = null;
+            return cinemaList;
+        }
 
-        return cinemaList;
     }//getNearByCinemas
 
 
