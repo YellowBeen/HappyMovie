@@ -40,11 +40,15 @@ public class FavFragment extends ListFragment {
 
     private void addCinemaData() {
 
-        try {
-            cinemaList = XMLParser.parse(getActivity().getAssets().open("cinemas.xml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CinemaFavorite objCinemaFav = new CinemaFavorite();
+        ContextProvider objContext = new ContextProvider();
+        cinemaList = objCinemaFav.getFavorites(objContext.getContext());
+
+//        try {
+//            cinemaList = XMLParser.parse(getActivity().getAssets().open("cinemas.xml"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 
 public class MainActivity extends ActionBarActivity{
 
@@ -33,6 +35,15 @@ public class MainActivity extends ActionBarActivity{
         mLocalActivityManager.dispatchCreate(savedInstanceState);
         tabHost.setup(mLocalActivityManager);
         setTabhost();
+
+        //// Jack
+        CinemaTABLE objCinemaTABLE = new CinemaTABLE();
+        try {
+            objCinemaTABLE.updateCinema(MainActivity.this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ///Jack
 
     }
 

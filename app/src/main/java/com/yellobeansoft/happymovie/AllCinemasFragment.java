@@ -39,11 +39,14 @@ public class AllCinemasFragment extends ListFragment {
 
     private void addCinemaData() {
 
-        try {
-            cinemaList = XMLParser.parse(getActivity().getAssets().open("cinemas.xml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CinemaTABLE objCinemaTABLE = new CinemaTABLE();
+        cinemaList = objCinemaTABLE.getAllCinemas();
+
+//        try {
+//            cinemaList = XMLParser.parse(getActivity().getAssets().open("cinemas.xml"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

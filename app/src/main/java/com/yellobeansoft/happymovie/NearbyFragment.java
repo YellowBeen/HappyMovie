@@ -36,11 +36,14 @@ public class NearbyFragment extends ListFragment {
 
     private void addCinemaData() {
 
-        try {
-            cinemaList = XMLParser.parse(getActivity().getAssets().open("cinemas.xml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CinemaTABLE objCinemaTABLE = new CinemaTABLE();
+        cinemaList = objCinemaTABLE.getNearByCinemas();
+
+//        try {
+//            cinemaList = XMLParser.parse(getActivity().getAssets().open("cinemas.xml"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
