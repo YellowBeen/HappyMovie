@@ -1,7 +1,5 @@
 package com.yellobeansoft.happymovie;
 
-import java.util.ArrayList;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
@@ -11,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Beboyz on 1/22/15 AD.
@@ -60,7 +60,8 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
         TextView nameTH = (TextView) view.findViewById(R.id.txtCinemaTH);
         Button favImg = (Button) view.findViewById(R.id.btnFavourite);
         name.setText(cinema.getName().trim());
-        nameTH.setText("เมเจอร์ ซินีเพล็กซ์");
+        //nameTH.setText("เมเจอร์ ซินีเพล็กซ์");
+        nameTH.setText(cinema.getNameTH());
 
         objContext = new ContextProvider();
         objCinemaFav = new CinemaFavorite();
@@ -164,7 +165,7 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
                 ArrayList<Cinema> newList = new ArrayList<Cinema>();
                 for(Cinema Cinema: CinemaList){
                     if(Cinema.getName().toLowerCase().contains(query) ||
-                            Cinema.getName().toLowerCase().contains(query)){
+                            Cinema.getNameTH().toLowerCase().contains(query)){
                         newList.add(Cinema);
                     }
                 }

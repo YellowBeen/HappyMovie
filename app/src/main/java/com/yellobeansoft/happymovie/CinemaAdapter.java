@@ -67,6 +67,7 @@ public class CinemaAdapter extends BaseAdapter{
         }
 
         mViewHolder.cinemaName.setText(mCinemaList.get(position).getName());
+        mViewHolder.cinemaNameTH.setText(mCinemaList.get(position).getNameTH());
         objContext = new ContextProvider();
         objCinemaFav = new CinemaFavorite();
         objCinema = mCinemaList.get(position);
