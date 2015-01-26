@@ -37,6 +37,7 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
         search.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         search.setIconifiedByDefault(false);
         search.setOnQueryTextListener(this);
+
         search.setOnCloseListener(this);
 
         int id = search.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
