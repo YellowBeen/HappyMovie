@@ -49,7 +49,7 @@ public class MovieTable {
                 movies.setMovieImg(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMAGE)));
                 movies.setURLInfo(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_INFO)));
                 movies.setURLTrailer(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_YOUTUBE)));
-                movies.setMovieLength(Integer.parseInt(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LENGTH))));
+                movies.setMovieLength(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LENGTH)));
                 movieList.add(movies);
             } while (objCursor.moveToNext());
         }

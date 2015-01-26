@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,11 +21,15 @@ public class CinemaAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
     ArrayList<Cinema> mCinemaList;
     private ViewHolder mViewHolder;
-
+    private CinemaAdapter mCinemaAdapter;
+    private Cinema objCinema;
+    private ContextProvider objContext;
+    private CinemaFavorite objCinemaFav;
     public CinemaAdapter(Context context, ArrayList<Cinema> lists) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mCinemaList = lists;
+        mCinemaAdapter = this;
     }
 
     @Override
@@ -44,15 +47,17 @@ public class CinemaAdapter extends BaseAdapter{
         return position;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
 
-            convertView = mInflater.inflate(R.layout.layout_cinema_item, null);
+            convertView = mInflater.inflate(R.layout.layout_cinema_allitem, null);
 
             mViewHolder = new ViewHolder();
             mViewHolder.cinemaName = (TextView) convertView.findViewById(R.id.txtCinema);
+            mViewHolder.cinemaNameTH = (TextView) convertView.findViewById(R.id.txtCinemaTH);
             mViewHolder.favImg = (Button) convertView.findViewById(R.id.btnFavourite);
             convertView.setTag(mViewHolder);
 
@@ -62,47 +67,58 @@ public class CinemaAdapter extends BaseAdapter{
         }
 
         mViewHolder.cinemaName.setText(mCinemaList.get(position).getName());
+        objContext = new ContextProvider();
+        objCinemaFav = new CinemaFavorite();
+        objCinema = mCinemaList.get(position);
+
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if (objCinemaFav.checkExist(objContext.getContext(), objCinema)){
+            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                mViewHolder.favImg.setBackgroundDrawable(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
+            } else {
+                mViewHolder.favImg.setBackground(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
+            }
+        } else {
+            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                mViewHolder.favImg.setBackgroundDrawable(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favoff));
+            } else {
+                mViewHolder.favImg.setBackground(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favoff));
+            }
+        }
+
         mViewHolder.favImg.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-
-                int sdk = android.os.Build.VERSION.SDK_INT;
-                if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    v.getResources().getDrawable(R.drawable.ic_favon);
-                    mViewHolder.favImg.setBackgroundDrawable(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
-                    mViewHolder.favImg.refreshDrawableState();
-
+                objCinema = mCinemaList.get(position);
+                if (objCinemaFav.checkExist(objContext.getContext(), objCinema)) {
+                    objCinemaFav.removeFavorite(objContext.getContext(), objCinema);
                 } else {
-                    mViewHolder.favImg.setBackground(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
-                    mViewHolder.favImg.refreshDrawableState();
-
+                    objCinemaFav.addFavorite(objContext.getContext(), objCinema);
                 }
 
-                Toast.makeText(mContext, "Fav Button" + mCinemaList.get(position).getName(),
-                        Toast.LENGTH_SHORT).show();
+                mCinemaAdapter.notifyDataSetChanged();
             }
         });
 
-
         //Jack
-        convertView.setOnClickListener(new View.OnClickListener() {
+    /*    convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContextProvider objContext = new ContextProvider();
                 CinemaFavorite objCinemaFav = new CinemaFavorite();
                 ArrayList<Cinema> cinemaFavList = objCinemaFav.getFavorites(objContext.getContext());
                 Cinema objCinema = mCinemaList.get(position);
-
                 if (objCinemaFav.checkExist(objContext.getContext(), objCinema)) {
                     objCinemaFav.removeFavorite(objContext.getContext(), objCinema);
                 } else {
                     objCinemaFav.addFavorite(objContext.getContext(), objCinema);
                 }
+                Toast.makeText(mContext, "Fav Button" + mCinemaList.get(position).getName(),
+                        Toast.LENGTH_SHORT).show();
+
             }
-        });//Jack
-
-
+        });//Jack        */
 
         return convertView;
     }
@@ -110,6 +126,7 @@ public class CinemaAdapter extends BaseAdapter{
     private static class ViewHolder {
         public Button favImg;
         public TextView cinemaName;
+        public TextView cinemaNameTH;
     }// class ViewHolder
 
 }

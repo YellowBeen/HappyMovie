@@ -4,5 +4,14 @@
     <string name="app_name">Happy Movie</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_cinema_fragment">CinemaFragmentActivity</string>
+
+
+    <string name="viewpager1">Favourite</string>
+    <string name="viewpager2">Nearby</string>
+    <string name="viewpager3">All Cinemas</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -1,7 +1,7 @@
 package com.yellobeansoft.happymovie;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 
 import com.etsy.android.grid.StaggeredGridView;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by Beboyz on 1/18/15 AD.
  */
 
-public class MovieStaggeredActivity extends ActionBarActivity {
+public class MovieStaggeredActivity extends Activity {
 
     private StaggeredGridView mGridView;
     private MovieStaggeredAdapter mAdapter;

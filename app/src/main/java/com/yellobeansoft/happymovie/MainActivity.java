@@ -2,12 +2,14 @@ package com.yellobeansoft.happymovie;
 
 import android.app.LocalActivityManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -31,11 +33,20 @@ public class MainActivity extends ActionBarActivity{
         getSupportActionBar().hide();
 
         tabHost = (TabHost) findViewById(R.id.tabHost);
+
         mLocalActivityManager = new LocalActivityManager(this, false);
         mLocalActivityManager.dispatchCreate(savedInstanceState);
         tabHost.setup(mLocalActivityManager);
         setTabhost();
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#ff6d6d6d")); // unselected
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
+            tv.setTextColor(Color.parseColor("#ffffff"));
+        }
 
+        tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#8E0013")); // selected
+        TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
+        tv.setTextColor(Color.parseColor("#ffffff"));
         //// Jack
         CinemaTABLE objCinemaTABLE = new CinemaTABLE();
         try {
@@ -45,6 +56,23 @@ public class MainActivity extends ActionBarActivity{
         }
         ///Jack
 
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            @Override
+            public void onTabChanged(String tabId) {
+
+                for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#ff6d6d6d")); // unselected
+                    TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
+                    tv.setTextColor(Color.parseColor("#ffffff"));
+                }
+
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#8E0013")); // selected
+                TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
+                tv.setTextColor(Color.parseColor("#ffffff"));
+
+            }
+        });
     }
 
 
@@ -60,7 +88,7 @@ public class MainActivity extends ActionBarActivity{
         tabSpec.setContent(intentMovie);
         tabHost.addTab(tabSpec);
 
-        intentCinema = new Intent().setClass(this, CinemaActivity.class);
+        intentCinema = new Intent().setClass(this, CinemaFragmentActivity.class);
         tabSpec = tabHost.newTabSpec("cinemas");
         tabSpec.setIndicator("Cinemas");
         tabSpec.setContent(intentCinema);

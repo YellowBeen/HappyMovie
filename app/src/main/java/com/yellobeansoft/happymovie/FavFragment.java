@@ -5,7 +5,6 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -21,37 +20,28 @@ public class FavFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (cinemaList == null) {
             addCinemaData();
-        }
-        
-        if (cinemaList != null) {
             setupCinemaAdapter();
-        }
 
     }
 
     private void setupCinemaAdapter() {
-
-        // Setup adapter
-        lvCinemaAdapter = new CinemaAdapter(getActivity().getBaseContext(), cinemaList);
-        setListAdapter(lvCinemaAdapter);
-
+        if (cinemaList != null) {
+            lvCinemaAdapter = new CinemaAdapter(getActivity().getBaseContext(), cinemaList);
+            setListAdapter(lvCinemaAdapter);
+            lvCinemaAdapter.notifyDataSetChanged();
+        }
     }
 
     private void addCinemaData() {
 
         CinemaFavorite objCinemaFav = new CinemaFavorite();
         ContextProvider objContext = new ContextProvider();
+        cinemaList = null;
         cinemaList = objCinemaFav.getFavorites(objContext.getContext());
 
-//        try {
-//            cinemaList = XMLParser.parse(getActivity().getAssets().open("cinemas.xml"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
     }
+
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {

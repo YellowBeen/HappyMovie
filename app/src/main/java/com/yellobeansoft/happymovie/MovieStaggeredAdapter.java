@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.etsy.android.grid.util.DynamicHeightImageView;
@@ -30,6 +31,9 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
 
     static class ViewHolder {
         DynamicHeightImageView imageView;
+        TextView movieTitle;
+        TextView movieRating;
+        TextView movieLength;
     }
 
     public MovieStaggeredAdapter(final Context context, final int staggeredId) {
@@ -48,8 +52,9 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
             viewHolder = new ViewHolder();
             viewHolder.imageView =
                     (DynamicHeightImageView) convertView.findViewById(R.id.image);
-
-
+            viewHolder.movieTitle = (TextView) convertView.findViewById(R.id.txtMovieTitle);
+            viewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
+            viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtMovieLength);
             convertView.setTag(viewHolder);
         }
         else {
@@ -67,7 +72,9 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
                 .error(R.drawable.ic_loadmovie)
                 .placeholder(R.drawable.ic_loadmovie)
                 .into(viewHolder.imageView);
-
+        viewHolder.movieTitle.setText("Movie title");
+        viewHolder.movieRating.setText("IMDB Rating");
+        viewHolder.movieLength.setText("Movie Length");
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

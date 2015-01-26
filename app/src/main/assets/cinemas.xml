@@ -3,6 +3,7 @@
 
     <cinema id="1">
         <name>Major Ratchayothin</name>
+        <nameTH>เมเจอร์ รัชโยธิน</nameTH>
         <brand>Major</brand>
         <group>Major Cineplex</group>
         <latitude>13.828246</latitude>
@@ -11,6 +12,7 @@
 
     <cinema id="2">
         <name>Major Nonthaburi</name>
+        <nameTH>เมเจอร์ นนทบุรี</nameTH>
         <brand>Major</brand>
         <group>Major Cineplex</group>
         <latitude>13.832077</latitude>
@@ -19,6 +21,7 @@
 
     <cinema id="3">
         <name>Major Fashion Island</name>
+        <nameTH>เมเจอร์ แฟชั่นไอส์แลนด์</nameTH>
         <brand>Major</brand>
         <group>Major Cineplex</group>
         <latitude>13.826412</latitude>
@@ -27,6 +30,7 @@
 
     <cinema id="4">
         <name>Major Rangsit</name>
+        <nameTH>เมเจอร์ รังสิต</nameTH>
         <brand>Major</brand>
         <group>Major Cineplex</group>
         <latitude>13.987218</latitude>
@@ -35,6 +39,7 @@
 
     <cinema id="5">
         <name>Major Central Bangna</name>
+        <nameTH>เมเจอร์ เซ็นทรัลบางนา</nameTH>
         <brand>Major</brand>
         <group>Major Cineplex</group>
         <latitude>13.668382</latitude>
@@ -43,6 +48,7 @@
 
     <cinema id="6">
         <name>Major Sukhumvit</name>
+        <nameTH>เมเจอร์ สุขุมวิท</nameTH>
         <brand>Major</brand>
         <group>Major Cineplex</group>
         <latitude>13.721271</latitude>
@@ -51,6 +57,7 @@
 
     <cinema id="7">
         <name>Grand EGV Seacon Bangkae</name>
+        <nameTH>อีจีวี ซีคอน บางแค</nameTH>
         <brand>EGV</brand>
         <group>Grand EGV</group>
         <latitude>13.720</latitude>
@@ -59,6 +66,7 @@
 
     <cinema id="8">
         <name>Grand EGV Seacon Srinakarin</name>
+        <nameTH>แกรน์ อีขีวี ซีคอน ศรีนครินทร์</nameTH>
         <brand>EGV</brand>
         <group>Grand EGV</group>
         <latitude>13.694256</latitude>
@@ -67,6 +75,7 @@
 
     <cinema id="9">
         <name>Major Cineplex Central Rama 3</name>
+        <nameTH>เมเจอร์ เซ็นทรัลพระราม 3</nameTH>
         <brand>Major</brand>
         <group>Major</group>
         <latitude>13.696155</latitude>
@@ -75,6 +84,7 @@
 
     <cinema id="10">
         <name>Paragon Cineplex</name>
+        <nameTH>พารากอน ซินีเพล็กซ์</nameTH>
         <brand>Major</brand>
         <group>Paragon</group>
         <latitude>13.745459</latitude>
@@ -83,6 +93,7 @@
 
     <cinema id="11">
         <name>Mega Cineplex</name>
+        <nameTH>เมกา ซินิเพล็กซ์</nameTH>
         <brand>Major</brand>
         <group>Mega</group>
         <latitude>13.648155</latitude>
@@ -91,6 +102,7 @@
 
     <cinema id="12">
         <name>EGV Ladprao</name>
+        <nameTH>อีจีวี ลาดพร้าว</nameTH>
         <brand>EGV</brand>
         <group>EGV</group>
         <latitude>13.785612</latitude>
@@ -99,6 +111,7 @@
 
     <cinema id="13">
         <name>SFX Central Rama 9</name>
+        <nameTH>เอสเอฟเอ็กซ์ เซ็นทรัล พระราม 9</nameTH>
         <brand>SF</brand>
         <group>SFX</group>
         <latitude>13.758357</latitude>
@@ -107,14 +120,16 @@
 
         <cinema id="14">
             <name>SFX Central Ladprao</name>
+            <nameTH>เอสเอฟเอ็กซ์ เซ็นทรัล ลาดพร้าว</nameTH>
             <brand>SF</brand>
             <group>SFX</group>
             <latitude>13.8169</latitude>
             <longtitude>100.5600</longtitude>
         </cinema>
-    <!--
+
         <cinema id="15">
             <name>SFC The mall Ngamwongwan</name>
+            <nameTH>เอสเอฟซี เดอะมอลล์ งามวงศ์วาน</nameTH>
             <brand>SF</brand>
             <group>SFC</group>
             <latitude>13.8553</latitude>
@@ -123,6 +138,7 @@
 
         <cinema id="16">
             <name>SFC The mall Bangkapi</name>
+            <nameTH>เอสเอฟซี เดอะมอลล์ บางกะปิ</nameTH>
             <brand>SF</brand>
             <group>SFC</group>
             <latitude>13.766027</latitude>
@@ -131,12 +147,13 @@
 
         <cinema id="17">
             <name>SFX Terminal 21</name>
+            <nameTH>เอสเอฟเอ็กซ์ เทอมินอล 21</nameTH>
             <brand>SF</brand>
             <group>SFX</group>
             <latitude>13.44237</latitude>
             <longtitude>100.33621</longtitude>
         </cinema>
-    -->
+
 
 </cinemas>
 

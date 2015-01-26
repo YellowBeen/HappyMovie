@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="55dip"
-    android:orientation="vertical" >
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/lblListItem"
-        android:layout_width="fill_parent"
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btnFavourite"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/ic_favoff"
+        android:scaleType="centerCrop"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <TextView android:id="@+id/txtCinema" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="17dip"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+        android:paddingLeft="10dp" android:text="Cinema Name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/btnFavourite"
+        android:layout_toEndOf="@+id/btnFavourite"
+        android:textColor="@color/dark_dark" />
 
-</LinearLayout>
+    <TextView android:id="@+id/txtCinemaTH" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="โรงภาพยนตร์"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/txtCinema"
+        android:layout_toRightOf="@+id/btnFavourite"
+        android:layout_toEndOf="@+id/btnFavourite"
+        android:textSize="15dp" />
+
+
+
+</RelativeLayout>

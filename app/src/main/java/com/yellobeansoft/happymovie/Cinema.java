@@ -86,4 +86,7 @@ public class Cinema {
     public void setDistance(Double distance) {
         this.distance = distance;
     }
+
+
+
 }

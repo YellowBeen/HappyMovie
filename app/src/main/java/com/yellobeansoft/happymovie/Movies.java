@@ -8,11 +8,12 @@ public class Movies {
     private String movieImg;
     private String movieTitle;
     private String movieTitleTH;
-    private int movieLength;
+    private String movieLength;
     private String showtime;
     private int rating;
     private String URLInfo;
     private String URLTrailer;
+
 
     public String getMovieImg() {
         return movieImg;
@@ -38,11 +39,11 @@ public class Movies {
         this.movieTitleTH = movieTitleTH;
     }
 
-    public int getMovieLength() {
+    public String getMovieLength() {
         return movieLength;
     }
 
-    public void setMovieLength(int movieLength) {
+    public void setMovieLength(String movieLength) {
         this.movieLength = movieLength;
     }
 
@@ -77,4 +78,6 @@ public class Movies {
     public void setURLTrailer(String URLTrailer) {
         this.URLTrailer = URLTrailer;
     }
+
+
 }
