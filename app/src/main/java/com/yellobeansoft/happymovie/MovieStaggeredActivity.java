@@ -35,32 +35,41 @@ public class MovieStaggeredActivity extends Activity {
     }
 
     private ArrayList<String> generateSampleData() {
+
         final ArrayList<String> data = new ArrayList<String>();
 
-        data.add("http://www.majorcineplex.com/uploads/movie/931/thumb_931.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/932/thumb_932.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/933/thumb_933.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/934/thumb_934.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/935/thumb_935.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/936/thumb_936.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/937/thumb_937.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/938/thumb_938.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/939/thumb_939.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/940/thumb_940.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/941/thumb_941.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/942/thumb_942.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/943/thumb_943.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/944/thumb_944.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/945/thumb_945.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/946/thumb_946.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/947/thumb_947.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/948/thumb_948.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/949/thumb_949.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/950/thumb_950.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/951/thumb_951.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/952/thumb_952.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/953/thumb_953.jpg");
-        data.add("http://www.majorcineplex.com/uploads/movie/954/thumb_954.jpg");
+        MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
+        ArrayList<Movies> movieList = objMovieTab.getAllMovies();
+
+        for (int i = 0; i < movieList.size(); i++) {
+            Movies objMovie = (Movies) movieList.get(i);
+            data.add(objMovie.getMovieImg());
+        }
+
+//        data.add("http://www.majorcineplex.com/uploads/movie/931/thumb_931.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/932/thumb_932.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/933/thumb_933.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/934/thumb_934.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/935/thumb_935.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/936/thumb_936.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/937/thumb_937.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/938/thumb_938.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/939/thumb_939.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/940/thumb_940.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/941/thumb_941.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/942/thumb_942.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/943/thumb_943.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/944/thumb_944.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/945/thumb_945.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/946/thumb_946.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/947/thumb_947.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/948/thumb_948.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/949/thumb_949.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/950/thumb_950.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/951/thumb_951.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/952/thumb_952.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/953/thumb_953.jpg");
+//        data.add("http://www.majorcineplex.com/uploads/movie/954/thumb_954.jpg");
 
         return data;
     }

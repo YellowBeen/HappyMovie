@@ -23,7 +23,6 @@ public class CinemaAdapter extends BaseAdapter{
     private ViewHolder mViewHolder;
     private CinemaAdapter mCinemaAdapter;
     private Cinema objCinema;
-    private ContextProvider objContext;
     private CinemaFavorite objCinemaFav;
     public CinemaAdapter(Context context, ArrayList<Cinema> lists) {
         mContext = context;
@@ -68,12 +67,11 @@ public class CinemaAdapter extends BaseAdapter{
 
         mViewHolder.cinemaName.setText(mCinemaList.get(position).getName());
         mViewHolder.cinemaNameTH.setText(mCinemaList.get(position).getNameTH());
-        objContext = new ContextProvider();
         objCinemaFav = new CinemaFavorite();
         objCinema = mCinemaList.get(position);
 
         int sdk = android.os.Build.VERSION.SDK_INT;
-        if (objCinemaFav.checkExist(objContext.getContext(), objCinema)){
+        if (objCinemaFav.checkExist(mContext, objCinema)){
             if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 mViewHolder.favImg.setBackgroundDrawable(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
             } else {
@@ -92,10 +90,10 @@ public class CinemaAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 objCinema = mCinemaList.get(position);
-                if (objCinemaFav.checkExist(objContext.getContext(), objCinema)) {
-                    objCinemaFav.removeFavorite(objContext.getContext(), objCinema);
+                if (objCinemaFav.checkExist(mContext, objCinema)) {
+                    objCinemaFav.removeFavorite(mContext, objCinema);
                 } else {
-                    objCinemaFav.addFavorite(objContext.getContext(), objCinema);
+                    objCinemaFav.addFavorite(mContext, objCinema);
                 }
 
                 mCinemaAdapter.notifyDataSetChanged();

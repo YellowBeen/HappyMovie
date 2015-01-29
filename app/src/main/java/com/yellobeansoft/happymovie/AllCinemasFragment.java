@@ -66,7 +66,7 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
             ArrayList<Cinema> cinemaEGV = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaSF = new ArrayList<Cinema>();
 
-            CinemaTABLE objCinemaTABLE = new CinemaTABLE();
+            CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
             cinemaList = objCinemaTABLE.getAllCinemas();
             for (int i=0; i < cinemaList.size(); i++){
                switch (cinemaList.get(i).getBrand()){

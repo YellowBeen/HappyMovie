@@ -30,12 +30,10 @@ public class NearbyFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                cinemaList.clear();
+//                cinemaList.clear();
                 addCinemaData();
                 setupCinemaAdapter();
-                lvCinemaAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
-
             }
         });
 
@@ -46,11 +44,12 @@ public class NearbyFragment extends Fragment {
         if (cinemaList != null) {
         lvCinemaAdapter = new CinemaAdapter(getActivity(), cinemaList);
             lvCinema.setAdapter(lvCinemaAdapter);
+            lvCinemaAdapter.notifyDataSetChanged();
         }
     }
 
     private void addCinemaData() {
-        CinemaTABLE objCinemaTABLE = new CinemaTABLE();
+        CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
         cinemaList = objCinemaTABLE.getNearByCinemas();
     }
 

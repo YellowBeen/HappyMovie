@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class CinemaTABLE {
     //Explicit
     private MyOpenHelper objMyOpenHelper;
     private SQLiteDatabase writeSQLite, readSQLite;
+    private Context sContext;
 
     public static final String TABLE_CINEMA = "cinemaTABLE";
     public static final String COLUMN_ID = "_id";
@@ -36,9 +36,9 @@ public class CinemaTABLE {
     public static final String COLUMN_DIST = "Distance";
 
     //Constructor
-    public CinemaTABLE() {
-        ContextProvider objContext = new ContextProvider();
-        objMyOpenHelper = new MyOpenHelper(objContext.getContext());
+    public CinemaTABLE(Context context) {
+        sContext = context;
+        objMyOpenHelper = new MyOpenHelper(context);
         writeSQLite = objMyOpenHelper.getWritableDatabase();
         readSQLite = objMyOpenHelper.getReadableDatabase();
     }//Constructor
@@ -53,7 +53,6 @@ public class CinemaTABLE {
     //getNearByCinemas
     public ArrayList<Cinema> getNearByCinemas() {
 
-        ContextProvider objContext = new ContextProvider();
         ArrayList<Cinema> allCinemaList = new ArrayList<Cinema>();
         ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
 
@@ -61,7 +60,7 @@ public class CinemaTABLE {
 
         try {
 
-            gps = new GPSTracker(objContext.getContext());
+            gps = new GPSTracker(sContext);
             if (gps.canGetLocation()) {
                 this.updateDistance(gps.getLocation());
                 allCinemaList = this.getAll("NEAR");
@@ -156,6 +155,29 @@ public class CinemaTABLE {
 
     }//updateDistance
 
+    public void deleteAllCinema() {
+        writeSQLite.delete(TABLE_CINEMA, null, null);
+    }
+
+
+    public void addNewCinema(String strName, String strNameTH, String strPhone, String strBrand, String strGroup, String strLat, String strLong){
+        try {
+            ContentValues objContentValues = new ContentValues();
+            objContentValues.put(COLUMN_NAME, strName);
+            objContentValues.put(COLUMN_NAME_TH, strNameTH);
+            objContentValues.put(COLUMN_PHONE, strPhone);
+            objContentValues.put(COLUMN_BRAND, strBrand);
+            objContentValues.put(COLUMN_SUB_BRAND, strGroup);
+            objContentValues.put(COLUMN_LAT, strLat);
+            objContentValues.put(COLUMN_LONG, strLong);
+            writeSQLite.insertOrThrow(TABLE_CINEMA, null, objContentValues);
+        } catch (Exception e){
+
+        }
+
+    }
+
+
 
     public void updateCinema(Context context) throws IOException {
 
@@ -164,7 +186,6 @@ public class CinemaTABLE {
         cinemaList = XMLParser.parse(assetManager.open("cinemas.xml"));
 
         if (cinemaList.size() != 0) {
-
 
             try {
                 writeSQLite.delete(TABLE_CINEMA, null, null);

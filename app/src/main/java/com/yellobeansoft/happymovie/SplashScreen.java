@@ -27,6 +27,13 @@ public class SplashScreen extends Activity {
         // Create a Timer
         Timer RunSplash = new Timer();
 
+
+        //// Jack
+        DataLoader objLoader = new DataLoader();
+        objLoader.syncAll(SplashScreen.this);
+        ///Jack
+
+
         // Task to do when the timer ends
         TimerTask ShowSplash = new TimerTask() {
             @Override

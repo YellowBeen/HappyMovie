@@ -21,7 +21,6 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
     private ArrayList<CinemaGroup> cinemaGroupList;
     private ArrayList<CinemaGroup> cinemaGroupOriList;
     private Cinema objCinema;
-    private ContextProvider objContext;
     private CinemaFavorite objCinemaFav;
 
     public CinemaExpandAdapter(Context context, ArrayList<CinemaGroup> cinemaGroupList) {
@@ -63,11 +62,10 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
         //nameTH.setText("เมเจอร์ ซินีเพล็กซ์");
         nameTH.setText(cinema.getNameTH());
 
-        objContext = new ContextProvider();
         objCinemaFav = new CinemaFavorite();
         objCinema = cinemaGroupList.get(groupPosition).getCinema().get(childPosition);
         int sdk = android.os.Build.VERSION.SDK_INT;
-        if (objCinemaFav.checkExist(objContext.getContext(), objCinema)){
+        if (objCinemaFav.checkExist(context, objCinema)){
             if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 favImg.setBackgroundDrawable(favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
             } else {
@@ -86,10 +84,10 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 objCinema = cinemaGroupList.get(groupPosition).getCinema().get(childPosition);
-                if (objCinemaFav.checkExist(objContext.getContext(), objCinema)) {
-                    objCinemaFav.removeFavorite(objContext.getContext(), objCinema);
+                if (objCinemaFav.checkExist(context, objCinema)) {
+                    objCinemaFav.removeFavorite(context, objCinema);
                 } else {
-                    objCinemaFav.addFavorite(objContext.getContext(), objCinema);
+                    objCinemaFav.addFavorite(context, objCinema);
                 }
 
                 notifyDataSetChanged();

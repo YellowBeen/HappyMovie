@@ -1,6 +1,7 @@
 package com.yellobeansoft.happymovie;
 
 import android.app.LocalActivityManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity{
@@ -22,7 +24,7 @@ public class MainActivity extends ActionBarActivity{
     private Intent intentCinema;
     LocalActivityManager mLocalActivityManager;
     private ActionBar actionBar;
-
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,11 @@ public class MainActivity extends ActionBarActivity{
         getSupportActionBar().hide();
 
         tabHost = (TabHost) findViewById(R.id.tabHost);
+
+        //// Jack
+        DataLoader objLoader = new DataLoader();
+        objLoader.syncAll(MainActivity.this);
+        ///Jack
 
         mLocalActivityManager = new LocalActivityManager(this, false);
         mLocalActivityManager.dispatchCreate(savedInstanceState);
@@ -47,14 +54,6 @@ public class MainActivity extends ActionBarActivity{
         tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#8E0013")); // selected
         TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
         tv.setTextColor(Color.parseColor("#ffffff"));
-        //// Jack
-        CinemaTABLE objCinemaTABLE = new CinemaTABLE();
-        try {
-            objCinemaTABLE.updateCinema(MainActivity.this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ///Jack
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 
@@ -75,6 +74,18 @@ public class MainActivity extends ActionBarActivity{
         });
     }
 
+
+    //// Jack
+    private void showpDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
+    //// Jack
 
     private void setTabhost() {
 

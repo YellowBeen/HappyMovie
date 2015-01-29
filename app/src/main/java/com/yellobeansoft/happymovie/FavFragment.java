@@ -36,9 +36,8 @@ public class FavFragment extends ListFragment {
     private void addCinemaData() {
 
         CinemaFavorite objCinemaFav = new CinemaFavorite();
-        ContextProvider objContext = new ContextProvider();
         cinemaList = null;
-        cinemaList = objCinemaFav.getFavorites(objContext.getContext());
+        cinemaList = objCinemaFav.getFavorites(getActivity().getBaseContext());
 
     }
 
