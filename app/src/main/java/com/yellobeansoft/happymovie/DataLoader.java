@@ -54,7 +54,7 @@ public class DataLoader {
     public void syncAll(Context context) {
         if (this.checkSync()) {
             sContext = context;
-//            this.syncCinema();
+            this.syncCinema();
             this.syncMovie();
             this.syncShowTime();
         }
@@ -107,7 +107,7 @@ public class DataLoader {
         objCinemaTab.deleteAllCinema();
 
         //Sync
-        this.updateCinemaTable(this.initJason(urlCinema));
+//        this.updateCinemaTable(this.initJason(urlCinema));
 
         //Async
 //        JsonReadTask task = new JsonReadTask();
@@ -115,7 +115,7 @@ public class DataLoader {
 //        this.updateMovieTable(jsonResult);
 
         //Valley
-//        this.makeCinemaRequest();
+        this.makeCinemaRequest();
     }//syncCinema
 
 
@@ -339,6 +339,12 @@ public class DataLoader {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        Toast.makeText(sContext,
+                                "Load Cinema Success",
+                                Toast.LENGTH_LONG).show();
+
+
                     }
                 }, new Response.ErrorListener() {
 
