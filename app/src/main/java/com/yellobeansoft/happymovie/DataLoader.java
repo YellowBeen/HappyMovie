@@ -23,9 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -57,9 +54,9 @@ public class DataLoader {
     public void syncAll(Context context) {
         if (this.checkSync()) {
             sContext = context;
-            this.syncCinema();
+//            this.syncCinema();
             this.syncMovie();
-//            this.syncShowTime();
+            this.syncShowTime();
         }
     }//syncAll
 
@@ -71,15 +68,15 @@ public class DataLoader {
         objMovieTab.deleteAllMovie();
 
         //Sync
-        this.updateMovieTable(this.initJason(urlMovie));
+//        this.updateMovieTable(this.initJason(urlMovie));
 
         //Async
 //        JsonReadTask task = new JsonReadTask();
 //        task.execute(new String[] { urlMovie });
 //        this.updateMovieTable(jsonResult);
 
-        //Valley
-//        this.makeMovieRequest();
+//        Valley
+        this.makeMovieRequest();
     }//syncMovie
 
 
@@ -90,15 +87,15 @@ public class DataLoader {
         objShowTab.deleteAllShowTime();
 
         //Sync
-        this.updateShowTimeTable(this.initJason(urlShowTime));
+//        this.updateShowTimeTable(this.initJason(urlShowTime));
 
         //Async
 //        JsonReadTask task = new JsonReadTask();
-//        task.execute(new String[] { urlShowTime });
+//        task.execute(new String[]{urlShowTime});
 //        this.updateMovieTable(jsonResult);
 
         //Valley
-//        this.makeShowTimeRequest();
+        this.makeShowTimeRequest();
 
     }//syncShowTme
 
@@ -277,6 +274,7 @@ public class DataLoader {
                 HttpResponse response = httpclient.execute(httppost);
                 jsonResult = inputStreamToString(
                         response.getEntity().getContent()).toString();
+                updateMovieTable(jsonResult);
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -382,16 +380,25 @@ public class DataLoader {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(sContext,
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
-
+//                        Toast.makeText(sContext,
+//                                "Load Movie Success",
+//                                Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("Volley", "Error: " + error.getMessage());
+                Toast.makeText(sContext,
+                        "Error: " + error.getMessage(),
+                        Toast.LENGTH_LONG).show();
             }
         });
 
@@ -417,20 +424,35 @@ public class DataLoader {
                             // loop through each json object
                             for (int i = 0; i < response.length(); i++) {
 
-                                JSONObject jsonShowTime = (JSONObject) response.get(i);
+                                JSONObject jsonShowTime = response.getJSONObject(i);
                                 String strName = jsonShowTime.getString("name_en");
                                 String strTitle = jsonShowTime.getString("title_en");
                                 String strScreen = jsonShowTime.getString("screen");
                                 String strDate = jsonShowTime.getString("date");
                                 String strTime = jsonShowTime.getString("time_info");
                                 objShowTab.addNewShowTime(strName, strTitle, strScreen, strDate, strTime);
+
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+
+                            Toast.makeText(sContext,
+                                    "ShowTime Error:  " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+
                         } catch (IOException e) {
+
                             e.printStackTrace();
+                            Toast.makeText(sContext,
+                                    "ShowTime Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+
                         }
+
+                        Toast.makeText(sContext,
+                                "Load ShowTime Success",
+                                Toast.LENGTH_LONG).show();
 
 
                     }
@@ -438,7 +460,12 @@ public class DataLoader {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("Volley", "Error: " + error.getMessage());
+                Toast.makeText(sContext,
+                        "Error: " + error.getMessage(),
+                        Toast.LENGTH_LONG).show();
             }
+
         });
 
         // Adding request to request queue
