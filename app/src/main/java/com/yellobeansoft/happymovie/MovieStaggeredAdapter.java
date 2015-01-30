@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.etsy.android.grid.util.DynamicHeightImageView;
 import com.squareup.picasso.Picasso;
 
@@ -63,15 +64,19 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
 
         double positionHeight = getPositionRatio(position);
 
-        //viewHolder.imageView.setHeightRatio(positionHeight);
-
         String path = getItem(position);
 
-        Picasso.with(mContext)
-                .load(path)
-                .error(R.drawable.ic_loadmovie)
-                .placeholder(R.drawable.ic_loadmovie)
-                .into(viewHolder.imageView);
+        // Loading image with placeholder and error image ##Volley##
+        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+        imageLoader.get(path, ImageLoader.getImageListener(
+                viewHolder.imageView,R.drawable.ic_loadmovie,R.drawable.ic_loadmovie));
+
+//        Picasso.with(mContext)
+//                .load(path)
+//                .error(R.drawable.ic_loadmovie)
+//                .placeholder(R.drawable.ic_loadmovie)
+//                .into(viewHolder.imageView);
+
         viewHolder.movieTitle.setText("Movie title");
         viewHolder.movieRating.setText("IMDB Rating");
         viewHolder.movieLength.setText("Movie Length");

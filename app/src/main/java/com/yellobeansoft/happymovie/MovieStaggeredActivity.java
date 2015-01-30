@@ -29,9 +29,35 @@ public class MovieStaggeredActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_staggered);
 
-        new LoadMovieAsync().execute();
+
+        ArrayList<String> mDataset = new ArrayList<String>();
+        MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
+        ArrayList<Movies> movieList = new ArrayList<Movies>();
+        movieList = objMovieTab.getAllMovies();
+
+        if (movieList.size() > 0) {
+            for (int i = 0; i < movieList.size(); i++) {
+                Movies objMovie = (Movies) movieList.get(i);
+                String img = objMovie.getMovieImg();
+                mDataset.add(img);
+            }
+            mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
+            mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.id.image);
+            for (String data : mDataset) {
+                mAdapter.add(data);
+            }
+            mGridView.setAdapter(mAdapter);
+        }
+
+
+
+//        new LoadMovieAsync().execute();
 
     }
+
+
+
+
 
     class LoadMovieAsync extends AsyncTask<String, Integer, ArrayList<String>> {
 
