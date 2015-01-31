@@ -30,6 +30,5 @@ dependencies {
     compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
     compile 'com.loopj.android:android-async-http:1.4.4'
     compile files('/Users/Beboyz/AndroidStudioProjects/HappyMovie/libs/google-gson-2.2.4/gson-2.2.4.jar')
-    compile files('C:/Users/Jirawut-Jack/Documents/GitHub/HappyMovie/libs/google-gson-2.2.4/gson-2.2.4.jar')
-    compile files('C:/Users/Jirawut-Jack/Documents/GitHub/HappyMovie/libs/volley.jar')
+    compile files('/Users/Beboyz/AndroidStudioProjects/HappyMovie/libs/volley.jar')
 }

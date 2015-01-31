@@ -83,6 +83,7 @@ public class CinemaAdapter extends BaseAdapter{
             } else {
                 mViewHolder.favImg.setBackground(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favoff));
             }
+
         }
 
         mViewHolder.favImg.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +93,10 @@ public class CinemaAdapter extends BaseAdapter{
                 objCinema = mCinemaList.get(position);
                 if (objCinemaFav.checkExist(mContext, objCinema)) {
                     objCinemaFav.removeFavorite(mContext, objCinema);
+                    mCinemaList.remove(position);
                 } else {
                     objCinemaFav.addFavorite(mContext, objCinema);
+                    mCinemaList.add(objCinema);
                 }
 
                 mCinemaAdapter.notifyDataSetChanged();

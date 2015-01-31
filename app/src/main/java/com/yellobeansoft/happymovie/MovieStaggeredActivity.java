@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.etsy.android.grid.StaggeredGridView;
 
@@ -60,7 +59,6 @@ public class MovieStaggeredActivity extends Activity {
 
 
     class LoadMovieAsync extends AsyncTask<String, Integer, ArrayList<String>> {
-
 
         @Override
         protected void onPreExecute() {

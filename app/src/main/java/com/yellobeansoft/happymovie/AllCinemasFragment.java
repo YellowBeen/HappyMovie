@@ -25,7 +25,6 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
     private ArrayList<CinemaGroup> cinemaGroups = new ArrayList<CinemaGroup>();
     private ArrayList<Cinema> cinemaList;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
