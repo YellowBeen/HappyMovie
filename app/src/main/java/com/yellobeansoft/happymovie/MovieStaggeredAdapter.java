@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.etsy.android.grid.util.DynamicHeightImageView;
-import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -25,6 +25,8 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
 
     private LayoutInflater mInflater;
     private Context mContext;
+    private ArrayList<Movies> mMovies;
+    private Movies movie;
 
     private static final SparseArray<Double> sPositionHeightRatios =
             new SparseArray<Double>();
@@ -64,8 +66,9 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
 
         double positionHeight = getPositionRatio(position);
 
+        //movie = mMovies.get(position);
+        //String path = movie.getMovieImg();
         String path = getItem(position);
-
         // Loading image with placeholder and error image ##Volley##
         ImageLoader imageLoader = AppController.getInstance().getImageLoader();
         imageLoader.get(path, ImageLoader.getImageListener(
@@ -76,10 +79,13 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
 //                .error(R.drawable.ic_loadmovie)
 //                .placeholder(R.drawable.ic_loadmovie)
 //                .into(viewHolder.imageView);
-
-        viewHolder.movieTitle.setText("Movie title");
-        viewHolder.movieRating.setText("IMDB Rating");
-        viewHolder.movieLength.setText("Movie Length");
+//        final Movies movie = mMovies.get(position);
+        viewHolder.movieTitle.setText("Movie Title");
+        viewHolder.movieRating.setText("Rating");
+        viewHolder.movieLength.setText("Duration");
+//        viewHolder.movieTitle.setText(movie.getMovieTitle());
+//        viewHolder.movieRating.setText(movie.getRating());
+//        viewHolder.movieLength.setText(movie.getMovieLength());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

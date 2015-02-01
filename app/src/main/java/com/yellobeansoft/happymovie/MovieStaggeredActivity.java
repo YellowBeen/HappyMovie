@@ -42,6 +42,7 @@ public class MovieStaggeredActivity extends Activity {
             }
             mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
             mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.id.image);
+            //mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.id.image, movieList);
             for (String data : mDataset) {
                 mAdapter.add(data);
             }
@@ -103,12 +104,39 @@ public class MovieStaggeredActivity extends Activity {
         @Override
         protected void onProgressUpdate(Integer...integers){}
 
+        /*@Override
+        protected void onPostExecute(final ArrayList<Movies> mDataset) {
+            MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
+            //final ArrayList<String> innerSet = mDataset;
+            final ArrayList<Movies> movies = mDataset;
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+
+                public void run() {
+
+                    mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
+                    mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.id.image, movies);
+
+                    if (movies == null) {
+                        Log.d("onPostExecute", "DataSet is Null");
+                    } else {
+                        Log.d("onPostExecute", "DataSet is Not Null");
+                        for (Movies data : movies) {
+                            mAdapter.add(data);
+                        }
+                        mGridView.setAdapter(mAdapter);
+                    }
+                    // dismiss the dialog after getting song information
+                    pDialog.dismiss();
+                }
+
+            });*/
 
         @Override
-        protected void onPostExecute(ArrayList<String> mDataset) {
-
+        protected void onPostExecute(final ArrayList<String> mDataset) {
+            MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
             final ArrayList<String> innerSet = mDataset;
-
+            final ArrayList<Movies> movies = objMovieTab.getAllMovies();
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
 
