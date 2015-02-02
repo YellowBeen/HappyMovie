@@ -71,11 +71,11 @@ public class SplashScreen extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(SplashScreen.this);
-            pDialog.setMessage("Loading Data ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
+//            pDialog = new ProgressDialog(SplashScreen.this);
+//            pDialog.setMessage("Loading Data ...");
+//            pDialog.setIndeterminate(false);
+//            pDialog.setCancelable(false);
+//            pDialog.show();
         }
 
 
@@ -99,9 +99,7 @@ public class SplashScreen extends Activity {
             runOnUiThread(new Runnable() {
                 public void run() {
                     // dismiss the dialog after getting song information
-                    pDialog.dismiss();
-
-
+//                    pDialog.dismiss();
 
                     finish();
                     Intent myIntent = new Intent(SplashScreen.this,

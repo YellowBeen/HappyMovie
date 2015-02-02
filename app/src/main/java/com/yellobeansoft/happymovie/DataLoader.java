@@ -2,7 +2,8 @@ package com.yellobeansoft.happymovie;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -16,7 +17,6 @@ import java.io.IOException;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 /**
@@ -30,12 +30,17 @@ public class DataLoader {
     private static final String SHOWTIME_LOC_TYP = "SHOWTIME_LOC";
     private static final String MOVIE_SERV_TYP = "MOVIE_SERV";
     private static final String SHOWTIME_SERV_TYP = "SHOWTIME_SERV";
+    private static final String MOVIE_FLAG_TYP = "MOVIE_FLAG";
+    private static final String SHOWTIME_FLAG_TYP = "SHOWTIME_FLAG";
+
     private MovieTable objMovieTab;
     private ShowTimeTABLE objShowTab;
     private CinemaTABLE objCinemaTab;
     private String urlMovie = "http://happymovie.esy.es/php_get_movie.json";
     private String urlCinema = "http://happymovie.esy.es/php_get_cinema.php";
     private String urlShowTime = "http://happymovie.esy.es/php_get_showtime_concat.php";
+    private String urlUpdateFlagMovie = "...";
+    private String urlUpdateFlagShowTime = "...";
     private Context sContext;
 
 
@@ -58,7 +63,7 @@ public class DataLoader {
 
     //checkMovieSyncDone
     public Boolean checkMovieSyncDone() {
-        if (getDate(MOVIE_LOC_TYP).equals(getDate(MOVIE_SERV_TYP))) {
+        if (getFlag(MOVIE_LOC_TYP).equals(getFlag(MOVIE_SERV_TYP))) {
             return true;
         } else {
             return false;
@@ -68,21 +73,12 @@ public class DataLoader {
 
     //checkShowTimeSyncDone
     public Boolean checkShowTimeSyncDone() {
-        if (getDate(SHOWTIME_LOC_TYP).equals(getDate(SHOWTIME_SERV_TYP))) {
+        if (getFlag(SHOWTIME_LOC_TYP).equals(getFlag(SHOWTIME_SERV_TYP))) {
             return true;
         } else {
             return false;
         }
     }//checkShowTimeSyncDone
-
-
-    //getDate
-    private String getDate(String strTyp) {
-        SharedPreferences settings;
-        settings = sContext.getSharedPreferences(PREFS_NAME,
-                Context.MODE_PRIVATE);
-        return settings.getString(strTyp, "");
-    }//getDate
 
 
     //syncMovie
@@ -115,21 +111,45 @@ public class DataLoader {
 
     //getServerDate
     private void downloadServerDate() {
+//        makeUpdateFlagRequest(MOVIE_SERV_TYP);
+//        makeUpdateFlagRequest(SHOWTIME_SERV_TYP);
+
+//        String strMovieFlag = "";
+//        String strShowTimeFlag = "";
+//
+//        while ( strMovieFlag.equals("") || strShowTimeFlag.equals("")) {
+//            strMovieFlag =  getFlag(MOVIE_FLAG_TYP);
+//            strShowTimeFlag = getFlag(SHOWTIME_FLAG_TYP);
+//        }
+
+//        setFlag(MOVIE_FLAG_TYP, "");
+//        setFlag(SHOWTIME_FLAG_TYP, "");
+
         String strServerDate = "X"; //********************
-        setDate(MOVIE_SERV_TYP, strServerDate);
-        setDate(SHOWTIME_SERV_TYP, strServerDate);
+        setFlag(MOVIE_SERV_TYP, strServerDate);
+        setFlag(SHOWTIME_SERV_TYP, strServerDate);
     }//getServerDate
 
 
     // setDate
-    private void setDate(String strType, String strDateTime) {
+    private void setFlag(String strType, String strFlag) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
         settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         editor = settings.edit();
-        editor.putString(strType, strDateTime);
+        editor.putString(strType, strFlag);
         editor.commit();
     }// setDate
+
+
+    //getFlag
+    private String getFlag(String strTyp) {
+        SharedPreferences settings;
+        settings = sContext.getSharedPreferences(PREFS_NAME,
+                Context.MODE_PRIVATE);
+        return settings.getString(strTyp, "");
+    }//getFlag
+
 
     // clearDateSetting
     private void clearDateSetting() {
@@ -159,11 +179,11 @@ public class DataLoader {
 
         switch (strType) {
             case MOVIE_LOC_TYP:
-                strServerUpdate = getDate(MOVIE_SERV_TYP);
-                strLocalUpdate = getDate(MOVIE_LOC_TYP);
+                strServerUpdate = getFlag(MOVIE_SERV_TYP);
+                strLocalUpdate = getFlag(MOVIE_LOC_TYP);
             case SHOWTIME_LOC_TYP:
-                strServerUpdate = getDate(SHOWTIME_SERV_TYP);
-                strLocalUpdate = getDate(SHOWTIME_LOC_TYP);
+                strServerUpdate = getFlag(SHOWTIME_SERV_TYP);
+                strLocalUpdate = getFlag(SHOWTIME_LOC_TYP);
         }
 
         if (strLocalUpdate.equals("")) {
@@ -200,7 +220,7 @@ public class DataLoader {
                             // Parsing json array response
                             // loop through each json object
                             for (int i = 0; i < response.length(); i++) {
-
+                                objCinemaTab = new CinemaTABLE(sContext);
                                 JSONObject jsonCinema = (JSONObject) response.get(i);
                                 String strName = jsonCinema.getString("name_en");
                                 String strNameTH = jsonCinema.getString("name_th");
@@ -270,7 +290,7 @@ public class DataLoader {
                             e.printStackTrace();
                         }
 
-                        setDate(MOVIE_LOC_TYP, getDate(MOVIE_SERV_TYP));
+                        setFlag(MOVIE_LOC_TYP, getFlag(MOVIE_SERV_TYP));
                     }
                 }, new Response.ErrorListener() {
 
@@ -331,7 +351,7 @@ public class DataLoader {
 
                         }
 
-                        setDate(SHOWTIME_LOC_TYP, getDate(SHOWTIME_SERV_TYP));
+                        setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
                         Toast.makeText(sContext,
                                 "Load ShowTime Success",
                                 Toast.LENGTH_LONG).show();
@@ -355,9 +375,45 @@ public class DataLoader {
     }//makeShowTimeRequest
 
 
+    private void makeUpdateFlagRequest(String strType) {
+
+        String tag_string_req = "string_req";
+        String strUrl = "";
+        String strFlag = "";
+        final String strInnerType = strType;
+
+        switch (strType) {
+            case MOVIE_SERV_TYP:
+                strUrl = urlUpdateFlagMovie;
+                strFlag = MOVIE_FLAG_TYP;
+            case SHOWTIME_SERV_TYP:
+                strUrl = urlUpdateFlagShowTime;
+                strFlag = SHOWTIME_FLAG_TYP;
+        }
+
+        final String strInnerFlag = strFlag;
+
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                strUrl, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                setFlag(strInnerType, response);
+                setFlag(strInnerFlag, "X");
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+
+// Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+
 //---------------------- NOT USE -----------------------------------------------------
-
-
 //    //////  Sync   ////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //    //initJason

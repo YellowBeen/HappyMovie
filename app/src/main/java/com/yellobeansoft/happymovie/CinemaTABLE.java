@@ -39,8 +39,6 @@ public class CinemaTABLE {
     public CinemaTABLE(Context context) {
         sContext = context;
         objMyOpenHelper = new MyOpenHelper(context);
-        writeSQLite = objMyOpenHelper.getWritableDatabase();
-        readSQLite = objMyOpenHelper.getReadableDatabase();
     }//Constructor
 
 
@@ -91,10 +89,48 @@ public class CinemaTABLE {
     }//getNearByCinemas
 
 
+    //getCinemaByMovie
+    public ArrayList<Cinema> getCinemaByMovie (String strMovie) {
+        ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
+
+        readSQLite = objMyOpenHelper.getReadableDatabase();
+
+        Cursor objCursor = readSQLite.rawQuery("SELECT DISTINCT * FROM cinemaTABLE INNER JOIN showtimeTABLE " +
+                "ON cinemaTABLE.CinemaName = showtimeTABLE.CinemaName WHERE showtimeTABLE.movieTitle = '" + strMovie + "'", null);
+
+        if (objCursor.moveToFirst()) {
+
+            do {
+                Cinema objCinema = new Cinema();
+                objCinema.setName(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME)));
+                objCinema.setNameTH(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME_TH)));
+                objCinema.setBrand(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_BRAND)));
+                objCinema.setGroup(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_SUB_BRAND)));
+                objCinema.setPhone(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_PHONE)));
+                objCinema.setLatitude(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LAT)));
+                objCinema.setLongtitude(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LONG)));
+                objCinema.setDistance(objCursor.getDouble(objCursor.getColumnIndexOrThrow(COLUMN_DIST)));
+                cinemaList.add(objCinema);
+            } while (objCursor.moveToNext());
+
+            if (objCursor != null && !objCursor.isClosed()) {
+                objCursor.close();
+            }
+            readSQLite.close();
+            return cinemaList;
+        } else {
+            cinemaList = null;
+            return cinemaList;
+        }
+
+    }//getCinemaByMovie
+
+
     //getAll
     private ArrayList<Cinema> getAll(String strSortType) {
 
         ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
+        readSQLite = objMyOpenHelper.getReadableDatabase();
         String strSort;
 
         if (strSortType.equals("NEAR")) {
@@ -124,9 +160,11 @@ public class CinemaTABLE {
             if (objCursor != null && !objCursor.isClosed()) {
                 objCursor.close();
             }
+            readSQLite.close();
             return cinemaList;
         } else {
             cinemaList = null;
+            readSQLite.close();
             return cinemaList;
         }
 
@@ -139,28 +177,36 @@ public class CinemaTABLE {
         ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
         cinemaList = this.getAll("");
 
+        writeSQLite = objMyOpenHelper.getWritableDatabase();
         for (int i = 0; i < cinemaList.size(); i++) {
             Cinema objCinema = (Cinema) cinemaList.get(i);
 
-            Location locCinema = new Location("Cinema");
-            locCinema.setLatitude(Double.parseDouble(objCinema.getLatitude()));
-            locCinema.setLongitude(Double.parseDouble(objCinema.getLongtitude()));
+            if (!objCinema.getLatitude().equals("null") && !objCinema.getLongtitude().equals("null")){
+                Location locCinema = new Location("Cinema");
+                locCinema.setLatitude(Double.parseDouble(objCinema.getLatitude()));
+                locCinema.setLongitude(Double.parseDouble(objCinema.getLongtitude()));
 
-            float distance = locMe.distanceTo(locCinema);
-            distance = distance / 1000;
+                float distance = locMe.distanceTo(locCinema);
+                distance = distance / 1000;
 
-            writeSQLite.execSQL("UPDATE " + TABLE_CINEMA + " SET " + COLUMN_DIST + " = " + distance + " WHERE " +
-                    COLUMN_NAME + " = '" + objCinema.getName() + "'");
+                writeSQLite.execSQL("UPDATE " + TABLE_CINEMA + " SET " + COLUMN_DIST + " = " + distance + " WHERE " +
+                        COLUMN_NAME + " = '" + objCinema.getName() + "'");
+            }
         }
+
+        writeSQLite.close();
 
     }//updateDistance
 
     public void deleteAllCinema() {
+        writeSQLite = objMyOpenHelper.getWritableDatabase();
         writeSQLite.delete(TABLE_CINEMA, null, null);
+        writeSQLite.close();
     }
 
 
     public void addNewCinema(String strName, String strNameTH, String strPhone, String strBrand, String strGroup, String strLat, String strLong){
+        writeSQLite = objMyOpenHelper.getWritableDatabase();
         try {
             ContentValues objContentValues = new ContentValues();
             objContentValues.put(COLUMN_NAME, strName);
@@ -174,9 +220,8 @@ public class CinemaTABLE {
         } catch (Exception e){
 
         }
-
+        writeSQLite.close();
     }
-
 
 
     public void updateCinema(Context context) throws IOException {

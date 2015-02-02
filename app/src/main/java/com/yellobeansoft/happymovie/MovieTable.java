@@ -30,8 +30,6 @@ public class MovieTable {
     //Constructor
     public MovieTable(Context context) {
         objMyOpenHelper = new MyOpenHelper(context);
-        writeSQLite = objMyOpenHelper.getWritableDatabase();
-        readSQLite = objMyOpenHelper.getReadableDatabase();
     }//Constructor
 
 
@@ -39,6 +37,7 @@ public class MovieTable {
     public ArrayList<Movies> getAllMovies() {
 
         ArrayList<Movies> movieList = new ArrayList<Movies>();
+        readSQLite = objMyOpenHelper.getReadableDatabase();
 
         Cursor objCursor = readSQLite.query(TABLE_MOVIE,
                 new String[]{COLUMN_TITLE, COLUMN_TITLE_TH, COLUMN_IMAGE, COLUMN_LENGTH, COLUMN_INFO, COLUMN_YOUTUBE},
@@ -61,17 +60,20 @@ public class MovieTable {
             objCursor.close();
         }
 
+        readSQLite.close();
         return movieList;
     } // getAllMovies
 
 
     public void deleteAllMovie() {
+        writeSQLite = objMyOpenHelper.getWritableDatabase();
         writeSQLite.delete(TABLE_MOVIE, null, null);
+        writeSQLite.close();
     }
 
 
     public void addNewMovie(String strTitle, String strTitleTH, String strImage, String strLength, String strYoutube) throws IOException {
-
+        writeSQLite = objMyOpenHelper.getWritableDatabase();
         try {
             ContentValues objContentValues = new ContentValues();
             objContentValues.put(COLUMN_TITLE, strTitle);
@@ -81,8 +83,9 @@ public class MovieTable {
             objContentValues.put(COLUMN_YOUTUBE, strYoutube);
             writeSQLite.insertOrThrow(TABLE_MOVIE, null, objContentValues);
         } catch (Exception e) {
-
+            writeSQLite.close();
         }
+        writeSQLite.close();
 
     }
 
