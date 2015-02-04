@@ -15,16 +15,16 @@ import java.util.ArrayList;
 /**
  * Created by Beboyz on 1/15/15 AD.
  */
-public class CinemaAdapter extends BaseAdapter{
+public class CinemaNearbyAdapter extends BaseAdapter{
 
     private Context mContext;
     private LayoutInflater mInflater;
     ArrayList<Cinema> mCinemaList;
     private ViewHolder mViewHolder;
-    private CinemaAdapter mCinemaAdapter;
+    private CinemaNearbyAdapter mCinemaAdapter;
     private Cinema objCinema;
     private CinemaFavorite objCinemaFav;
-    public CinemaAdapter(Context context, ArrayList<Cinema> lists) {
+    public CinemaNearbyAdapter(Context context, ArrayList<Cinema> lists) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mCinemaList = lists;
@@ -70,15 +70,15 @@ public class CinemaAdapter extends BaseAdapter{
         objCinemaFav = new CinemaFavorite();
         objCinema = mCinemaList.get(position);
 
-        int sdk = android.os.Build.VERSION.SDK_INT;
+        int sdk = Build.VERSION.SDK_INT;
         if (objCinemaFav.checkExist(mContext, objCinema)){
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            if(sdk < Build.VERSION_CODES.JELLY_BEAN) {
                 mViewHolder.favImg.setBackgroundDrawable(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
             } else {
                 mViewHolder.favImg.setBackground(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
             }
         } else {
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            if(sdk < Build.VERSION_CODES.JELLY_BEAN) {
                 mViewHolder.favImg.setBackgroundDrawable(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favoff));
             } else {
                 mViewHolder.favImg.setBackground(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favoff));
@@ -93,7 +93,6 @@ public class CinemaAdapter extends BaseAdapter{
                 objCinema = mCinemaList.get(position);
                 if (objCinemaFav.checkExist(mContext, objCinema)) {
                     objCinemaFav.removeFavorite(mContext, objCinema);
-                    mCinemaList.remove(position);
                 } else {
                     objCinemaFav.addFavorite(mContext, objCinema);
                 }

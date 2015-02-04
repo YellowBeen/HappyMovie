@@ -7,7 +7,7 @@
     android:padding="5dip" >
 
     <!--  ListRow Left sied Thumbnail image -->
-    <LinearLayout android:id="@+id/thumbnail"
+    <LinearLayout android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="3dip"
@@ -18,45 +18,32 @@
         <ImageView
             android:id="@+id/imgMovie"
             android:layout_width="50dip"
-            android:layout_height="50dip"
+            android:layout_height="70dip"
             android:src="@drawable/ic_taken3"/>
 
     </LinearLayout>
 
     <!-- Title Of Song-->
-    <TextView
-        android:id="@+id/txtMovieName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textColor="#040404"
-        android:typeface="sans"
-        android:textSize="15dip"
-        android:textStyle="bold"
-        android:text="Title" />
 
     <!-- Artist Name -->
     <TextView
         android:id="@+id/txtMovieLength"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtMovieName"
         android:textColor="#343434"
         android:textSize="10dip"
-        android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:text="Length" />
+        android:text="Length"
+        android:layout_toRightOf="@+id/image"
+        android:layout_toEndOf="@+id/image" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Rating"
         android:id="@+id/txtRating"
-        android:layout_marginTop="1dip"
+        android:textStyle="bold"
         android:layout_below="@+id/txtMovieLength"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textStyle="bold" />
+        android:layout_toRightOf="@+id/image" />
 
 
 </RelativeLayout>

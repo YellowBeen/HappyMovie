@@ -1,10 +1,11 @@
 package com.yellobeansoft.happymovie;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.etsy.android.grid.StaggeredGridView;
 
@@ -14,12 +15,13 @@ import java.util.ArrayList;
  * Created by Beboyz on 1/18/15 AD.
  */
 
-public class MovieStaggeredActivity extends Activity {
+public class MovieStaggeredActivity extends ActionBarActivity implements ActionBar.OnNavigationListener{
 
     private StaggeredGridView mGridView;
     private MovieStaggeredAdapter mAdapter;
-//    private ArrayList<String> mDataset;
-
+    private ActionBar actionBar;
+    private ArrayList<SpinnerMoviesSort> sortSpinner;
+    private MovieSortSpinnerAdapter sortAdapter;
     // Progress Dialog
     private ProgressDialog pDialog;
 
@@ -28,141 +30,53 @@ public class MovieStaggeredActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_staggered);
 
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-        ArrayList<String> mDataset = new ArrayList<String>();
+        // Spinner title navigation data
+        sortSpinner = new ArrayList<SpinnerMoviesSort>();
+        sortSpinner.add(new SpinnerMoviesSort("Sort by Date"));
+        sortSpinner.add(new SpinnerMoviesSort("Name"));
+        sortSpinner.add(new SpinnerMoviesSort("Rating"));
+        sortSpinner.add(new SpinnerMoviesSort("Duration"));
+
+        sortAdapter = new MovieSortSpinnerAdapter(sortSpinner, getApplicationContext());
+        actionBar.setListNavigationCallbacks(sortAdapter, this);
+
         MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
         ArrayList<Movies> movieList = new ArrayList<Movies>();
         movieList = objMovieTab.getAllMovies();
 
-        if (movieList.size() > 0) {
-            for (int i = 0; i < movieList.size(); i++) {
-                Movies objMovie = (Movies) movieList.get(i);
-                String img = objMovie.getMovieImg();
-                mDataset.add(img);
-            }
-            mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
-            mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.id.image);
-            //mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.id.image, movieList);
-            for (String data : mDataset) {
-                mAdapter.add(data);
-            }
-            mGridView.setAdapter(mAdapter);
-        }
 
-
-
-//        new LoadMovieAsync().execute();
+        mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
+        mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.layout.layout_staggered_list, movieList);
+        mGridView.setAdapter(mAdapter);
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-
-
-
-    class LoadMovieAsync extends AsyncTask<String, Integer, ArrayList<String>> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(MovieStaggeredActivity.this);
-            pDialog.setMessage("Loading Movie ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-
-
-        @Override
-        protected ArrayList<String> doInBackground(String... params) {
-
-            ArrayList<String> mDataset = new ArrayList<String>();
-            MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
-            ArrayList<Movies> movieList = new ArrayList<Movies>();
-
-            while ( movieList.size() == 0 ) {
-                movieList = objMovieTab.getAllMovies();
-            }
-
-            if (movieList.size() == 0){
-                Log.d("doInBackground","movieList is null");
-            } else {
-                Log.d("doInBackground","movieList is NOT null");
-                Log.d("doInBackground","movieList Size = " + movieList.size() );
-
-                for (int i = 0; i < movieList.size(); i++) {
-                    Movies objMovie = (Movies) movieList.get(i);
-                    String img = objMovie.getMovieImg();
-                    mDataset.add(img);
-                }
-            }
-
-            Log.d("doInBackground","End");
-
-            return mDataset;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer...integers){}
-
-        /*@Override
-        protected void onPostExecute(final ArrayList<Movies> mDataset) {
-            MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
-            //final ArrayList<String> innerSet = mDataset;
-            final ArrayList<Movies> movies = mDataset;
-            // updating UI from Background Thread
-            runOnUiThread(new Runnable() {
-
-                public void run() {
-
-                    mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
-                    mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.id.image, movies);
-
-                    if (movies == null) {
-                        Log.d("onPostExecute", "DataSet is Null");
-                    } else {
-                        Log.d("onPostExecute", "DataSet is Not Null");
-                        for (Movies data : movies) {
-                            mAdapter.add(data);
-                        }
-                        mGridView.setAdapter(mAdapter);
-                    }
-                    // dismiss the dialog after getting song information
-                    pDialog.dismiss();
-                }
-
-            });*/
-
-        @Override
-        protected void onPostExecute(final ArrayList<String> mDataset) {
-            MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
-            final ArrayList<String> innerSet = mDataset;
-            final ArrayList<Movies> movies = objMovieTab.getAllMovies();
-            // updating UI from Background Thread
-            runOnUiThread(new Runnable() {
-
-                public void run() {
-
-                    mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
-                    mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.id.image);
-
-                    if (innerSet == null) {
-                        Log.d("onPostExecute", "DataSet is Null");
-                    } else {
-                        Log.d("onPostExecute", "DataSet is Not Null");
-                        for (String data : innerSet) {
-                            mAdapter.add(data);
-                        }
-                        mGridView.setAdapter(mAdapter);
-                    }
-                    // dismiss the dialog after getting song information
-                    pDialog.dismiss();
-                }
-
-            });
-
-        }
-
-
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(int i, long l) {
+        return false;
+    }
 }

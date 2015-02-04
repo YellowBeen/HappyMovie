@@ -10,7 +10,7 @@ public class Movies {
     private String movieTitleTH;
     private String movieLength;
     private String showtime;
-    private int rating;
+    private String rating;
     private String URLInfo;
     private String URLTrailer;
 
@@ -55,11 +55,11 @@ public class Movies {
         this.showtime = showtime;
     }
 
-    public int getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 

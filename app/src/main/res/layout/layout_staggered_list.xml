@@ -27,7 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Movie Title"
-            android:id="@+id/txtMovieTitle" />
+            android:id="@+id/txtMovieTitle"
+            android:textColor="#ff880a22"
+            android:textStyle="bold"
+            android:textSize="15dp" />
 
         <TextView
             android:layout_width="match_parent"

@@ -49,7 +49,7 @@ public class MovieAdapter extends BaseAdapter{
             convertView = mInflater.inflate(R.layout.layout_movie_item, null);
 
             mViewHolder = new ViewHolder();
-            mViewHolder.title = (TextView) convertView.findViewById(R.id.txtMovieName);
+           // mViewHolder.title = (TextView) convertView.findViewById(R.id.txtMovieName);
             mViewHolder.image = (ImageView) convertView.findViewById(R.id.imgMovie);
             mViewHolder.rating = (TextView) convertView.findViewById(R.id.txtRating);
             mViewHolder.length = (TextView) convertView.findViewById(R.id.txtMovieLength);

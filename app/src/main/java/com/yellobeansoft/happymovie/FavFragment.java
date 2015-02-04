@@ -21,6 +21,7 @@ public class FavFragment extends Fragment {
     private ArrayList<Cinema> cinemaList;
     private SwipeRefreshLayout swipeRefreshLayout;
     private CinemaFavorite objCinemaFav = new CinemaFavorite();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate layout

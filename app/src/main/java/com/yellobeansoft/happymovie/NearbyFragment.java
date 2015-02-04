@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class NearbyFragment extends Fragment {
 
-    private CinemaAdapter lvCinemaAdapter;
+    private CinemaNearbyAdapter lvCinemaAdapter;
     private ListView lvCinema;
     private ArrayList<Cinema> cinemaList;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -30,7 +30,6 @@ public class NearbyFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                cinemaList.clear();
                 addCinemaData();
                 setupCinemaAdapter();
                 swipeRefreshLayout.setRefreshing(false);
@@ -42,7 +41,7 @@ public class NearbyFragment extends Fragment {
 
     private void setupCinemaAdapter() {
         if (cinemaList != null) {
-        lvCinemaAdapter = new CinemaAdapter(getActivity(), cinemaList);
+        lvCinemaAdapter = new CinemaNearbyAdapter(getActivity(), cinemaList);
             lvCinema.setAdapter(lvCinemaAdapter);
             lvCinemaAdapter.notifyDataSetChanged();
         }

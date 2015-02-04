@@ -1,6 +1,6 @@
 package com.yellobeansoft.happymovie;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -19,14 +19,13 @@ import java.util.Random;
 /**
  * Created by Beboyz on 1/18/15 AD.
  */
-
-
-public class MovieStaggeredAdapter extends ArrayAdapter<String> {
+public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
 
     private LayoutInflater mInflater;
-    private Context mContext;
+    private int mResource;
     private ArrayList<Movies> mMovies;
     private Movies movie;
+    private Activity mActivity;
 
     private static final SparseArray<Double> sPositionHeightRatios =
             new SparseArray<Double>();
@@ -39,11 +38,12 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
         TextView movieLength;
     }
 
-    public MovieStaggeredAdapter(final Context context, final int staggeredId) {
-        super(context, staggeredId);
-        mContext = context;
-        mInflater = LayoutInflater.from(context);
-        mRandom = new Random();
+    public MovieStaggeredAdapter(Activity activity, int resource, ArrayList<Movies> movies) {
+        super(activity, resource, movies);
+        this.mActivity = activity;
+        this.mResource = resource;
+        this.mRandom = new Random();
+        this.mMovies = movies;
     }
 
     @Override
@@ -51,7 +51,8 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
         ViewHolder viewHolder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.layout_staggered_list, parent, false);
+            mInflater = mActivity.getLayoutInflater();
+            convertView = mInflater.inflate(mResource, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.imageView =
                     (DynamicHeightImageView) convertView.findViewById(R.id.image);
@@ -66,26 +67,17 @@ public class MovieStaggeredAdapter extends ArrayAdapter<String> {
 
         double positionHeight = getPositionRatio(position);
 
-        //movie = mMovies.get(position);
-        //String path = movie.getMovieImg();
-        String path = getItem(position);
+        movie = mMovies.get(position);
+        String path = movie.getMovieImg();
+
         // Loading image with placeholder and error image ##Volley##
         ImageLoader imageLoader = AppController.getInstance().getImageLoader();
         imageLoader.get(path, ImageLoader.getImageListener(
                 viewHolder.imageView,R.drawable.ic_loadmovie,R.drawable.ic_loadmovie));
 
-//        Picasso.with(mContext)
-//                .load(path)
-//                .error(R.drawable.ic_loadmovie)
-//                .placeholder(R.drawable.ic_loadmovie)
-//                .into(viewHolder.imageView);
-//        final Movies movie = mMovies.get(position);
-        viewHolder.movieTitle.setText("Movie Title");
-        viewHolder.movieRating.setText("Rating");
-        viewHolder.movieLength.setText("Duration");
-//        viewHolder.movieTitle.setText(movie.getMovieTitle());
-//        viewHolder.movieRating.setText(movie.getRating());
-//        viewHolder.movieLength.setText(movie.getMovieLength());
+        viewHolder.movieTitle.setText(movie.getMovieTitle());
+        viewHolder.movieRating.setText("IMDB Rating : "+movie.getRating());
+        viewHolder.movieLength.setText("Duration : "+movie.getMovieLength());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
