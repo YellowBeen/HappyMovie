@@ -191,6 +191,10 @@ public class CinemaTABLE {
 
                 writeSQLite.execSQL("UPDATE " + TABLE_CINEMA + " SET " + COLUMN_DIST + " = " + distance + " WHERE " +
                         COLUMN_NAME + " = '" + objCinema.getName() + "'");
+
+            }else {
+                writeSQLite.execSQL("UPDATE " + TABLE_CINEMA + " SET " + COLUMN_DIST + " = " + 99999999 + " WHERE " +
+                        COLUMN_NAME + " = '" + objCinema.getName() + "'");
             }
         }
 

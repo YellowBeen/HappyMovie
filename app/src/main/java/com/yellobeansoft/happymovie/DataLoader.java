@@ -6,6 +6,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -105,7 +107,44 @@ public class DataLoader {
     private void syncCinema() {
         objCinemaTab = new CinemaTABLE(sContext);
         objCinemaTab.deleteAllCinema();
-        this.makeCinemaRequest();
+        String JSONString = null;
+
+        try {
+            //open the inputStream to the file
+            AssetManager assetManager = sContext.getAssets();
+            InputStream inputStream = assetManager.open("Cinema.json");
+
+            int sizeOfJSONFile = inputStream.available();
+
+            //array that will store all the data
+            byte[] bytes = new byte[sizeOfJSONFile];
+
+            //reading data into the array from the file
+            inputStream.read(bytes);
+
+            //close the input stream
+            inputStream.close();
+
+            JSONString = new String(bytes, "UTF-8");
+            final JSONArray objJsonArray = new JSONArray(JSONString);
+
+            for (int i = 0; i < objJsonArray.length(); i++) {
+                JSONObject objJSONObject = objJsonArray.getJSONObject(i);
+                String strName = objJSONObject.getString("CinemaName");
+                String strNameTH = objJSONObject.getString("CinemaName_TH");
+                String strBrand = objJSONObject.getString("Brand");
+                String strGroup = objJSONObject.getString("SubBrand");
+                String strLat = objJSONObject.getString("Latitude");
+                String strLong = objJSONObject.getString("Longitude");
+                objCinemaTab.addNewCinema(strName, strNameTH, "", strBrand, strGroup, strLat, strLong);
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        catch (JSONException x) {
+            x.printStackTrace();
+        }
     }//syncCinema
 
 

@@ -61,31 +61,79 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
 
         if (cinemaGroups.size() == 0) {
 
-            ArrayList<Cinema> cinemaMajor = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaMAJOR = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaEGV = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaESPLANADE = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaHATYAI = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaIMAX = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaMEGA = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaPARADISE = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaPARAGON = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaSF = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaSFX = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaSFWORLD = new ArrayList<Cinema>();
 
             CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
             cinemaList = objCinemaTABLE.getAllCinemas();
             for (int i=0; i < cinemaList.size(); i++){
                switch (cinemaList.get(i).getBrand()){
-                   case "Major":
-                       cinemaMajor.add(cinemaList.get(i));
+                   case "MAJOR CINEPLEX":
+                       cinemaMAJOR.add(cinemaList.get(i));
                        break;
-                   case "EGV":
+                   case "EGV CINEMA":
                        cinemaEGV.add(cinemaList.get(i));
                        break;
-                   case "SF":
+                   case "ESPLANADE CINEPLEX":
+                       cinemaESPLANADE.add(cinemaList.get(i));
+                       break;
+                   case "HATYAI CINEPLEX":
+                       cinemaHATYAI.add(cinemaList.get(i));
+                       break;
+                   case "IMAX THEATRE":
+                       cinemaIMAX.add(cinemaList.get(i));
+                       break;
+                   case "MEGA CINEPLEX":
+                       cinemaMEGA.add(cinemaList.get(i));
+                       break;
+                   case "PARADISE CINEPLEX":
+                       cinemaPARADISE.add(cinemaList.get(i));
+                       break;
+                   case "PARAGON CINEPLEX":
+                       cinemaPARAGON.add(cinemaList.get(i));
+                       break;
+                   case "SFX CINEMA":
+                       cinemaSFX.add(cinemaList.get(i));
+                       break;
+                   case "SF WORLD CINEMA":
+                       cinemaSFWORLD.add(cinemaList.get(i));
+                       break;
+                   case "SF CINEMA CITY":
                        cinemaSF.add(cinemaList.get(i));
                        break;
                }
 
             }
-            CinemaGroup cinemaGroup = new CinemaGroup("Major Cineplex", cinemaMajor);
+            CinemaGroup cinemaGroup = new CinemaGroup("MAJOR CINEPLEX", cinemaMAJOR);
             cinemaGroups.add(cinemaGroup);
             cinemaGroup = new CinemaGroup("EGV", cinemaEGV);
             cinemaGroups.add(cinemaGroup);
-            cinemaGroup = new CinemaGroup("SF Cinema City", cinemaSF);
+            cinemaGroup = new CinemaGroup("ESPLANADE CINEPLEX", cinemaESPLANADE);
+            cinemaGroups.add(cinemaGroup);
+            cinemaGroup = new CinemaGroup("HATYAI CINEPLEX", cinemaHATYAI);
+            cinemaGroups.add(cinemaGroup);
+            cinemaGroup = new CinemaGroup("IMAX THEATRE", cinemaIMAX);
+            cinemaGroups.add(cinemaGroup);
+            cinemaGroup = new CinemaGroup("MEGA CINEPLEX", cinemaMEGA);
+            cinemaGroups.add(cinemaGroup);
+            cinemaGroup = new CinemaGroup("PARADISE CINEPLEX", cinemaPARADISE);
+            cinemaGroups.add(cinemaGroup);
+            cinemaGroup = new CinemaGroup("PARAGON CINEPLEX", cinemaPARAGON);
+            cinemaGroups.add(cinemaGroup);
+            cinemaGroup = new CinemaGroup("SF CINEMA CITY", cinemaSF);
+            cinemaGroups.add(cinemaGroup);
+            cinemaGroup = new CinemaGroup("SFX CINEMA", cinemaSFX);
+            cinemaGroups.add(cinemaGroup);
+            cinemaGroup = new CinemaGroup("SF WORLD CINEMA", cinemaSFWORLD);
             cinemaGroups.add(cinemaGroup);
         }
 
