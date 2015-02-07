@@ -5,15 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
-import android.widget.ProgressBar;
 
-import com.etsy.android.grid.StaggeredGridView;
-
-import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -106,6 +100,7 @@ public class SplashScreen extends Activity {
                     Intent myIntent = new Intent(SplashScreen.this,
                             MainActivity.class);
                     startActivity(myIntent);
+
 
                 }
             });

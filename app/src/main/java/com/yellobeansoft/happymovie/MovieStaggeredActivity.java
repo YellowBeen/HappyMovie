@@ -38,8 +38,7 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         sortSpinner = new ArrayList<SpinnerMoviesSort>();
         sortSpinner.add(new SpinnerMoviesSort("Sort by Date"));
         sortSpinner.add(new SpinnerMoviesSort("Name"));
-        sortSpinner.add(new SpinnerMoviesSort("Rating"));
-        sortSpinner.add(new SpinnerMoviesSort("Duration"));
+        sortSpinner.add(new SpinnerMoviesSort("IMDB Rating"));
 
         sortAdapter = new MovieSortSpinnerAdapter(sortSpinner, getApplicationContext());
         actionBar.setListNavigationCallbacks(sortAdapter, this);
@@ -47,7 +46,6 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
         ArrayList<Movies> movieList = new ArrayList<Movies>();
         movieList = objMovieTab.getAllMovies();
-
 
         mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
         mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.layout.layout_staggered_list, movieList);

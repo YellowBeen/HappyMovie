@@ -58,13 +58,16 @@ public class CinemaNearbyAdapter extends BaseAdapter{
             mViewHolder.cinemaName = (TextView) convertView.findViewById(R.id.txtCinema);
             mViewHolder.cinemaNameTH = (TextView) convertView.findViewById(R.id.txtCinemaTH);
             mViewHolder.favImg = (Button) convertView.findViewById(R.id.btnFavourite);
+            mViewHolder.distance = (TextView) convertView.findViewById(R.id.txtDistance);
             convertView.setTag(mViewHolder);
 
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
 
         }
-
+        double dist = mCinemaList.get(position).getDistance();
+        String txtDistance = String.format("%.2f", dist);
+        mViewHolder.distance.setText(txtDistance+"km");
         mViewHolder.cinemaName.setText(mCinemaList.get(position).getName());
         mViewHolder.cinemaNameTH.setText(mCinemaList.get(position).getNameTH());
         objCinemaFav = new CinemaFavorite();
@@ -127,6 +130,7 @@ public class CinemaNearbyAdapter extends BaseAdapter{
         public Button favImg;
         public TextView cinemaName;
         public TextView cinemaNameTH;
+        public TextView distance;
     }// class ViewHolder
 
 }

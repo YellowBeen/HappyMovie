@@ -55,6 +55,7 @@ public class CinemaAdapter extends BaseAdapter{
             convertView = mInflater.inflate(R.layout.layout_cinema_allitem, null);
 
             mViewHolder = new ViewHolder();
+            mViewHolder.distance = (TextView) convertView.findViewById(R.id.txtDistance);
             mViewHolder.cinemaName = (TextView) convertView.findViewById(R.id.txtCinema);
             mViewHolder.cinemaNameTH = (TextView) convertView.findViewById(R.id.txtCinemaTH);
             mViewHolder.favImg = (Button) convertView.findViewById(R.id.btnFavourite);
@@ -67,8 +68,12 @@ public class CinemaAdapter extends BaseAdapter{
 
         mViewHolder.cinemaName.setText(mCinemaList.get(position).getName());
         mViewHolder.cinemaNameTH.setText(mCinemaList.get(position).getNameTH());
+
         objCinemaFav = new CinemaFavorite();
         objCinema = mCinemaList.get(position);
+        double dist = objCinema.getDistance();
+        String txtDistance = String.format("%.2f", dist);
+        mViewHolder.distance.setText(txtDistance+"km");
 
         int sdk = android.os.Build.VERSION.SDK_INT;
         if (objCinemaFav.checkExist(mContext, objCinema)){
@@ -128,6 +133,7 @@ public class CinemaAdapter extends BaseAdapter{
         public Button favImg;
         public TextView cinemaName;
         public TextView cinemaNameTH;
+        public TextView distance;
     }// class ViewHolder
 
 }

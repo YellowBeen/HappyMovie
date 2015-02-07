@@ -58,12 +58,17 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
         TextView name = (TextView) view.findViewById(R.id.txtCinema);
         TextView nameTH = (TextView) view.findViewById(R.id.txtCinemaTH);
         Button favImg = (Button) view.findViewById(R.id.btnFavourite);
+        TextView distance = (TextView) view.findViewById(R.id.txtDistance);
         name.setText(cinema.getName().trim());
-        //nameTH.setText("เมเจอร์ ซินีเพล็กซ์");
         nameTH.setText(cinema.getNameTH());
+
+
 
         objCinemaFav = new CinemaFavorite();
         objCinema = cinemaGroupList.get(groupPosition).getCinema().get(childPosition);
+        double dist = objCinema.getDistance();
+        String txtDistance = String.format("%.2f", dist);
+        distance.setText(txtDistance+"km");
         int sdk = android.os.Build.VERSION.SDK_INT;
         if (objCinemaFav.checkExist(context, objCinema)){
             if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {

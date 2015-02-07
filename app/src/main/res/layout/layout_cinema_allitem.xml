@@ -23,7 +23,7 @@
         android:layout_toEndOf="@+id/btnFavourite"
         android:textColor="@color/dark_dark" />
 
-    <TextView android:id="@+id/txtCinemaTH" android:layout_width="match_parent"
+    <TextView android:id="@+id/txtCinemaTH" android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:text="โรงภาพยนตร์"
@@ -33,6 +33,16 @@
         android:layout_toEndOf="@+id/btnFavourite"
         android:textSize="15dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5.5 km"
+        android:id="@+id/txtDistance"
+        android:textStyle="italic"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textColor="#ffc8c8c8" />
 
 
 </RelativeLayout>
