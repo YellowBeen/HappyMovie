@@ -13,7 +13,24 @@ public class Movies {
     private String rating;
     private String URLInfo;
     private String URLTrailer;
+    private String URLIMDB;
+    private String Date;
 
+    public String getURLIMDB() {
+        return URLIMDB;
+    }
+
+    public void setURLIMDB(String URLIMDB) {
+        this.URLIMDB = URLIMDB;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
 
     public String getMovieImg() {
         return movieImg;

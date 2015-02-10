@@ -1,5 +1,7 @@
 package com.yellobeansoft.happymovie;
 
+import java.util.ArrayList;
+
 /**
  * Created by Jirawut-Jack on 23/01/2015.
  */
@@ -9,7 +11,44 @@ public class ShowTime {
     private String movieTitle;
     private String screen;
     private String date;
-    private String time;
+    private String Type;
+    private String nextTime;
+
+    ArrayList<String> timeList;
+
+    public String getNextTime() {
+        return nextTime;
+    }
+
+    public void setNextTime(String nextTime) {
+        this.nextTime = nextTime;
+    }
+
+    private Integer timeID;
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    public Integer getTimeID() {
+        return timeID;
+    }
+
+    public void setTimeID(Integer timeID) {
+        this.timeID = timeID;
+    }
+
+    public ArrayList<String> getTimeList() {
+        return timeList;
+    }
+
+    public void setTimeList(ArrayList<String> timeList) {
+        this.timeList = timeList;
+    }
 
     public String getName() {
         return name;
@@ -43,12 +82,5 @@ public class ShowTime {
         this.date = date;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
 }

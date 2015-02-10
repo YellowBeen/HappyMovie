@@ -26,6 +26,9 @@ public class MovieTable {
     public static final String COLUMN_LENGTH = "Length";
     public static final String COLUMN_INFO = "Url_Info";
     public static final String COLUMN_YOUTUBE = "Url_Youtube";
+    public static final String COLUMN_RATING = "imdb_rating";
+    public static final String COLUMN_IMDB = "imdb_url";
+    public static final String COLUMN_DATE = "Date";
 
     //Constructor
     public MovieTable(Context context) {
@@ -40,7 +43,7 @@ public class MovieTable {
         readSQLite = objMyOpenHelper.getReadableDatabase();
 
         Cursor objCursor = readSQLite.query(TABLE_MOVIE,
-                new String[]{COLUMN_TITLE, COLUMN_TITLE_TH, COLUMN_IMAGE, COLUMN_LENGTH, COLUMN_INFO, COLUMN_YOUTUBE},
+                new String[]{COLUMN_TITLE, COLUMN_TITLE_TH, COLUMN_IMAGE, COLUMN_LENGTH, COLUMN_INFO, COLUMN_YOUTUBE, COLUMN_RATING, COLUMN_IMDB, COLUMN_DATE},
                 null, null, null, null, null);
 
         if (objCursor.moveToFirst()) {
@@ -52,6 +55,9 @@ public class MovieTable {
                 movies.setURLInfo(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_INFO)));
                 movies.setURLTrailer(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_YOUTUBE)));
                 movies.setMovieLength(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LENGTH)));
+                movies.setRating(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_RATING)));
+                movies.setURLIMDB(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMDB)));
+                movies.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
                 movieList.add(movies);
             } while (objCursor.moveToNext());
         }
@@ -72,7 +78,7 @@ public class MovieTable {
     }
 
 
-    public void addNewMovie(String strTitle, String strTitleTH, String strImage, String strLength, String strYoutube) throws IOException {
+    public void addNewMovie(String strTitle, String strTitleTH, String strImage, String strLength, String strYoutube, String strRating, String strDate, String strIMDB) throws IOException {
         writeSQLite = objMyOpenHelper.getWritableDatabase();
         try {
             ContentValues objContentValues = new ContentValues();
@@ -81,6 +87,9 @@ public class MovieTable {
             objContentValues.put(COLUMN_IMAGE, strImage);
             objContentValues.put(COLUMN_LENGTH, strLength);
             objContentValues.put(COLUMN_YOUTUBE, strYoutube);
+            objContentValues.put(COLUMN_RATING, strRating);
+            objContentValues.put(COLUMN_IMDB, strIMDB);
+            objContentValues.put(COLUMN_DATE, strDate);
             writeSQLite.insertOrThrow(TABLE_MOVIE, null, objContentValues);
         } catch (Exception e) {
             writeSQLite.close();

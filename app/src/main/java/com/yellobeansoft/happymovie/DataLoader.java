@@ -36,11 +36,14 @@ public class DataLoader {
     private static final String SHOWTIME_FLAG_TYP = "SHOWTIME_FLAG";
 
     private MovieTable objMovieTab;
-    private ShowTimeTABLE objShowTab;
+    private ShowTimeTABLE objShowTimeTab;
     private CinemaTABLE objCinemaTab;
-    private String urlMovie = "http://happymovie.esy.es/php_get_movie.json";
+    private TimeTABLE objTimeTab;
+    private String urlMovie = "http://happymovie.esy.es/JSON_V2/php_get_movie.php";
     private String urlCinema = "http://happymovie.esy.es/php_get_cinema.php";
-    private String urlShowTime = "http://happymovie.esy.es/php_get_showtime_concat.php";
+//    private String urlShowTime = "http://happymovie.esy.es/JSON_V2/php_get_showtime_concat_short.php";
+    private String urlShowTime = "http://happymovie.esy.es/JSON_V2/php_get_showtime_concat_short2.php";
+    private String urlTime = "http://happymovie.esy.es/JSON_V2/php_get_time.php";
     private String urlUpdateFlagMovie = "...";
     private String urlUpdateFlagShowTime = "...";
     private Context sContext;
@@ -57,8 +60,8 @@ public class DataLoader {
         this.clearDateSetting();
 
         this.downloadServerDate();
-        this.syncCinema();
         this.syncMovie();
+        this.syncCinema();
         this.syncShowTime();
     }//syncAll
 
@@ -96,9 +99,8 @@ public class DataLoader {
     //syncShowTme
     private void syncShowTime() {
         if (this.checkSync(SHOWTIME_LOC_TYP)) {
-            objShowTab = new ShowTimeTABLE(sContext);
-            objShowTab.deleteAllShowTime();
             this.makeShowTimeRequest();
+            this.makeTimeRequest();
         }
     }//syncShowTme
 
@@ -242,61 +244,10 @@ public class DataLoader {
 
 //////  Valley   ////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //makeCinemaRequest
-    private void makeCinemaRequest() {
-
-        JsonArrayRequest req = new JsonArrayRequest(urlCinema,
-                new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        try {
-                            objCinemaTab = new CinemaTABLE(sContext);
-                            objCinemaTab.deleteAllCinema();
-
-                            // Parsing json array response
-                            // loop through each json object
-                            for (int i = 0; i < response.length(); i++) {
-                                objCinemaTab = new CinemaTABLE(sContext);
-                                JSONObject jsonCinema = (JSONObject) response.get(i);
-                                String strName = jsonCinema.getString("name_en");
-                                String strNameTH = jsonCinema.getString("name_th");
-                                String strPhone = jsonCinema.getString("phone");
-//                                String strBrand = objJSONObject.getString("brand");
-                                String strBrand = "Major";
-                                String strGroup = jsonCinema.getString("subbrand");
-                                String strLat = jsonCinema.getString("lat");
-                                String strLong = jsonCinema.getString("lng");
-                                objCinemaTab.addNewCinema(strName, strNameTH, strPhone, strBrand, strGroup, strLat, strLong);
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        Toast.makeText(sContext,
-                                "Load Cinema Success",
-                                Toast.LENGTH_LONG).show();
-
-
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(req);
-
-    }//makeCinemaRequest
-
-
     //makeMovieRequest
     private void makeMovieRequest() {
+
+        Request.Priority priority = Request.Priority.HIGH;
 
         JsonArrayRequest req = new JsonArrayRequest(urlMovie,
                 new Response.Listener<JSONArray>() {
@@ -317,7 +268,10 @@ public class DataLoader {
                                 String strImage = jsonCinema.getString("image_url");
                                 String strLength = jsonCinema.getString("duration");
                                 String strYoutube = jsonCinema.getString("youtube_url");
-                                objMovieTab.addNewMovie(strTitle, strTitleTH, strImage, strLength, strYoutube);
+                                String strRating = jsonCinema.getString("imdb_rating");
+                                String strIMDB = jsonCinema.getString("imdb_url");
+                                String strDate = jsonCinema.getString("create_date");
+                                objMovieTab.addNewMovie(strTitle, strTitleTH, strImage, strLength, strYoutube, strRating, strDate, strIMDB );
                             }
 
                         } catch (JSONException e) {
@@ -330,7 +284,9 @@ public class DataLoader {
                         }
 
                         setFlag(MOVIE_LOC_TYP, getFlag(MOVIE_SERV_TYP));
+                        Log.d("Movie", "Load Success");
                     }
+
                 }, new Response.ErrorListener() {
 
             @Override
@@ -339,11 +295,20 @@ public class DataLoader {
                 Toast.makeText(sContext,
                         "Error: " + error.getMessage(),
                         Toast.LENGTH_LONG).show();
+
             }
-        });
+        }){
+            @Override
+            public Request.Priority getPriority() {
+                return Priority.HIGH;
+            }
+        };
+
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req);
+
+
 
     }//makeMovieRequest
 
@@ -356,40 +321,45 @@ public class DataLoader {
 
                     @Override
                     public void onResponse(JSONArray response) {
+
                         try {
-                            objShowTab = new ShowTimeTABLE(sContext);
-                            objShowTab.deleteAllShowTime();
+                            objShowTimeTab = new ShowTimeTABLE(sContext);
+                            objTimeTab = new TimeTABLE(sContext);
+                            objShowTimeTab.deleteAllShowTime();
+                            objTimeTab.deleteAllTime();
 
                             // Parsing json array response
                             // loop through each json object
                             for (int i = 0; i < response.length(); i++) {
 
                                 JSONObject jsonShowTime = response.getJSONObject(i);
-                                String strName = jsonShowTime.getString("name_en");
-                                String strTitle = jsonShowTime.getString("title_en");
-                                String strScreen = jsonShowTime.getString("screen");
-                                String strDate = jsonShowTime.getString("date");
-                                String strTime = jsonShowTime.getString("time_info");
-                                objShowTab.addNewShowTime(strName, strTitle, strScreen, strDate, strTime);
-
+                                String strName = jsonShowTime.getString("2");
+                                String strTitle = jsonShowTime.getString("3");
+                                String strDate = jsonShowTime.getString("4");
+                                String strScreen = jsonShowTime.getString("5");
+                                Integer intTimeID = jsonShowTime.getInt("6");
+                                String strType = jsonShowTime.getString("8");
+                                objShowTimeTab.addNewShowTime(strName, strTitle, strScreen, strDate, intTimeID, strType);
                             }
+
+                            objShowTimeTab.closeDB();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-
+                            objShowTimeTab.closeDB();
                             Toast.makeText(sContext,
                                     "ShowTime Error:  " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
 
                         } catch (IOException e) {
-
                             e.printStackTrace();
+                            objShowTimeTab.closeDB();
                             Toast.makeText(sContext,
                                     "ShowTime Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
 
                         }
-
+                        Log.d("ShowTime", "Load Success");
                         setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
                         Toast.makeText(sContext,
                                 "Load ShowTime Success",
@@ -406,12 +376,79 @@ public class DataLoader {
                         Toast.LENGTH_LONG).show();
             }
 
-        });
+        }){
+            @Override
+            public Request.Priority getPriority() {
+                return Priority.NORMAL;
+            }
+        };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req);
 
     }//makeShowTimeRequest
+
+
+    //makeTimeRequest
+    private void makeTimeRequest() {
+
+        JsonArrayRequest req = new JsonArrayRequest(urlTime,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            objTimeTab = new TimeTABLE(sContext);
+                            objTimeTab.deleteAllTime();
+
+                            // Parsing json array response
+                            // loop through each json object
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonTime = response.getJSONObject(i);
+                                Integer intID = jsonTime.getInt("id");
+                                Integer intItem = jsonTime.getInt("time_item");
+                                String strTime = jsonTime.getString("time");
+                                objTimeTab.addNewTime(intID, intItem, strTime);
+                            }
+
+                            objTimeTab.closeDB();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            objTimeTab.closeDB();
+                            Toast.makeText(sContext,
+                                    "Time Error:  " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+                        setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
+                        Log.d("Time", "Load Success");
+                        Toast.makeText(sContext,
+                                "Load Time Success",
+                                Toast.LENGTH_LONG).show();
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley", "Error: " + error.getMessage());
+                Toast.makeText(sContext,
+                        "Error: " + error.getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
+
+        }){
+            @Override
+            public Request.Priority getPriority() {
+                return Priority.LOW;
+            }
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(req);
+
+    }//makeTimeRequest
 
 
     private void makeUpdateFlagRequest(String strType) {
