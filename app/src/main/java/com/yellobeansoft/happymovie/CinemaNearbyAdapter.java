@@ -2,6 +2,7 @@ package com.yellobeansoft.happymovie;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -104,6 +106,18 @@ public class CinemaNearbyAdapter extends BaseAdapter{
             }
         });
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objCinema = mCinemaList.get(position);
+                Toast.makeText(mContext, objCinema.getName(),
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
+                intent.putExtra("Cinema", objCinema.getName());
+                v.getContext().startActivity(intent);
+
+            }
+        });
         //Jack
     /*    convertView.setOnClickListener(new View.OnClickListener() {
             @Override

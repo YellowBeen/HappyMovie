@@ -45,5 +45,13 @@
         android:layout_below="@+id/txtMovieName"
         android:layout_toRightOf="@+id/image" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Showtime List"
+        android:id="@+id/txtShowtime"
+        android:layout_below="@+id/txtRating"
+        android:layout_toRightOf="@+id/image" />
+
 
 </RelativeLayout>

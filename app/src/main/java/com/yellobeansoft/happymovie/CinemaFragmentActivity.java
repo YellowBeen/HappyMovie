@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -30,6 +31,7 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    private static long back_pressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +70,9 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
                     actionBar.newTab()
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
+
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,6 +101,7 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
+        //((FavFragment.OnRefreshListener) mSectionsPagerAdapter.getItem(tab.getPosition())).onRefresh();
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
@@ -108,6 +111,14 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
+        else Toast.makeText(getBaseContext(), getString(R.string.back_exit), Toast.LENGTH_SHORT).show();
+        back_pressed = System.currentTimeMillis();
+
     }
 
     /**

@@ -2,6 +2,7 @@ package com.yellobeansoft.happymovie;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
                     (DynamicHeightImageView) convertView.findViewById(R.id.image);
             viewHolder.movieTitle = (TextView) convertView.findViewById(R.id.txtMovieTitle);
             viewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
-            viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtMovieLength);
+            viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtMovieName);
             convertView.setTag(viewHolder);
         }
         else {
@@ -76,16 +77,21 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
                 viewHolder.imageView,R.drawable.ic_loadmovie,R.drawable.ic_loadmovie));
 
         viewHolder.movieTitle.setText(movie.getMovieTitle());
-        viewHolder.movieRating.setText("IMDB Rating : "+movie.getRating());
+        viewHolder.movieRating.setText(movie.getRating()+"/10");
         viewHolder.movieLength.setText("Duration : "+movie.getMovieLength());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
-                Toast.makeText(getContext(), "Pic" + Integer.toString(position), Toast.LENGTH_SHORT).show();
-                intent.putExtra("id", Integer.toString(position));
-                intent.putExtra("flagmovie", "1");
+
+                movie = mMovies.get(position);
+                Log.d("click", Integer.toString(position));
+                Toast.makeText(getContext(), movie.getMovieTitle(), Toast.LENGTH_SHORT).show();
+                intent.putExtra("MovieTitle", movie.getMovieTitle());
                 v.getContext().startActivity(intent);
+
+
             }
         });
 

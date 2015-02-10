@@ -2,7 +2,6 @@ package com.yellobeansoft.happymovie;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -69,6 +68,39 @@ public class MovieTable {
         readSQLite.close();
         return movieList;
     } // getAllMovies
+
+    // getMovies
+    public Movies getMovies(String strName) {
+
+        Movies movies = new Movies();
+
+        readSQLite = objMyOpenHelper.getReadableDatabase();
+
+        Cursor objCursor = readSQLite.rawQuery("SELECT * FROM movieTABLE WHERE movieTitle  = '"
+                + strName + "'", null);
+
+        if (objCursor.moveToFirst()) {
+            do {
+                movies.setMovieTitle(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE)));
+                movies.setMovieTitleTH(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE_TH)));
+                movies.setMovieImg(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMAGE)));
+                movies.setURLInfo(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_INFO)));
+                movies.setURLTrailer(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_YOUTUBE)));
+                movies.setMovieLength(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LENGTH)));
+                movies.setRating(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_RATING)));
+                movies.setURLIMDB(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMDB)));
+                movies.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
+
+            } while (objCursor.moveToNext());
+        }
+
+        if (objCursor != null && !objCursor.isClosed()) {
+            objCursor.close();
+        }
+
+        readSQLite.close();
+        return movies;
+    } // getMovies
 
 
     public void deleteAllMovie() {

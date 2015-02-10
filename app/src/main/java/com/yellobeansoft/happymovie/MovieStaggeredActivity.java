@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.etsy.android.grid.StaggeredGridView;
 
@@ -24,6 +25,7 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
     private MovieSortSpinnerAdapter sortAdapter;
     // Progress Dialog
     private ProgressDialog pDialog;
+    private static long back_pressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,13 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
+        else Toast.makeText(getBaseContext(), getString(R.string.back_exit), Toast.LENGTH_SHORT).show();
+        back_pressed = System.currentTimeMillis();
+
+    }
 
     @Override
     public boolean onNavigationItemSelected(int i, long l) {

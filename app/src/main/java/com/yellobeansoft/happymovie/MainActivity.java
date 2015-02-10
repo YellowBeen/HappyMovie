@@ -1,10 +1,8 @@
 package com.yellobeansoft.happymovie;
 
 import android.app.LocalActivityManager;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -12,10 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity{
@@ -89,15 +83,12 @@ public class MainActivity extends ActionBarActivity{
 
         // Set Default Tab
         Intent intent = getIntent();
-        String chooseMovie = intent.getStringExtra("flagmovie");
-        String movieId = intent.getStringExtra("id");
+        String chooseMovie = intent.getStringExtra("MovieTitle");
         if (chooseMovie != null) {
-            if (chooseMovie.equalsIgnoreCase("1")) {
                 tabHost.setCurrentTab(1);
-                Toast.makeText(getBaseContext(), movieId, Toast.LENGTH_SHORT).show();
-            } else {
-                tabHost.setCurrentTab(0); // Movie tab
-            }
+            chooseMovie = null;
+         } else {
+                tabHost.setCurrentTab(0);
         }
     }
 

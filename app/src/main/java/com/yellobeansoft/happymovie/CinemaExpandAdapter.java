@@ -2,6 +2,7 @@ package com.yellobeansoft.happymovie;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -84,6 +86,19 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
             }
         }
 
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objCinema = cinemaGroupList.get(groupPosition).getCinema().get(childPosition);
+                Toast.makeText(context, objCinema.getName(),
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
+                intent.putExtra("Cinema", objCinema.getName());
+                v.getContext().startActivity(intent);
+
+            }
+        });
+
         favImg.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -149,6 +164,8 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
+
+
         return true;
     }
 

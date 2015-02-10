@@ -45,11 +45,17 @@ public class FavFragment extends Fragment {
         return view;
     }
 
+    public interface OnRefreshListener {
+        public void onRefresh();
+    }
+
     private void setupCinemaAdapter() {
         if (cinemaList != null) {
             lvCinemaAdapter = new CinemaAdapter(getActivity(), cinemaList);
             lvCinema.setAdapter(lvCinemaAdapter);
             lvCinemaAdapter.notifyDataSetChanged();
+        } else {
+
         }
     }
 

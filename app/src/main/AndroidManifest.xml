@@ -17,35 +17,53 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
 
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
     <application
         android:name=".AppController"
         android:allowBackup="true"
         android:icon="@drawable/ic_launch_hpmv"
         android:label="@string/app_name"
         android:theme="@style/NoActionBar" >
-
         <activity
             android:name=".SplashScreen"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <!-- Main activity <activity android:name=".MainActivity"></activity> -->
-        <activity android:name=".MainActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".MovieStaggeredActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MovieStaggeredActivity" />
         <activity
             android:name=".CinemaFragmentActivity"
-            android:label="@string/title_activity_cinema_fragment">
+            android:label="@string/title_activity_cinema_fragment" >
         </activity>
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCG9e6hFUlGasNfEiKf_Yh7Hg9YWdtq4Mk" />
 
+        <activity
+            android:name=".TestActivity"
+            android:label="@string/title_activity_test" >
+        </activity>
+        <activity
+            android:name=".ShowtimeFragmentActivity"
+            android:label="@string/title_activity_showtime_fragment" >
+        </activity>
+        <activity
+            android:name=".ShowtimeCinemaActivity"
+            android:label="@string/title_activity_showtime_cinema" >
+        </activity>
     </application>
-
 
 </manifest>
