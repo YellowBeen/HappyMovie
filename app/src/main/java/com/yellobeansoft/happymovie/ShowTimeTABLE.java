@@ -65,9 +65,11 @@ public class ShowTimeTABLE {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
 
-        Cursor objCursor = readSQLite.rawQuery("SELECT * FROM showtimeTABLE INNER JOIN timeTABLE " +
-                "ON showtimeTABLE.Time_id = timeTABLE.Time_id WHERE showtimeTABLE.CinemaName = '" + strCinema + "'"
-               , null);
+        String strQuery = "SELECT DISTINCT showtimeTABLE.* FROM showtimeTABLE INNER JOIN timeTABLE " +
+                          "ON showtimeTABLE.Time_id = timeTABLE.Time_id " +
+                          "WHERE showtimeTABLE.CinemaName = '" + strCinema + "'";
+
+        Cursor objCursor = readSQLite.rawQuery(strQuery, null);
 
         if (objCursor.moveToFirst()) {
 
@@ -119,9 +121,11 @@ public class ShowTimeTABLE {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
 
-        Cursor objCursor = readSQLite.rawQuery("SELECT * FROM showtimeTABLE INNER JOIN timeTABLE " +
-                "ON showtimeTABLE.Time_id = timeTABLE.Time_id WHERE showtimeTABLE.movieTitle = '" + strMovie + "'"
-                , null);
+        String strQuery = "SELECT DISTINCT showtimeTABLE.* FROM showtimeTABLE INNER JOIN timeTABLE " +
+                "ON showtimeTABLE.Time_id = timeTABLE.Time_id " +
+                "WHERE showtimeTABLE.movieTitle = '" + strMovie + "'";
+
+        Cursor objCursor = readSQLite.rawQuery(strQuery, null);
 
         if (objCursor.moveToFirst()) {
 

@@ -3,6 +3,7 @@ package com.yellobeansoft.happymovie;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -28,8 +29,8 @@ public class TimeTABLE {
 
 
     public void deleteAllTime() {
+
         writeSQLite.delete(TABLE_TIME, null, null);
-        writeSQLite.close();
     }
 
     //addNewTime

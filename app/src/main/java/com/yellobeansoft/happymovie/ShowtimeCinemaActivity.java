@@ -15,7 +15,7 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
     private ListView lvShowtime;
     private ShowtimeCinemaAdapter lvShowtimeAdapter;
     private String chooseCinema;
-    private ShowTimeTABLE showTimeTABLE;
+    private ShowTimeTABLE objShowTimeTab;
     ArrayList<ShowTime> showTimesList;
 
     @Override
@@ -39,8 +39,9 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         // Set Default Tab
         Intent intent = getIntent();
         chooseCinema = intent.getStringExtra("Cinema");
+        objShowTimeTab = new ShowTimeTABLE(ShowtimeCinemaActivity.this);
         if (!chooseCinema.equalsIgnoreCase(null)) {
-            showTimesList = showTimeTABLE.getShowTimeByCinema(chooseCinema, "");
+            showTimesList = objShowTimeTab.getShowTimeByCinema(chooseCinema, "");
         }
     }
 

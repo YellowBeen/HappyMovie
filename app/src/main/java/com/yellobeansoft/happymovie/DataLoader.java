@@ -324,17 +324,15 @@ public class DataLoader {
 
                         try {
                             objShowTimeTab = new ShowTimeTABLE(sContext);
-                            objTimeTab = new TimeTABLE(sContext);
                             objShowTimeTab.deleteAllShowTime();
-                            objTimeTab.deleteAllTime();
 
                             // Parsing json array response
                             // loop through each json object
                             for (int i = 0; i < response.length(); i++) {
 
                                 JSONObject jsonShowTime = response.getJSONObject(i);
-                                String strName = jsonShowTime.getString("2");
-                                String strTitle = jsonShowTime.getString("3");
+                                String strName = jsonShowTime.getString("3");
+                                String strTitle = jsonShowTime.getString("2");
                                 String strDate = jsonShowTime.getString("4");
                                 String strScreen = jsonShowTime.getString("5");
                                 Integer intTimeID = jsonShowTime.getInt("6");
@@ -361,9 +359,9 @@ public class DataLoader {
                         }
                         Log.d("ShowTime", "Load Success");
                         setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
-                        Toast.makeText(sContext,
-                                "Load ShowTime Success",
-                                Toast.LENGTH_LONG).show();
+//                        Toast.makeText(sContext,
+//                                "Load ShowTime Success",
+//                                Toast.LENGTH_LONG).show();
 
                     }
                 }, new Response.ErrorListener() {
@@ -400,6 +398,7 @@ public class DataLoader {
                         try {
                             objTimeTab = new TimeTABLE(sContext);
                             objTimeTab.deleteAllTime();
+                            Log.d("Time", "Time deleted");
 
                             // Parsing json array response
                             // loop through each json object
@@ -422,7 +421,7 @@ public class DataLoader {
                         }
 
                         setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
-                        Log.d("Time", "Load Success");
+                        Log.d("Time", "Time added");
                         Toast.makeText(sContext,
                                 "Load Time Success",
                                 Toast.LENGTH_LONG).show();

@@ -95,7 +95,7 @@ public class CinemaTABLE {
 
         readSQLite = objMyOpenHelper.getReadableDatabase();
 
-        Cursor objCursor = readSQLite.rawQuery("SELECT DISTINCT * FROM cinemaTABLE INNER JOIN showtimeTABLE " +
+        Cursor objCursor = readSQLite.rawQuery("SELECT DISTINCT cinemaTABLE.* FROM cinemaTABLE INNER JOIN showtimeTABLE " +
                 "ON cinemaTABLE.CinemaName = showtimeTABLE.CinemaName WHERE showtimeTABLE.movieTitle = '" + strMovie + "'", null);
 
         if (objCursor.moveToFirst()) {
