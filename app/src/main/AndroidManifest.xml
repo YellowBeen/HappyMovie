@@ -37,8 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- Main activity <activity android:name=".MainActivity"></activity> -->
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
@@ -52,17 +50,11 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCG9e6hFUlGasNfEiKf_Yh7Hg9YWdtq4Mk" />
 
-        <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test" >
+        <activity android:name=".ShowtimeCinemaActivity" >
         </activity>
         <activity
-            android:name=".ShowtimeFragmentActivity"
-            android:label="@string/title_activity_showtime_fragment" >
-        </activity>
-        <activity
-            android:name=".ShowtimeCinemaActivity"
-            android:label="@string/title_activity_showtime_cinema" >
+            android:name=".TTActivity"
+            android:label="@string/title_activity_tt" >
         </activity>
     </application>
 

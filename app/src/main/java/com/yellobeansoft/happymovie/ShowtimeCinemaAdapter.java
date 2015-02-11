@@ -1,7 +1,6 @@
 package com.yellobeansoft.happymovie;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.InputStream;
-import java.net.URL;
+import com.android.volley.toolbox.ImageLoader;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Beboyz on 1/15/15 AD.
@@ -24,6 +24,8 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
     private ViewHolder mViewHolder;
     private MovieTable movieTable;
     private Movies objMovie;
+    private String showtimeConcat;
+    private ArrayList<String> timeList = new ArrayList<String>();
 
     public ShowtimeCinemaAdapter(Context context, ArrayList<ShowTime> lists) {
         mContext = context;
@@ -51,51 +53,78 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
 
         if (convertView == null) {
 
-            convertView = mInflater.inflate(R.layout.layout_movie_item, null);
+            convertView = mInflater.inflate(R.layout.layout_showtime_cinema_item, null);
 
             mViewHolder = new ViewHolder();
-            mViewHolder.movieName = (TextView) convertView.findViewById(R.id.txtMovieName);
+            mViewHolder.movieName = (TextView) convertView.findViewById(R.id.txtDuration);
+            mViewHolder.movieNameTH = (TextView) convertView.findViewById(R.id.txtMovieNameTH);
             mViewHolder.movieImg = (ImageView) convertView.findViewById(R.id.imgMovie);
             mViewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
             mViewHolder.movieShowtime = (TextView) convertView.findViewById(R.id.txtShowtime);
-
-            Drawable drawable = LoadImageFromWebOperations(objMovie.getMovieImg());
-
-            objMovie = movieTable.getMovies(mShowtimeList.get(position).getMovieTitle());
-            mViewHolder.movieName.setText(objMovie.getMovieTitle());
-            mViewHolder.movieImg.setImageDrawable(drawable);
-            mViewHolder.movieRating.setText(objMovie.getRating());
-            //mViewHolder.movieShowtime.setText(mShowtimeList.get(position).getTimeList());
-
+            mViewHolder.movieDate = (TextView) convertView.findViewById(R.id.txtDate);
+            mViewHolder.screen = (TextView) convertView.findViewById(R.id.txtScreen);
+            mViewHolder.showtimeType = (TextView) convertView.findViewById(R.id.txtType);
             convertView.setTag(mViewHolder);
 
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
 
+        // Get data from movie class
+        movieTable = new MovieTable(mContext);
+        objMovie = movieTable.getMovies(mShowtimeList.get(position).getMovieTitle());
+
+        // Set image
+        String path = objMovie.getMovieImg();
+        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+        // Concatenate showtime
+        timeList = mShowtimeList.get(position).getTimeList();
+        showtimeConcat = JoinArray(timeList, "   ");
+
+        // Set Textview (Movie object)
+        mViewHolder.movieName.setText(objMovie.getMovieTitle());
+        mViewHolder.movieNameTH.setText(objMovie.getMovieTitleTH());
+        mViewHolder.movieRating.setText(objMovie.getRating()+"/10");
+        mViewHolder.movieDate.setText(objMovie.getDate());
+        // Set Textview (Showtime object)
+        mViewHolder.movieShowtime.setText(showtimeConcat);
+        mViewHolder.showtimeType.setText(mShowtimeList.get(position).getType());
+        mViewHolder.screen.setText(mShowtimeList.get(position).getScreen());
+        imageLoader.get(path, ImageLoader.getImageListener(
+                mViewHolder.movieImg,R.drawable.ic_loadmovie,R.drawable.ic_loadmovie));
 
         return convertView;
     }// method getView
 
+    public static String JoinArray(List<String> list, String delim) {
+
+        StringBuilder sb = new StringBuilder();
+
+        String loopDelim = "";
+
+        for(String s : list) {
+
+            sb.append(loopDelim);
+            sb.append(s);
+
+            loopDelim = delim;
+        }
+
+        return sb.toString();
+    }// JoinArray
+
+
     private static class ViewHolder {
         public ImageView movieImg;
         public TextView movieName;
+        public TextView movieNameTH;
         public TextView movieRating;
         public TextView movieShowtime;
+        public TextView movieDate;
+        public TextView showtimeType;
+        public TextView screen;
+
     }// class ViewHolder
-
-    private Drawable LoadImageFromWebOperations(String url)
-    {
-        try
-        {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        }catch (Exception e) {
-            System.out.println("Exc="+e);
-            return null;
-        }
-    }
-
 
 }

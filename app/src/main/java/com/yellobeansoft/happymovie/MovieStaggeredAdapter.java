@@ -37,6 +37,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         TextView movieTitle;
         TextView movieRating;
         TextView movieLength;
+        TextView releaseDate;
     }
 
     public MovieStaggeredAdapter(Activity activity, int resource, ArrayList<Movies> movies) {
@@ -59,7 +60,8 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
                     (DynamicHeightImageView) convertView.findViewById(R.id.image);
             viewHolder.movieTitle = (TextView) convertView.findViewById(R.id.txtMovieTitle);
             viewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
-            viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtMovieName);
+            viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtDuration);
+            viewHolder.releaseDate = (TextView) convertView.findViewById(R.id.txtDate);
             convertView.setTag(viewHolder);
         }
         else {
@@ -78,7 +80,8 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
 
         viewHolder.movieTitle.setText(movie.getMovieTitle());
         viewHolder.movieRating.setText(movie.getRating()+"/10");
-        viewHolder.movieLength.setText("Duration : "+movie.getMovieLength());
+        viewHolder.movieLength.setText(movie.getMovieLength());
+        viewHolder.releaseDate.setText(movie.getDate());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
