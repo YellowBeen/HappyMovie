@@ -404,10 +404,9 @@ public class DataLoader {
                             // loop through each json object
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonTime = response.getJSONObject(i);
-                                Integer intID = jsonTime.getInt("id");
-                                Integer intItem = jsonTime.getInt("time_item");
-                                String strTime = jsonTime.getString("time");
-                                objTimeTab.addNewTime(intID, intItem, strTime);
+                                Integer intID = jsonTime.getInt("1");
+                                String strTime = jsonTime.getString("2");
+                                objTimeTab.addNewTime(intID, 0, strTime);
                             }
 
                             objTimeTab.closeDB();
