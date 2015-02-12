@@ -35,7 +35,7 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
+        actionBar.setIcon(getResources().getDrawable(R.drawable.ic_launch_hpmv));
         // Spinner title navigation data
         sortSpinner = new ArrayList<SpinnerMoviesSort>();
         sortSpinner.add(new SpinnerMoviesSort("Sort by Date"));
@@ -67,6 +67,8 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
         switch (item.getItemId()){
             case R.id.action_settings:
+                return true;
+            case R.id.filter:
                 return true;
 
         }

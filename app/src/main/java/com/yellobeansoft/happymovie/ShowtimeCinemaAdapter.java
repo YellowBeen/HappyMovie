@@ -1,6 +1,11 @@
 package com.yellobeansoft.happymovie;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +86,8 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
         // Concatenate showtime
         timeList = mShowtimeList.get(position).getTimeList();
         showtimeConcat = JoinArray(timeList, "   ");
+        Spannable showtimeSpan = new SpannableString(showtimeConcat);
+        showtimeSpan.setSpan(new ForegroundColorSpan(Color.RED), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         // Set Textview (Movie object)
         mViewHolder.movieName.setText(objMovie.getMovieTitle());
@@ -88,14 +95,21 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
         mViewHolder.movieRating.setText(objMovie.getRating()+"/10");
         mViewHolder.movieDate.setText(objMovie.getDate());
         // Set Textview (Showtime object)
-        mViewHolder.movieShowtime.setText(showtimeConcat);
+        mViewHolder.movieShowtime.setText(showtimeSpan);
         mViewHolder.showtimeType.setText(mShowtimeList.get(position).getType());
         mViewHolder.screen.setText(mShowtimeList.get(position).getScreen());
         imageLoader.get(path, ImageLoader.getImageListener(
-                mViewHolder.movieImg,R.drawable.ic_loadmovie,R.drawable.ic_loadmovie));
+                mViewHolder.movieImg, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
 
         return convertView;
     }// method getView
+
+/*    private void setShowtimeColor(TextView view, String fulltext, String subtext, int color) {
+        view.setText(fulltext, TextView.BufferType.SPANNABLE);
+        Spannable str = (Spannable) view.getText();
+        int i = fulltext.indexOf(subtext);
+        str.setSpan(new ForegroundColorSpan(color), i, i+subtext.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }*/
 
     public static String JoinArray(List<String> list, String delim) {
 

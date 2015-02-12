@@ -65,7 +65,8 @@
         android:text="Type"
         android:id="@+id/txtType"
         android:layout_below="@+id/txtMovieNameTH"
-        android:layout_toRightOf="@+id/vLayout" />
+        android:layout_toRightOf="@+id/vLayout"
+        android:textSize="15dp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -77,6 +78,7 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="19dp"
+            android:adjustViewBounds="true"
             android:id="@+id/imgIMDB"
             android:src="@drawable/ic_imdb" />
         <TextView
@@ -84,7 +86,6 @@
             android:layout_height="wrap_content"
             android:text="Rating"
             android:id="@+id/txtRating"
-            android:textStyle="bold"
             android:layout_below="@+id/txtDuration"
             android:layout_toRightOf="@+id/image"
             android:paddingLeft="5dp" />
