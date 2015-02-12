@@ -2,7 +2,9 @@ package com.yellobeansoft.happymovie;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
+import android.util.LruCache;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Cache;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 import com.etsy.android.grid.util.DynamicHeightImageView;
 
 import java.util.ArrayList;
@@ -63,8 +68,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
             viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtDuration);
             viewHolder.releaseDate = (TextView) convertView.findViewById(R.id.txtDate);
             convertView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
@@ -74,12 +78,17 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         String path = movie.getMovieImg();
 
         // Loading image with placeholder and error image ##Volley##
-        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+//        ImageLoader imageLoader = new ImageLoader(Volley.newRequestQueue(getContext()), new BitmapLruCache(
+//                100));
+
+//        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+        ImageLoader imageLoader = MyVolleySingleton.getInstance(getContext()).getImageLoader();
         imageLoader.get(path, ImageLoader.getImageListener(
-                viewHolder.imageView,R.drawable.ic_loadmovie,R.drawable.ic_loadmovie));
+                viewHolder.imageView, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
 
         viewHolder.movieTitle.setText(movie.getMovieTitle());
-        viewHolder.movieRating.setText(movie.getRating()+"/10");
+        viewHolder.movieRating.setText(movie.getRating() + "/10");
         viewHolder.movieLength.setText(movie.getMovieLength());
         viewHolder.releaseDate.setText(movie.getDate());
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -117,4 +126,6 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
     private double getRandomHeightRatio() {
         return (mRandom.nextDouble() / 2.0) + 1.0; // height will be 1.0 - 1.5 the width
     }
+
+
 }

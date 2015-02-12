@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -62,7 +63,7 @@ public class ShowTimeTABLE {
 
 
     //getShowTimeByCinema
-    public ArrayList<ShowTime> getShowTimeByCinema(String strCinema, String strTime) {
+    public ArrayList<ShowTime> getShowTimeByCinema(String strCinema, String strTime) throws ParseException {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
 
@@ -87,7 +88,7 @@ public class ShowTimeTABLE {
                 objShowTime.setType(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TYPE)));
                 objShowTime.setTimeID(objCursor.getInt(objCursor.getColumnIndexOrThrow(COLUMN_TIMEID)));
                 objShowTime.setTime(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TIME)));
-                objShowTime.setTimeList();
+                objShowTime.setTimeList(strTime);
 
 //                Cursor objCursorT = readSQLite.rawQuery("SELECT * FROM timeTABLE WHERE Time_id  = "
 //                        + objShowTime.getTimeID() , null);
@@ -104,7 +105,10 @@ public class ShowTimeTABLE {
 //                    objShowTime.setTimeList(timeList);
 //                } ;
 
-                showTimeList.add(objShowTime);
+                if (objShowTime.getTimeList().size() > 0){
+                    showTimeList.add(objShowTime);
+                }
+
             } while (objCursor.moveToNext());
 
             if (objCursor != null && !objCursor.isClosed()) {
@@ -122,7 +126,7 @@ public class ShowTimeTABLE {
 
 
     //getShowTimeByMovie
-    public ArrayList<ShowTime> getShowTimeByMovie(String strMovie, String strTime) {
+    public ArrayList<ShowTime> getShowTimeByMovie(String strMovie, String strTime) throws ParseException {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
 
@@ -146,7 +150,7 @@ public class ShowTimeTABLE {
                 objShowTime.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
                 objShowTime.setType(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TYPE)));
                 objShowTime.setTimeID(objCursor.getInt(objCursor.getColumnIndexOrThrow(COLUMN_TIMEID)));
-                objShowTime.setTimeList();
+                objShowTime.setTimeList(strTime);
 
 //                Cursor objCursorT = readSQLite.rawQuery("SELECT * FROM timeTABLE WHERE Time_id  = "
 //                        + objShowTime.getTimeID() , null);
@@ -163,7 +167,10 @@ public class ShowTimeTABLE {
 //                    objShowTime.setTimeList(timeList);
 //                } ;
 
-                showTimeList.add(objShowTime);
+                if (objShowTime.getTimeList().size() > 0){
+                    showTimeList.add(objShowTime);
+                }
+
             } while (objCursor.moveToNext());
 
             if (objCursor != null && !objCursor.isClosed()) {

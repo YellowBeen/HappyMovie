@@ -78,8 +78,8 @@ public class SplashScreen extends Activity {
             DataLoader objLoader = new DataLoader(SplashScreen.this);
             objLoader.syncAll();
 
-//            while ( !objLoader.checkMovieSyncDone() || !objLoader.checkShowTimeSyncDone() ) {
-            while ( !objLoader.checkMovieSyncDone() ) {
+            while ( !objLoader.checkMovieSyncDone() || !objLoader.checkShowTimeSyncDone() ) {
+//            while ( !objLoader.checkMovieSyncDone() ) {
             }
             return null;
         }

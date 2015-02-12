@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 
@@ -30,7 +31,12 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         txtCinemaName = (TextView) findViewById(R.id.txtCinemaName);
         txtCinemaNameTH = (TextView) findViewById(R.id.txtCinemaNameTH);
 
-        addShowtimeData();
+        try {
+            addShowtimeData();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         setupShowtimeAdapter();
 
         txtCinemaName.setText(chooseCinema);
@@ -44,7 +50,7 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         }
     }
 
-    private void addShowtimeData() {
+    private void addShowtimeData() throws ParseException {
 
         // Set Default Tab
         Intent intent = getIntent();

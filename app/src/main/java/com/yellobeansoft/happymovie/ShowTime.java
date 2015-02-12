@@ -1,7 +1,11 @@
 package com.yellobeansoft.happymovie;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Jirawut-Jack on 23/01/2015.
@@ -27,12 +31,26 @@ public class ShowTime {
 
     ArrayList<String> timeList;
 
-    public String getNextTime() {
-        return nextTime;
+    public String getNextTime() throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        String strNow = dateFormat.format(new Date());
+        java.util.Date dNow =(java.util.Date)dateFormat.parse(strNow);
+        ArrayList<String> time = this.getTimeList();
+
+        for (int i = 0; i < time.size(); i++){
+            java.util.Date dShowTime =(java.util.Date)dateFormat.parse(time.get(i));
+            if (dShowTime.after(dNow)) {
+                return time.get(i);
+            }
+        }
+
+        return "00:00";
+//        return nextTime;
     }
 
-    public void setNextTime(String nextTime) {
-        this.nextTime = nextTime;
+    public void setNextTime(String time) {
+        nextTime = time;
     }
 
     private Integer timeID;
@@ -58,9 +76,24 @@ public class ShowTime {
     }
 
     //    public void setTimeList(ArrayList<String> timeList) {
-    public void setTimeList() {
-        ArrayList<String> aList= new ArrayList(Arrays.asList(this.getTime().split(",")));
-        this.timeList = aList;
+    public void setTimeList(String strTime) throws ParseException {
+        ArrayList<String> tList= new ArrayList(Arrays.asList(this.getTime().split(",")));
+
+        if (strTime.equals("")){
+            this.timeList = tList;
+        }else {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            java.util.Date dTime =(java.util.Date)dateFormat.parse(strTime);
+
+            for (int i = 0; i < tList.size(); i++){
+                java.util.Date dShowTime =(java.util.Date)dateFormat.parse(tList.get(i));
+                if (dShowTime.after(dTime)) {
+                    this.timeList.add(tList.get(i));
+                }
+            }
+
+        }
+
     }
 
     public String getName() {
