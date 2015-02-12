@@ -41,8 +41,8 @@ public class DataLoader {
     private TimeTABLE objTimeTab;
     private String urlMovie = "http://happymovie.esy.es/JSON_V2/php_get_movie.php";
     private String urlCinema = "http://happymovie.esy.es/php_get_cinema.php";
-//    private String urlShowTime = "http://happymovie.esy.es/JSON_V2/php_get_showtime_concat_short.php";
-    private String urlShowTime = "http://happymovie.esy.es/JSON_V2/php_get_showtime_concat_short2.php";
+    private String urlShowTime = "http://happymovie.esy.es/JSON_V2/php_get_showtime_concat_short.php";
+//    private String urlShowTime = "http://happymovie.esy.es/JSON_V2/php_get_showtime_concat_short2.php";
     private String urlTime = "http://happymovie.esy.es/JSON_V2/php_get_time.php";
     private String urlUpdateFlagMovie = "...";
     private String urlUpdateFlagShowTime = "...";
@@ -59,10 +59,12 @@ public class DataLoader {
     public void syncAll() {
         this.clearDateSetting();
 
+        Log.d("Sync Time", "Start");
+
         this.downloadServerDate();
         this.syncMovie();
-        this.syncCinema();
         this.syncShowTime();
+        this.syncCinema();
     }//syncAll
 
 
@@ -87,7 +89,7 @@ public class DataLoader {
 
 
     //syncMovie
-    private void syncMovie() {
+    public void syncMovie() {
         if (this.checkSync(MOVIE_LOC_TYP)) {
             objMovieTab = new MovieTable(sContext);
             objMovieTab.deleteAllMovie();
@@ -97,19 +99,16 @@ public class DataLoader {
 
 
     //syncShowTme
-    private void syncShowTime() {
+    public void syncShowTime() {
         if (this.checkSync(SHOWTIME_LOC_TYP)) {
             this.makeShowTimeRequest();
-            this.makeTimeRequest();
+//            this.makeTimeRequest();
         }
     }//syncShowTme
 
 
     //syncCinema
-    private void syncCinema() {
-        objCinemaTab = new CinemaTABLE(sContext);
-        objCinemaTab.deleteAllCinema();
-        String JSONString = null;
+    public void syncCinema() {
 
         try {
             //open the inputStream to the file
@@ -127,8 +126,12 @@ public class DataLoader {
             //close the input stream
             inputStream.close();
 
+            String JSONString = null;
             JSONString = new String(bytes, "UTF-8");
             final JSONArray objJsonArray = new JSONArray(JSONString);
+
+            objCinemaTab = new CinemaTABLE(sContext);
+            objCinemaTab.deleteAllCinema();
 
             for (int i = 0; i < objJsonArray.length(); i++) {
                 JSONObject objJSONObject = objJsonArray.getJSONObject(i);
@@ -141,17 +144,21 @@ public class DataLoader {
                 objCinemaTab.addNewCinema(strName, strNameTH, "", strBrand, strGroup, strLat, strLong);
             }
 
+            objCinemaTab.closeDB();
+
         } catch (IOException ex) {
             ex.printStackTrace();
+            objCinemaTab.closeDB();
         }
         catch (JSONException x) {
             x.printStackTrace();
+            objCinemaTab.closeDB();
         }
     }//syncCinema
 
 
     //getServerDate
-    private void downloadServerDate() {
+    public void downloadServerDate() {
 //        makeUpdateFlagRequest(MOVIE_SERV_TYP);
 //        makeUpdateFlagRequest(SHOWTIME_SERV_TYP);
 
@@ -193,7 +200,7 @@ public class DataLoader {
 
 
     // clearDateSetting
-    private void clearDateSetting() {
+    public void clearDateSetting() {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
         settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -300,15 +307,13 @@ public class DataLoader {
         }){
             @Override
             public Request.Priority getPriority() {
-                return Priority.HIGH;
+                return Priority.IMMEDIATE;
             }
         };
 
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req);
-
-
 
     }//makeMovieRequest
 
@@ -329,7 +334,6 @@ public class DataLoader {
                             // Parsing json array response
                             // loop through each json object
                             for (int i = 0; i < response.length(); i++) {
-
                                 JSONObject jsonShowTime = response.getJSONObject(i);
                                 String strName = jsonShowTime.getString("3");
                                 String strTitle = jsonShowTime.getString("2");
@@ -337,7 +341,8 @@ public class DataLoader {
                                 String strScreen = jsonShowTime.getString("5");
                                 Integer intTimeID = jsonShowTime.getInt("6");
                                 String strType = jsonShowTime.getString("8");
-                                objShowTimeTab.addNewShowTime(strName, strTitle, strScreen, strDate, intTimeID, strType);
+                                String strTime = jsonShowTime.getString("7");
+                                objShowTimeTab.addNewShowTime(strName, strTitle, strScreen, strDate, intTimeID, strType, strTime);
                             }
 
                             objShowTimeTab.closeDB();
@@ -359,9 +364,9 @@ public class DataLoader {
                         }
                         Log.d("ShowTime", "Load Success");
                         setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
-//                        Toast.makeText(sContext,
-//                                "Load ShowTime Success",
-//                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(sContext,
+                                "Load ShowTime Success",
+                                Toast.LENGTH_LONG).show();
 
                     }
                 }, new Response.ErrorListener() {
@@ -377,7 +382,7 @@ public class DataLoader {
         }){
             @Override
             public Request.Priority getPriority() {
-                return Priority.NORMAL;
+                return Priority.HIGH;
             }
         };
 
@@ -415,7 +420,7 @@ public class DataLoader {
                             e.printStackTrace();
                             objTimeTab.closeDB();
                             Toast.makeText(sContext,
-                                    "Time Error:  " + e.getMessage(),
+                                     "Time Error:  " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
 

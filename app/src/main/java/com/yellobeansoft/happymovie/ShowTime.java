@@ -1,6 +1,7 @@
 package com.yellobeansoft.happymovie;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Jirawut-Jack on 23/01/2015.
@@ -12,6 +13,16 @@ public class ShowTime {
     private String screen;
     private String date;
     private String Type;
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
+    }
+
+    private String Time;
     private String nextTime;
 
     ArrayList<String> timeList;
@@ -46,8 +57,10 @@ public class ShowTime {
         return timeList;
     }
 
-    public void setTimeList(ArrayList<String> timeList) {
-        this.timeList = timeList;
+    //    public void setTimeList(ArrayList<String> timeList) {
+    public void setTimeList() {
+        ArrayList<String> aList= new ArrayList(Arrays.asList(this.getTime().split(",")));
+        this.timeList = aList;
     }
 
     public String getName() {

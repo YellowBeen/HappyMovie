@@ -77,6 +77,7 @@ public class SplashScreen extends Activity {
         protected String doInBackground(String... params) {
             DataLoader objLoader = new DataLoader(SplashScreen.this);
             objLoader.syncAll();
+
 //            while ( !objLoader.checkMovieSyncDone() || !objLoader.checkShowTimeSyncDone() ) {
             while ( !objLoader.checkMovieSyncDone() ) {
             }

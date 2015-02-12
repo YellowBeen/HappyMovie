@@ -29,7 +29,6 @@ public class TimeTABLE {
 
 
     public void deleteAllTime() {
-
         writeSQLite.delete(TABLE_TIME, null, null);
     }
 

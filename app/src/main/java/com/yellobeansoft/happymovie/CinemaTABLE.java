@@ -39,6 +39,8 @@ public class CinemaTABLE {
     public CinemaTABLE(Context context) {
         sContext = context;
         objMyOpenHelper = new MyOpenHelper(context);
+        readSQLite = objMyOpenHelper.getReadableDatabase();
+        writeSQLite = objMyOpenHelper.getWritableDatabase();
     }//Constructor
 
 
@@ -130,7 +132,6 @@ public class CinemaTABLE {
     private ArrayList<Cinema> getAll(String strSortType) {
 
         ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
-        readSQLite = objMyOpenHelper.getReadableDatabase();
         String strSort;
 
         if (strSortType.equals("NEAR")) {
@@ -138,6 +139,8 @@ public class CinemaTABLE {
         } else {
             strSort = COLUMN_NAME + " ASC";
         }
+
+        readSQLite = objMyOpenHelper.getReadableDatabase();
 
         Cursor objCursor = readSQLite.query(TABLE_CINEMA, new String[]{COLUMN_NAME, COLUMN_NAME_TH, COLUMN_BRAND, COLUMN_SUB_BRAND,
                 COLUMN_PHONE, COLUMN_LAT, COLUMN_LONG, COLUMN_DIST}, null, null, null, null, strSort);
@@ -178,6 +181,7 @@ public class CinemaTABLE {
         cinemaList = this.getAll("");
 
         writeSQLite = objMyOpenHelper.getWritableDatabase();
+
         for (int i = 0; i < cinemaList.size(); i++) {
             Cinema objCinema = (Cinema) cinemaList.get(i);
 
@@ -205,12 +209,10 @@ public class CinemaTABLE {
     public void deleteAllCinema() {
         writeSQLite = objMyOpenHelper.getWritableDatabase();
         writeSQLite.delete(TABLE_CINEMA, null, null);
-        writeSQLite.close();
-    }
+}
 
 
     public void addNewCinema(String strName, String strNameTH, String strPhone, String strBrand, String strGroup, String strLat, String strLong){
-        writeSQLite = objMyOpenHelper.getWritableDatabase();
         try {
             ContentValues objContentValues = new ContentValues();
             objContentValues.put(COLUMN_NAME, strName);
@@ -224,38 +226,13 @@ public class CinemaTABLE {
         } catch (Exception e){
 
         }
+    }
+
+    public void closeDB() {
+        readSQLite.close();
         writeSQLite.close();
     }
 
 
-    public void updateCinema(Context context) throws IOException {
-
-        ArrayList<Cinema> cinemaList;
-        AssetManager assetManager = context.getAssets();
-        cinemaList = XMLParser.parse(assetManager.open("cinemas.xml"));
-
-        if (cinemaList.size() != 0) {
-
-            try {
-                writeSQLite.delete(TABLE_CINEMA, null, null);
-
-                for (int i = 0; i < cinemaList.size(); i++) {
-                    ContentValues objContentValues = new ContentValues();
-                    Cinema objCinema = (Cinema) cinemaList.get(i);
-                    objContentValues.put(COLUMN_NAME, objCinema.getName());
-                    objContentValues.put(COLUMN_NAME_TH, objCinema.getNameTH());
-                    objContentValues.put(COLUMN_PHONE, objCinema.getPhone());
-                    objContentValues.put(COLUMN_BRAND, objCinema.getBrand());
-                    objContentValues.put(COLUMN_SUB_BRAND, objCinema.getGroup());
-                    objContentValues.put(COLUMN_LAT, objCinema.getLatitude());
-                    objContentValues.put(COLUMN_LONG, objCinema.getLongtitude());
-                    writeSQLite.insertOrThrow(TABLE_CINEMA, null, objContentValues);
-                }
-            } catch (Exception e) {
-            }
-
-        }
-
-    }
 
 }

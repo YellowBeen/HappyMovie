@@ -8,11 +8,11 @@ public class MyOpenHelper extends SQLiteOpenHelper {
 
     //Explicit
     private static final String DATABASE_NAME = "ShowTime.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 8;
     private static final String CREATE_MOVIE_TABLE = "create table movieTABLE (_id integer primary key, "+" movieTitle text, movieTitle_TH text, Image text, Length text, Url_Info text, Url_Youtube text, Date text, imdb_rating text, imdb_url text);";
     private static final String CREATE_CINEMA_TABLE = "create table cinemaTABLE (_id integer primary key, "+" CinemaName text, CinemaName_TH text, Brand text, SubBrand text, Zone text, Province text, Phone text, Latitude text, Longitude text, Distance numeric);";
-    private static final String CREATE_SHOWTIME_TABLE = "create table showtimeTABLE (_id integer primary key, "+" CinemaName text, movieTitle text, Screen text, Date numeric, Time_id numeric, Type text);";
-    private static final String CREATE_TIME_TABLE = "create table timeTABLE (_id integer primary key, "+" Time_id numeric, Item numeric, Time String);";
+    private static final String CREATE_SHOWTIME_TABLE = "create table showtimeTABLE (_id integer primary key, "+" CinemaName text, movieTitle text, Screen text, Date numeric, Time_id numeric, Type text, Time String);";
+//    private static final String CREATE_TIME_TABLE = "create table timeTABLE (_id integer primary key, "+" Time_id numeric, Item numeric, Time String);";
 
     public MyOpenHelper(Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -23,7 +23,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_MOVIE_TABLE);
         db.execSQL(CREATE_SHOWTIME_TABLE);
         db.execSQL(CREATE_CINEMA_TABLE);
-        db.execSQL(CREATE_TIME_TABLE);
+//        db.execSQL(CREATE_TIME_TABLE);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + "movieTABLE");
         db.execSQL("DROP TABLE IF EXISTS " + "cinemaTABLE");
         db.execSQL("DROP TABLE IF EXISTS " + "showtimeTABLE");
-        db.execSQL("DROP TABLE IF EXISTS " + "timeTABLE");
+//        db.execSQL("DROP TABLE IF EXISTS " + "timeTABLE");
         onCreate(db);
     }
 

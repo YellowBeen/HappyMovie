@@ -44,7 +44,7 @@ public class ShowTimeTABLE {
     }
 
     //addNewShowTime
-    public void addNewShowTime(String strName, String strTitle, String strScreen, String strDate, Integer intTimeID, String strType) throws IOException {
+    public void addNewShowTime(String strName, String strTitle, String strScreen, String strDate, Integer intTimeID, String strType, String strTime) throws IOException {
         try {
             ContentValues objContentValues = new ContentValues();
             objContentValues.put(COLUMN_NAME, strName);
@@ -53,6 +53,7 @@ public class ShowTimeTABLE {
             objContentValues.put(COLUMN_DATE, strDate);
             objContentValues.put(COLUMN_TIMEID, intTimeID);
             objContentValues.put(COLUMN_TYPE, strType);
+            objContentValues.put(COLUMN_TIME, strTime);
             writeSQLite.insertOrThrow(TABLE_SHOWTIME, null, objContentValues);
         } catch (Exception e) {
 
@@ -65,9 +66,12 @@ public class ShowTimeTABLE {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
 
-        String strQuery = "SELECT DISTINCT showtimeTABLE.* FROM showtimeTABLE INNER JOIN timeTABLE " +
-                          "ON showtimeTABLE.Time_id = timeTABLE.Time_id " +
-                          "WHERE showtimeTABLE.CinemaName = '" + strCinema + "'";
+//        String strQuery = "SELECT DISTINCT showtimeTABLE.* FROM showtimeTABLE INNER JOIN timeTABLE " +
+//                          "ON showtimeTABLE.Time_id = timeTABLE.Time_id " +
+//                          "WHERE showtimeTABLE.CinemaName = '" + strCinema + "'";
+
+        String strQuery = "SELECT * FROM showtimeTABLE " +
+                          "WHERE CinemaName = '" + strCinema + "'";
 
         Cursor objCursor = readSQLite.rawQuery(strQuery, null);
 
@@ -82,22 +86,23 @@ public class ShowTimeTABLE {
                 objShowTime.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
                 objShowTime.setType(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TYPE)));
                 objShowTime.setTimeID(objCursor.getInt(objCursor.getColumnIndexOrThrow(COLUMN_TIMEID)));
+                objShowTime.setTime(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TIME)));
+                objShowTime.setTimeList();
 
-
-                Cursor objCursorT = readSQLite.rawQuery("SELECT * FROM timeTABLE WHERE Time_id  = "
-                        + objShowTime.getTimeID() , null);
-
-                if (objCursorT.moveToFirst()) {
-                    ArrayList<String> timeList = new ArrayList<String>();
-                    do {
-                        timeList.add(objCursorT.getString(objCursorT.getColumnIndexOrThrow(COLUMN_TIME)));
-                    } while (objCursorT.moveToNext());
-
-                    if (objCursorT != null && !objCursorT.isClosed()) {
-                        objCursorT.close();
-                    }
-                    objShowTime.setTimeList(timeList);
-                } ;
+//                Cursor objCursorT = readSQLite.rawQuery("SELECT * FROM timeTABLE WHERE Time_id  = "
+//                        + objShowTime.getTimeID() , null);
+//
+//                if (objCursorT.moveToFirst()) {
+//                    ArrayList<String> timeList = new ArrayList<String>();
+//                    do {
+//                        timeList.add(objCursorT.getString(objCursorT.getColumnIndexOrThrow(COLUMN_TIME)));
+//                    } while (objCursorT.moveToNext());
+//
+//                    if (objCursorT != null && !objCursorT.isClosed()) {
+//                        objCursorT.close();
+//                    }
+//                    objShowTime.setTimeList(timeList);
+//                } ;
 
                 showTimeList.add(objShowTime);
             } while (objCursor.moveToNext());
@@ -121,9 +126,12 @@ public class ShowTimeTABLE {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
 
-        String strQuery = "SELECT DISTINCT showtimeTABLE.* FROM showtimeTABLE INNER JOIN timeTABLE " +
-                "ON showtimeTABLE.Time_id = timeTABLE.Time_id " +
-                "WHERE showtimeTABLE.movieTitle = '" + strMovie + "'";
+//        String strQuery = "SELECT DISTINCT showtimeTABLE.* FROM showtimeTABLE INNER JOIN timeTABLE " +
+//                "ON showtimeTABLE.Time_id = timeTABLE.Time_id " +
+//                "WHERE showtimeTABLE.movieTitle = '" + strMovie + "'";
+
+        String strQuery = "SELECT * FROM showtimeTABLE " +
+                          "WHERE movieTitle = '" + strMovie + "'";
 
         Cursor objCursor = readSQLite.rawQuery(strQuery, null);
 
@@ -138,21 +146,22 @@ public class ShowTimeTABLE {
                 objShowTime.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
                 objShowTime.setType(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TYPE)));
                 objShowTime.setTimeID(objCursor.getInt(objCursor.getColumnIndexOrThrow(COLUMN_TIMEID)));
+                objShowTime.setTimeList();
 
-                Cursor objCursorT = readSQLite.rawQuery("SELECT * FROM timeTABLE WHERE Time_id  = "
-                        + objShowTime.getTimeID() , null);
-
-                if (objCursorT.moveToFirst()) {
-                    ArrayList<String> timeList = new ArrayList<String>();
-                    do {
-                        timeList.add(objCursorT.getString(objCursorT.getColumnIndexOrThrow(COLUMN_TIME)));
-                    } while (objCursorT.moveToNext());
-
-                    if (objCursorT != null && !objCursorT.isClosed()) {
-                        objCursorT.close();
-                    }
-                    objShowTime.setTimeList(timeList);
-                } ;
+//                Cursor objCursorT = readSQLite.rawQuery("SELECT * FROM timeTABLE WHERE Time_id  = "
+//                        + objShowTime.getTimeID() , null);
+//
+//                if (objCursorT.moveToFirst()) {
+//                    ArrayList<String> timeList = new ArrayList<String>();
+//                    do {
+//                        timeList.add(objCursorT.getString(objCursorT.getColumnIndexOrThrow(COLUMN_TIME)));
+//                    } while (objCursorT.moveToNext());
+//
+//                    if (objCursorT != null && !objCursorT.isClosed()) {
+//                        objCursorT.close();
+//                    }
+//                    objShowTime.setTimeList(timeList);
+//                } ;
 
                 showTimeList.add(objShowTime);
             } while (objCursor.moveToNext());
