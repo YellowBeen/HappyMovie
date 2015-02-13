@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class FavFragment extends Fragment {
     private ListView lvCinema;
     private ArrayList<Cinema> cinemaList;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView emptyFav;
     private CinemaFavorite objCinemaFav = new CinemaFavorite();
 
     @Override
@@ -28,6 +30,8 @@ public class FavFragment extends Fragment {
         View view = inflater.inflate(R.layout.layout_cinema_fav,container,false);
         // Matching View
         lvCinema = (ListView) view.findViewById(R.id.lvFavCinema);
+        emptyFav = (TextView) view.findViewById(R.id.txtEmptyFav);
+        lvCinema.setEmptyView(emptyFav);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
 
         addCinemaData();
@@ -63,5 +67,6 @@ public class FavFragment extends Fragment {
 
         cinemaList = objCinemaFav.getFavorites(getActivity());
     }
+
 
 }

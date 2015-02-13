@@ -42,7 +42,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="13 February 2015"
+            android:text="Today Date"
             android:textSize="15dp"
             android:textColor="@android:color/white"
             android:background="#ff6d6d6d"

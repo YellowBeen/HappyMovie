@@ -103,6 +103,7 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
         // the ViewPager.
         //((FavFragment.OnRefreshListener) mSectionsPagerAdapter.getItem(tab.getPosition())).onRefresh();
         mViewPager.setCurrentItem(tab.getPosition());
+
     }
 
     @Override
@@ -111,6 +112,7 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 
     @Override

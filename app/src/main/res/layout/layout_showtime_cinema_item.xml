@@ -43,7 +43,8 @@
             android:layout_marginTop="3dip"
             android:textSize="10dp"
             android:layout_gravity="center_horizontal"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:gravity="center_vertical|center_horizontal" />
     </LinearLayout>
 
     <TextView

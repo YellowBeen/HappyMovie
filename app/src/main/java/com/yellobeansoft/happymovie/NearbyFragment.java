@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -18,12 +19,15 @@ public class NearbyFragment extends Fragment {
     private CinemaNearbyAdapter lvCinemaAdapter;
     private ListView lvCinema;
     private ArrayList<Cinema> cinemaList;
+    private TextView emptyNearby;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_cinema_nearby,container,false);
         lvCinema = (ListView) view.findViewById(R.id.lvCinema);
+        emptyNearby = (TextView) view.findViewById(R.id.txtEmptyNearby);
+        lvCinema.setEmptyView(emptyNearby);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         addCinemaData();
         setupCinemaAdapter();
@@ -51,6 +55,7 @@ public class NearbyFragment extends Fragment {
         CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
         cinemaList = objCinemaTABLE.getNearByCinemas();
     }
+
 
 }
 

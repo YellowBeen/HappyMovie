@@ -1,3 +1,6 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeRefreshLayout"
@@ -12,3 +15,19 @@
         android:layout_height="match_parent" />
 
 </android.support.v4.widget.SwipeRefreshLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/emptyNearby"
+            android:id="@+id/txtEmptyNearby"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#ffa9a9a9" />
+    </LinearLayout>
+</FrameLayout>

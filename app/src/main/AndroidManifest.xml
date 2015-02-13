@@ -3,7 +3,7 @@
     package="com.yellobeansoft.happymovie" >
 
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="17"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -52,10 +52,6 @@
             android:value="AIzaSyCG9e6hFUlGasNfEiKf_Yh7Hg9YWdtq4Mk" />
 
         <activity android:name=".ShowtimeCinemaActivity" >
-        </activity>
-        <activity
-            android:name=".TTActivity"
-            android:label="@string/title_activity_tt" >
         </activity>
     </application>
 
