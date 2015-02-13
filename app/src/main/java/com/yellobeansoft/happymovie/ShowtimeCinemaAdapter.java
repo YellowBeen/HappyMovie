@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,10 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
     private MovieTable movieTable;
     private Movies objMovie;
     private String showtimeConcat;
+    private String nextTime;
     private ArrayList<String> timeList = new ArrayList<String>();
+
+    protected static int timeDigit = 5;
 
     public ShowtimeCinemaAdapter(Context context, ArrayList<ShowTime> lists) {
         mContext = context;
@@ -66,7 +71,7 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
             mViewHolder.movieImg = (ImageView) convertView.findViewById(R.id.imgMovie);
             mViewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
             mViewHolder.movieShowtime = (TextView) convertView.findViewById(R.id.txtShowtime);
-            mViewHolder.movieDate = (TextView) convertView.findViewById(R.id.txtDate);
+            //mViewHolder.movieDate = (TextView) convertView.findViewById(R.id.txtDate);
             mViewHolder.screen = (TextView) convertView.findViewById(R.id.txtScreen);
             mViewHolder.showtimeType = (TextView) convertView.findViewById(R.id.txtType);
             convertView.setTag(mViewHolder);
@@ -86,16 +91,24 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
         // Concatenate showtime
         timeList = mShowtimeList.get(position).getTimeList();
         showtimeConcat = JoinArray(timeList, "   ");
+
         Spannable showtimeSpan = new SpannableString(showtimeConcat);
         showtimeSpan.setSpan(new ForegroundColorSpan(Color.RED), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+
+        try {
+            nextTime = mShowtimeList.get(position).getNextTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //mViewHolder.movieShowtime.setText(showtimeSpan);
+        setShowtimeColor(mViewHolder.movieShowtime, showtimeConcat, nextTime, Color.GRAY, Color.RED, Color.BLACK);
         // Set Textview (Movie object)
         mViewHolder.movieName.setText(objMovie.getMovieTitle());
         mViewHolder.movieNameTH.setText(objMovie.getMovieTitleTH());
         mViewHolder.movieRating.setText(objMovie.getRating()+"/10");
-        mViewHolder.movieDate.setText(objMovie.getDate());
+        //mViewHolder.movieDate.setText(objMovie.getDate());
         // Set Textview (Showtime object)
-        mViewHolder.movieShowtime.setText(showtimeSpan);
         mViewHolder.showtimeType.setText(mShowtimeList.get(position).getType());
         mViewHolder.screen.setText(mShowtimeList.get(position).getScreen());
         imageLoader.get(path, ImageLoader.getImageListener(
@@ -104,12 +117,37 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
         return convertView;
     }// method getView
 
-/*    private void setShowtimeColor(TextView view, String fulltext, String subtext, int color) {
-        view.setText(fulltext, TextView.BufferType.SPANNABLE);
-        Spannable str = (Spannable) view.getText();
-        int i = fulltext.indexOf(subtext);
-        str.setSpan(new ForegroundColorSpan(color), i, i+subtext.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    }*/
+    private void setShowtimeColor(TextView view, String fullShowtime, String currentTime, int eColor, int cColor, int lColor) {
+
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        if (!currentTime.equalsIgnoreCase("XXX")) {
+            int cTimePosition = fullShowtime.indexOf(currentTime);
+            int lTimePosition = cTimePosition + currentTime.length();
+            int showtimeLength = fullShowtime.length();
+            String earlyTime = fullShowtime.substring(0, cTimePosition);
+            String lateTime = fullShowtime.substring(lTimePosition, showtimeLength);
+
+            if (!earlyTime.equalsIgnoreCase(null)) {
+                SpannableString earlyTimeSpannable = new SpannableString(earlyTime);
+                earlyTimeSpannable.setSpan(new ForegroundColorSpan(eColor), 0, earlyTime.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.append(earlyTimeSpannable);
+            }
+
+            SpannableString currentTimeSpannable = new SpannableString(currentTime);
+            currentTimeSpannable.setSpan(new ForegroundColorSpan(cColor), 0, currentTime.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.append(currentTimeSpannable);
+
+            if (!lateTime.equalsIgnoreCase(null)) {
+                SpannableString lateTimeSpannable = new SpannableString(lateTime);
+                lateTimeSpannable.setSpan(new ForegroundColorSpan(lColor), 0, lateTime.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.append(lateTimeSpannable);
+            }
+            view.setText(builder, TextView.BufferType.SPANNABLE);
+        }else{
+            view.setText(fullShowtime);
+        }
+        //str.setSpan(new ForegroundColorSpan(cColor), cTimePosition, cTimePosition+currentTime.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
 
     public static String JoinArray(List<String> list, String delim) {
 

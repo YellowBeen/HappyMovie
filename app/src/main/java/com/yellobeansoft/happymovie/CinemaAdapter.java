@@ -117,6 +117,7 @@ public class CinemaAdapter extends BaseAdapter{
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
                 intent.putExtra("Cinema", objCinema.getName());
+                intent.putExtra("CinemaTH", objCinema.getNameTH());
                 v.getContext().startActivity(intent);
 
             }

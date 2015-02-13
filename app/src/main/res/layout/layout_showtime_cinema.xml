@@ -1,29 +1,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="#e5e5e5"
+    android:orientation="vertical">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/card_bg_header"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="Cinema Name"
-        android:background="@color/dark_light"
         android:id="@+id/txtCinemaName"
+        android:padding="5dip"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textSize="20dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_light"
         android:text="โรงภาพยนตร์"
         android:textSize="15dp"
+        android:padding="5dip"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
         android:id="@+id/txtCinemaNameTH" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="13 February 2015"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:background="#ff6d6d6d"
+            android:textStyle="bold"
+            android:id="@+id/txtShowDate"
+            android:layout_gravity="center_horizontal|bottom"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+    </FrameLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:id="@+id/lvShowtime" />
 </LinearLayout>

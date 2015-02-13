@@ -2,11 +2,14 @@
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeRefreshLayout"
+    android:background="#e5e5e5"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/lvFavCinema"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

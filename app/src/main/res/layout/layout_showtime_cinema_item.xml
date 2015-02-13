@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:background="@drawable/card_bg"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:padding="5dip" >
 
     <!--  ListRow Left sied Thumbnail image -->
@@ -94,20 +103,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Release Date"
-        android:id="@+id/txtDate"
-        android:layout_below="@+id/ratinglayout"
-        android:layout_toRightOf="@+id/vLayout" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Showtime List"
         android:id="@+id/txtShowtime"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/txtDate"
         android:layout_toRightOf="@+id/vLayout"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold|italic"
+        android:textColor="@android:color/darker_gray"
+        android:layout_below="@+id/ratinglayout" />
 
 
 </RelativeLayout>
+</FrameLayout>

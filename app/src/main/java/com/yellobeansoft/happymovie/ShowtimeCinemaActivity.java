@@ -19,6 +19,7 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
     private TextView txtCinemaNameTH;
     private ShowtimeCinemaAdapter lvShowtimeAdapter;
     private String chooseCinema;
+    private String chooseCinemaTH;
     private ShowTimeTABLE objShowTimeTABLE;
     ArrayList<ShowTime> showTimesList;
 
@@ -40,7 +41,7 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         setupShowtimeAdapter();
 
         txtCinemaName.setText(chooseCinema);
-        txtCinemaNameTH.setText("โรงภาพยนตร์");
+        txtCinemaNameTH.setText(chooseCinemaTH);
     }
 
     private void setupShowtimeAdapter() {
@@ -55,6 +56,7 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         // Set Default Tab
         Intent intent = getIntent();
         chooseCinema = intent.getStringExtra("Cinema");
+        chooseCinemaTH = intent.getStringExtra("CinemaTH");
         if (!chooseCinema.equalsIgnoreCase(null)) {
             objShowTimeTABLE = new ShowTimeTABLE(ShowtimeCinemaActivity.this);
             showTimesList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, "");
