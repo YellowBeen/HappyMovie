@@ -23,7 +23,6 @@ import java.util.Date;
 public class ShowtimeCinemaActivity extends ActionBarActivity {
 
     private ListView lvShowtime;
-    private TextView txtCinemaName;
     private TextView txtCinemaNameTH;
     private TextView txtShowDate;
     private ShowtimeCinemaAdapter lvShowtimeAdapter;
@@ -40,9 +39,9 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
         lvShowtime = (ListView) findViewById(R.id.lvShowtime);
-        txtCinemaName = (TextView) findViewById(R.id.txtCinemaName);
         txtCinemaNameTH = (TextView) findViewById(R.id.txtCinemaNameTH);
         txtShowDate = (TextView) findViewById(R.id.txtShowDate);
 
@@ -51,10 +50,8 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+        actionBar.setTitle(chooseCinema);
         setupShowtimeAdapter();
-
-        txtCinemaName.setText(chooseCinema);
         txtCinemaNameTH.setText(chooseCinemaTH);
         Date date = new Date();
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
@@ -115,8 +112,9 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-  /*          case R.id.action_settings:
-                return true;*/
+            case android.R.id.home:
+                this.finish();
+                return true;
             case R.id.action_filterCinema:
                 Calendar calendar = Calendar.getInstance();
                 int hh = calendar.get(Calendar.HOUR_OF_DAY);

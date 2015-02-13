@@ -18,26 +18,24 @@
         android:layout_marginBottom="4dp"
         android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="Cinema Name"
-        android:id="@+id/txtCinemaName"
-        android:padding="5dip"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:textSize="20dp" />
-
-    <TextView
+        <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="โรงภาพยนตร์"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:padding="5dip"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:id="@+id/txtCinemaNameTH" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tel Number "
+            android:id="@+id/txtPhone"
+            android:textColor="#ffffffff"
+            android:paddingLeft="5dip"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
