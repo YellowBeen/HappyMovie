@@ -92,8 +92,8 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(),filterTime,Toast.LENGTH_SHORT).show();
             objShowTimeTABLE = new ShowTimeTABLE(ShowtimeCinemaActivity.this);
             try {
-                showTimesList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, "");
-               // showTimesList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, filterTime.toString());
+               // showTimesList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, "");
+                showTimesList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, filterTime.toString());
                 lvShowtime.setAdapter(lvShowtimeAdapter);
                 lvShowtimeAdapter.notifyDataSetChanged();
             } catch (ParseException e) {
