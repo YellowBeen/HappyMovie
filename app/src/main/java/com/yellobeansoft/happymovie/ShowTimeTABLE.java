@@ -44,6 +44,13 @@ public class ShowTimeTABLE {
         writeSQLite.delete(TABLE_SHOWTIME, null, null);
     }
 
+    public Integer getRowCount(){
+        String strQuery = "SELECT CinemaName FROM showtimeTABLE";
+        Cursor objCursor = readSQLite.rawQuery(strQuery, null);
+        return objCursor.getCount();
+    }
+
+
     //addNewShowTime
     public void addNewShowTime(String strName, String strTitle, String strScreen, String strDate, Integer intTimeID, String strType, String strTime) throws IOException {
         try {

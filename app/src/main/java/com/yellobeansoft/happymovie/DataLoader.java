@@ -48,6 +48,8 @@ public class DataLoader {
     private String urlUpdateFlagShowTime = "...";
     private Context sContext;
 
+    public Integer intProgress = 0;
+
 
     //Constructor
     public DataLoader(Context context) {
@@ -62,8 +64,8 @@ public class DataLoader {
         Log.d("Sync Time", "Start");
 
         this.downloadServerDate();
-        this.syncMovie();
         this.syncShowTime();
+        this.syncMovie();
         this.syncCinema();
     }//syncAll
 
@@ -145,6 +147,7 @@ public class DataLoader {
             }
 
             objCinemaTab.closeDB();
+            Log.d("Cinema", "Cinema Done!");
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -278,7 +281,8 @@ public class DataLoader {
                                 String strRating = jsonCinema.getString("imdb_rating");
                                 String strIMDB = jsonCinema.getString("imdb_url");
                                 String strDate = jsonCinema.getString("create_date");
-                                objMovieTab.addNewMovie(strTitle, strTitleTH, strImage, strLength, strYoutube, strRating, strDate, strIMDB );
+                                String strReleaseDate = jsonCinema.getString("release_date");
+                                objMovieTab.addNewMovie(strTitle, strTitleTH, strImage, strLength, strYoutube, strRating, strDate, strIMDB, strReleaseDate );
                             }
 
                         } catch (JSONException e) {
@@ -307,7 +311,7 @@ public class DataLoader {
         }){
             @Override
             public Request.Priority getPriority() {
-                return Priority.IMMEDIATE;
+                return Priority.LOW;
             }
         };
 
@@ -340,7 +344,7 @@ public class DataLoader {
                                 String strDate = jsonShowTime.getString("4");
                                 String strScreen = jsonShowTime.getString("5");
                                 Integer intTimeID = jsonShowTime.getInt("6");
-                                String strType = jsonShowTime.getString("8");
+                                String strType = jsonShowTime.getString("9");
                                 String strTime = jsonShowTime.getString("7");
                                 objShowTimeTab.addNewShowTime(strName, strTitle, strScreen, strDate, intTimeID, strType, strTime);
                             }
@@ -490,6 +494,36 @@ public class DataLoader {
 // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
+
+//    public void updateProgress() {
+//        Integer intProgress = 0;
+//
+//        intProgress = getProgress() + 1;
+//        SharedPreferences settings;
+//        SharedPreferences.Editor editor;
+//        settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+//        editor = settings.edit();
+//        editor.putInt("PROGRESS", intProgress);
+//        editor.commit();
+//    }
+//
+//    public Integer getProgress() {
+//        SharedPreferences settings;
+//        settings = sContext.getSharedPreferences(PREFS_NAME,
+//                Context.MODE_PRIVATE);
+//        return settings.getInt("PROGRESS", 0);
+//    }
+//
+//    public void resetProgress() {
+//        SharedPreferences settings;
+//        SharedPreferences.Editor editor;
+//        settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+//        editor = settings.edit();
+//        editor.putInt("PROGRESS", 0);
+//        editor.commit();
+//    }
+
+
 
 
 //---------------------- NOT USE -----------------------------------------------------

@@ -15,6 +15,15 @@ public class Movies {
     private String URLTrailer;
     private String URLIMDB;
     private String Date;
+    private String ReleaseDate;
+
+    public String getReleaseDate() {
+        return ReleaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        ReleaseDate = releaseDate;
+    }
 
     public String getURLIMDB() {
         return URLIMDB;

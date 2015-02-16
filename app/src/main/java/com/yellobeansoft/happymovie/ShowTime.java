@@ -77,6 +77,7 @@ public class ShowTime {
     //    public void setTimeList(ArrayList<String> timeList) {
     public void setTimeList(String strTime) throws ParseException {
         ArrayList<String> tList= new ArrayList(Arrays.asList(this.getTime().split(",")));
+        ArrayList<String> yList= new ArrayList();
 
         if (strTime.equals("")){
             this.timeList = tList;
@@ -87,10 +88,11 @@ public class ShowTime {
             for (int i = 0; i < tList.size(); i++){
                 java.util.Date dShowTime =(java.util.Date)dateFormat.parse(tList.get(i));
                 if (dShowTime.after(dTime)) {
-                    this.timeList.add(tList.get(i));
+                    yList.add(tList.get(i));
                 }
             }
 
+            this.timeList = yList;
         }
 
     }
