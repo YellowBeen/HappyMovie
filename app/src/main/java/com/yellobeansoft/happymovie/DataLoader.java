@@ -23,7 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 /**
- * Created by Jirawut-Jack on 22/01/2015.
+ * Created by Jirawut-Jack on 22/01/2015
  */
 public class DataLoader {
 

@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 /**
- * Created by Jirawut-Jack on 23/01/2015.
+ * Created by Jirawut-Jack on 23/01/2015
  */
 public class ShowTime {
 

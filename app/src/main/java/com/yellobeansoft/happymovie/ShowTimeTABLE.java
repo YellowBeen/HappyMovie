@@ -185,7 +185,7 @@ public class ShowTimeTABLE {
 
 
     //getShowTimeByMovie
-    public ArrayList<ShowTime> getShowTimeByMovie(String strMovie, String strTime) throws ParseException {
+    public ArrayList<ShowTime> getShowTimeByMovieX(String strMovie, String strTime) throws ParseException {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
 
@@ -228,6 +228,45 @@ public class ShowTimeTABLE {
             return showTimeList;
         }
     }//getShowTimeByMovie
+
+
+    //getShowTimeByCinema
+    public ArrayList<ShowTime> getShowTimeByMovie(String strMovie, String strTime) throws ParseException {
+
+        ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
+        ArrayList<ShowTime> newList = new ArrayList<ShowTime>();
+        List<ShowTime> ShowTimes;
+
+        SharedPreferences settings;
+
+        settings = sContext.getSharedPreferences(PREFS_NAME,
+                Context.MODE_PRIVATE);
+
+        if (settings.contains(SHOWTIME)) {
+            String jsonFavorites = settings.getString(SHOWTIME, null);
+            Gson gson = new Gson();
+            ShowTime[] ShowTimeItems = gson.fromJson(jsonFavorites,
+                    ShowTime[].class);
+
+            ShowTimes = Arrays.asList(ShowTimeItems);
+            showTimeList = new ArrayList<ShowTime>(ShowTimes);
+        } ;
+
+        for (int i = 0; i < showTimeList.size(); i++) {
+            ShowTime objShowTime = showTimeList.get(i);
+
+            if (objShowTime.getMovieTitle().equals(strMovie)) {
+                objShowTime.setTimeList(strTime);
+                if (objShowTime.getTimeList().size() > 0){
+                    newList.add(objShowTime);
+                }
+            }
+
+        }
+
+        return newList;
+
+    }//getShowTimeByCinema
 
 
     public void closeDB() {

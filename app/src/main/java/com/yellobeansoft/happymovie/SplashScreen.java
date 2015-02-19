@@ -15,7 +15,7 @@ import java.util.Timer;
 
 
 /**
- * Created by Beboyz on 1/15/15 AD.
+ * Created by Beboyz on 1/15/15 AD
  */
 public class SplashScreen extends Activity {
 
