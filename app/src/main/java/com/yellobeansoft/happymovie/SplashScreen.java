@@ -1,11 +1,15 @@
 package com.yellobeansoft.happymovie;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -19,13 +23,6 @@ import java.util.Timer;
  */
 public class SplashScreen extends Activity {
 
-    // Progress Dialog
-    private ProgressDialog mProgress;
-    private ProgressBar progressBar;
-
-    private Integer mProgressDialog = 2;
-    private Integer intMax = 660;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -37,38 +34,51 @@ public class SplashScreen extends Activity {
         // Get the view from splash_screen.xml
         setContentView(R.layout.layout_splash);
 
-        Thread syncLoading = new Thread() {
-
-            public void run() {
-                try {
-                    DataLoader objLoader = new DataLoader(SplashScreen.this);
-                    objLoader.syncAll();
-                    sleep(2000);
-                    while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone()){
-                    }
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
+        DataLoader objLoader = new DataLoader(SplashScreen.this);
+        if (!objLoader.connectivityCheck()) {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("No internet connection");
+            alertDialog.setMessage("Please check your internet connectivity and try again later.");
+            alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
                     finish();
-                    Intent myIntent = new Intent(SplashScreen.this,
-                            MainActivity.class);
-                    startActivity(myIntent);
                 }
-            }
+            });
 
-        };
+            alertDialog.show();
 
-        syncLoading.start();
+        } else {
+
+            Thread syncLoading = new Thread() {
+
+                public void run() {
+                    try {
+                        DataLoader objLoader = new DataLoader(SplashScreen.this);
+
+                        objLoader.syncAll();
+                        sleep(2000);
+                        while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone()) {
+                        }
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        finish();
+                        Intent myIntent = new Intent(SplashScreen.this,
+                                MainActivity.class);
+                        startActivity(myIntent);
+                    }
+                }
+
+            };
+
+            syncLoading.start();
+        }
+
     }
 
 }
-
-
-
-
-
-
 
 
 //    new LoadData().execute();

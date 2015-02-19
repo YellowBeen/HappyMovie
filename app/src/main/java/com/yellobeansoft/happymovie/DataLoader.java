@@ -1,12 +1,17 @@
 package com.yellobeansoft.happymovie;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,14 +48,10 @@ public class DataLoader {
     private String urlMovie = "http://happymovie.esy.es/JSON_V2/php_get_movie.php";
     private String urlCinema = "http://happymovie.esy.es/php_get_cinema.php";
     private String urlShowTime = "http://happymovie.esy.es/JSON_V2/php_get_showtime_concat_short.php";
-//    private String urlShowTime = "http://happymovie.esy.es/JSON_V2/php_get_showtime_concat_short2.php";
     private String urlTime = "http://happymovie.esy.es/JSON_V2/php_get_time.php";
     private String urlUpdateFlagMovie = "...";
     private String urlUpdateFlagShowTime = "...";
     private Context sContext;
-
-    public Integer intProgress = 0;
-
 
     //Constructor
     public DataLoader(Context context) {
@@ -250,6 +251,26 @@ public class DataLoader {
     }//checkSync
 
 
+    //connectivityCheck
+    public Boolean connectivityCheck() {
+        ConnectivityManager connectivity = (ConnectivityManager)sContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivity != null)
+        {
+            NetworkInfo[] inf = connectivity.getAllNetworkInfo();
+            if (inf != null)
+                for (int i = 0; i < inf.length; i++)
+                    if (inf[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+
+        }
+        return false;
+    }//connectivityCheck
+
+
+
 //////  Valley   ////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
     //makeMovieRequest
@@ -285,11 +306,12 @@ public class DataLoader {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(sContext,
-                                    "Error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
+                            Log.d("Volley", "Movie Error: " + e.getMessage());
+                            showErrorDialog();
                         } catch (IOException e) {
                             e.printStackTrace();
+                            Log.d("Volley", "Movie Error: " + e.getMessage());
+                            showErrorDialog();
                         }
 
                         setFlag(MOVIE_LOC_TYP, getFlag(MOVIE_SERV_TYP));
@@ -303,88 +325,9 @@ public class DataLoader {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Volley", "Error: " + error.getMessage());
-                Toast.makeText(sContext,
-                        "Error: " + error.getMessage(),
-                        Toast.LENGTH_LONG).show();
-
+                Log.d("Volley", "Movie Error: " + error.getMessage());
+                showErrorDialog();
             }
-        }){
-            @Override
-            public Request.Priority getPriority() {
-                return Priority.LOW;
-            }
-        };
-
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(req);
-
-    }//makeMovieRequest
-
-
-
-    //makeShowTimeRequest
-    private void makeShowTimeRequest() {
-
-        JsonArrayRequest req = new JsonArrayRequest(urlShowTime,
-                new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        try {
-                            objShowTimeTab = new ShowTimeTABLE(sContext);
-                            objShowTimeTab.deleteAllShowTime();
-
-                            // Parsing json array response
-                            // loop through each json object
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonShowTime = response.getJSONObject(i);
-                                String strName = jsonShowTime.getString("3");
-                                String strTitle = jsonShowTime.getString("2");
-                                String strDate = jsonShowTime.getString("4");
-                                String strScreen = jsonShowTime.getString("5");
-                                Integer intTimeID = jsonShowTime.getInt("6");
-                                String strType = jsonShowTime.getString("9");
-                                String strTime = jsonShowTime.getString("7");
-                                objShowTimeTab.addNewShowTime(strName, strTitle, strScreen, strDate, intTimeID, strType, strTime);
-                            }
-
-                            objShowTimeTab.closeDB();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            objShowTimeTab.closeDB();
-                            Toast.makeText(sContext,
-                                    "ShowTime Error:  " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            objShowTimeTab.closeDB();
-                            Toast.makeText(sContext,
-                                    "ShowTime Error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-
-                        }
-                        Log.d("ShowTime", "Load Success");
-                        setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
-                        Toast.makeText(sContext,
-                                "Load ShowTime Success",
-                                Toast.LENGTH_LONG).show();
-
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Volley", "Error: " + error.getMessage());
-                Toast.makeText(sContext,
-                        "Error: " + error.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-
         }){
             @Override
             public Request.Priority getPriority() {
@@ -395,10 +338,10 @@ public class DataLoader {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req);
 
-    }//makeShowTimeRequest
+    }//makeMovieRequest
 
 
-    //makeShowTimeRequest
+    //makeShowTimeRequestJSON
     private void makeShowTimeRequestJSON() {
 
         JsonArrayRequest req = new JsonArrayRequest(urlShowTime,
@@ -432,41 +375,46 @@ public class DataLoader {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            objShowTimeTab.closeDB();
-                            Toast.makeText(sContext,
-                                    "ShowTime Error:  " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-
+                            Log.d("Volley", "ShowTime Error: " + e.getMessage());
+                            showErrorDialog();
                         }
                         Log.d("ShowTime", "Load Success");
                         setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
-                        Toast.makeText(sContext,
-                                "Load ShowTime Success",
-                                Toast.LENGTH_LONG).show();
-
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Volley", "Error: " + error.getMessage());
-                Toast.makeText(sContext,
-                        "Error: " + error.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                Log.d("Volley", "ShowTime Error: " + error.getMessage());
+                showErrorDialog();
             }
 
         }){
             @Override
             public Request.Priority getPriority() {
-                return Priority.HIGH;
+                return Priority.LOW;
             }
         };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req);
 
-    }//makeShowTimeRequest
+    }//makeShowTimeRequestJSON
 
+
+    private void showErrorDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(sContext).create();
+        alertDialog.setTitle("Data loading failed");
+        alertDialog.setMessage("Please try again later.");
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                System.exit(0);
+            }
+        });
+
+        alertDialog.show();
+    }
 
 
     private void makeUpdateFlagRequest(String strType) {
@@ -505,6 +453,84 @@ public class DataLoader {
 // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
+
+
+
+
+////////////// NOT USE ///////////////////////////////////////
+
+//    //makeShowTimeRequest
+//    private void makeShowTimeRequest() {
+//
+//        JsonArrayRequest req = new JsonArrayRequest(urlShowTime,
+//                new Response.Listener<JSONArray>() {
+//
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//
+//                        try {
+//                            objShowTimeTab = new ShowTimeTABLE(sContext);
+//                            objShowTimeTab.deleteAllShowTime();
+//
+//                            // Parsing json array response
+//                            // loop through each json object
+//                            for (int i = 0; i < response.length(); i++) {
+//                                JSONObject jsonShowTime = response.getJSONObject(i);
+//                                String strName = jsonShowTime.getString("3");
+//                                String strTitle = jsonShowTime.getString("2");
+//                                String strDate = jsonShowTime.getString("4");
+//                                String strScreen = jsonShowTime.getString("5");
+//                                Integer intTimeID = jsonShowTime.getInt("6");
+//                                String strType = jsonShowTime.getString("9");
+//                                String strTime = jsonShowTime.getString("7");
+//                                objShowTimeTab.addNewShowTime(strName, strTitle, strScreen, strDate, intTimeID, strType, strTime);
+//                            }
+//
+//                            objShowTimeTab.closeDB();
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                            objShowTimeTab.closeDB();
+//                            Toast.makeText(sContext,
+//                                    "ShowTime Error:  " + e.getMessage(),
+//                                    Toast.LENGTH_LONG).show();
+//
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                            objShowTimeTab.closeDB();
+//                            Toast.makeText(sContext,
+//                                    "ShowTime Error: " + e.getMessage(),
+//                                    Toast.LENGTH_LONG).show();
+//
+//                        }
+//                        Log.d("ShowTime", "Load Success");
+//                        setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
+//                        Toast.makeText(sContext,
+//                                "Load ShowTime Success",
+//                                Toast.LENGTH_LONG).show();
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("Volley", "Error: " + error.getMessage());
+//                Toast.makeText(sContext,
+//                        "Error: " + error.getMessage(),
+//                        Toast.LENGTH_LONG).show();
+//            }
+//
+//        }){
+//            @Override
+//            public Request.Priority getPriority() {
+//                return Priority.HIGH;
+//            }
+//        };
+//
+//        // Adding request to request queue
+//        AppController.getInstance().addToRequestQueue(req);
+//
+//    }//makeShowTimeRequest
 
 
 }
