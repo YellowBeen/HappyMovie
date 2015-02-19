@@ -44,7 +44,7 @@ public class SplashScreen extends Activity {
                     DataLoader objLoader = new DataLoader(SplashScreen.this);
                     objLoader.syncAll();
                     sleep(2000);
-                    while (!objLoader.checkShowTimeSyncDone()){
+                    while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone()){
                     }
 
                 } catch (InterruptedException e) {
@@ -63,6 +63,13 @@ public class SplashScreen extends Activity {
     }
 
 }
+
+
+
+
+
+
+
 
 //    new LoadData().execute();
 //

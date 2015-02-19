@@ -294,6 +294,9 @@ public class DataLoader {
 
                         setFlag(MOVIE_LOC_TYP, getFlag(MOVIE_SERV_TYP));
                         Log.d("Movie", "Load Success");
+                        Toast.makeText(sContext,
+                                "Load Movie Success",
+                                Toast.LENGTH_LONG).show();
                     }
 
                 }, new Response.ErrorListener() {
