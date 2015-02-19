@@ -5,23 +5,23 @@
     android:shape="rectangle"   >
 
     <solid
-        android:color="#191919" >
+        android:color="@color/all_stoke" >
     </solid>
 
     <stroke
-        android:width="1dp"
-        android:color="#383737" >
+        android:width="0dp"
+        android:color="@color/all_stoke" >
     </stroke>
 
     <padding
-        android:left="1dp"
-        android:top="1dp"
-        android:right="1dp"
-        android:bottom="1dp"    >
+        android:left="2dp"
+        android:top="0dp"
+        android:right="2dp"
+        android:bottom="0dp"    >
     </padding>
 
     <corners
-        android:radius="1dp"   >
+        android:radius="2dp"   >
     </corners>
 
 </shape>

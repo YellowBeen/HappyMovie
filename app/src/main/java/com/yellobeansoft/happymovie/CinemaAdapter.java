@@ -123,25 +123,6 @@ public class CinemaAdapter extends BaseAdapter{
             }
         });
 
-        //Jack
-    /*    convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContextProvider objContext = new ContextProvider();
-                CinemaFavorite objCinemaFav = new CinemaFavorite();
-                ArrayList<Cinema> cinemaFavList = objCinemaFav.getFavorites(objContext.getContext());
-                Cinema objCinema = mCinemaList.get(position);
-                if (objCinemaFav.checkExist(objContext.getContext(), objCinema)) {
-                    objCinemaFav.removeFavorite(objContext.getContext(), objCinema);
-                } else {
-                    objCinemaFav.addFavorite(objContext.getContext(), objCinema);
-                }
-                Toast.makeText(mContext, "Fav Button" + mCinemaList.get(position).getName(),
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });//Jack        */
-
         return convertView;
     }
 

@@ -7,4 +7,4 @@
     android:layout_height="match_parent"
     app:item_margin="0dp"
     app:column_count="2"
-    android:background="@color/dark_dark" />
+    android:background="@color/all_bg" />

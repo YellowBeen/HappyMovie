@@ -1,11 +1,16 @@
 package com.yellobeansoft.happymovie;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class ShowtimeCinemaActivity extends ActionBarActivity {
+public class ShowtimeCinemaActivity extends ActionBarActivity implements MapFragment.OnFragmentInteractionListener {
 
     private ListView lvShowtime;
     private TextView txtCinemaNameTH;
@@ -31,6 +36,8 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
     private ShowTimeTABLE objShowTimeTABLE;
     private TimePickerDialog timePickerDialog;
     ArrayList<ShowTime> showTimesList;
+    ArrayList<ShowTime> showTimesFilterList;
+    private Button btnMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,18 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         lvShowtime = (ListView) findViewById(R.id.lvShowtime);
         txtCinemaNameTH = (TextView) findViewById(R.id.txtCinemaNameTH);
         txtShowDate = (TextView) findViewById(R.id.txtShowDate);
+        btnMap = (Button) findViewById(R.id.btnMap);
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              Fragment mapFragment = (Fragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
 
+              FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.remove(mapFragment).commit();
+
+
+            }
+        });
         try {
             addShowtimeData();
         } catch (ParseException e) {
@@ -89,12 +107,11 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         @Override
         public void onTimeSet(RadialPickerLayout radialPickerLayout, int hh, int mm) {
             StringBuilder filterTime = new StringBuilder().append(Integer.toString(hh)).append(":").append(Integer.toString(mm));
-            Toast.makeText(getApplicationContext(),filterTime,Toast.LENGTH_SHORT).show();
             objShowTimeTABLE = new ShowTimeTABLE(ShowtimeCinemaActivity.this);
             try {
-               // showTimesList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, "");
-                showTimesList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, filterTime.toString());
-                lvShowtime.setAdapter(lvShowtimeAdapter);
+                showTimesList.clear();
+                showTimesFilterList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, filterTime.toString());
+                showTimesList.addAll(showTimesFilterList);
                 lvShowtimeAdapter.notifyDataSetChanged();
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -129,5 +146,10 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

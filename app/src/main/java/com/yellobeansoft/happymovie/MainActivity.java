@@ -35,12 +35,12 @@ public class MainActivity extends ActionBarActivity{
         tabHost.setup(mLocalActivityManager);
         setTabhost();
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#ff6d6d6d")); // unselected
+            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#6d6d6d")); // unselected
             TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
             tv.setTextColor(Color.parseColor("#ffffff"));
         }
 
-        tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#8E0013")); // selected
+        tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#CB3641")); // selected
         TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
         tv.setTextColor(Color.parseColor("#ffffff"));
 
@@ -50,12 +50,12 @@ public class MainActivity extends ActionBarActivity{
             public void onTabChanged(String tabId) {
 
                 for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#ff6d6d6d")); // unselected
+                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#6d6d6d")); // unselected
                     TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
                     tv.setTextColor(Color.parseColor("#ffffff"));
                 }
 
-                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#8E0013")); // selected
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#CB3641")); // selected
                 TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
                 tv.setTextColor(Color.parseColor("#ffffff"));
 

@@ -57,7 +57,6 @@ public class FavFragment extends Fragment {
         if (cinemaList != null) {
             lvCinemaAdapter = new CinemaAdapter(getActivity(), cinemaList);
             lvCinema.setAdapter(lvCinemaAdapter);
-            lvCinemaAdapter.notifyDataSetChanged();
         } else {
 
         }

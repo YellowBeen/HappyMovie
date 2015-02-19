@@ -17,4 +17,7 @@
     <string name="title_activity_showtime_cinema">ShowtimeCinemaActivity</string>
     <string name="title_activity_tt">TTActivity</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

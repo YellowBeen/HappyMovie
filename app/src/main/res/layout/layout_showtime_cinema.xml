@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#191919"
@@ -37,7 +38,7 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:id="@+id/btnNavi"
+                android:id="@+id/btnMap"
                 android:layout_weight="1"
                 android:background="@drawable/ic_navi1"
                 android:layout_marginRight="3dp" />
@@ -63,6 +64,13 @@
             android:id="@+id/txtShowDate"
             android:layout_gravity="center_horizontal|bottom"
             android:gravity="center_horizontal" />
+        <fragment
+            android:id="@+id/mapFragment"
+            android:name="com.yellobeansoft.happymovie.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/layout_fragment_map" />
+
     </LinearLayout>
 
     </FrameLayout>
