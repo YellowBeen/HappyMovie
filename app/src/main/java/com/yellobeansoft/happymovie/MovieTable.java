@@ -30,6 +30,8 @@ public class MovieTable {
     public static final String COLUMN_DATE = "Date";
     public static final String COLUMN_RDATE = "Release_Date";
 
+    public static final String PREFS_NAME = "CINEMA_APP";
+    public static final String SHOWTIME = "MOVIE";
     //Constructor
     public MovieTable(Context context) {
         objMyOpenHelper = new MyOpenHelper(context);

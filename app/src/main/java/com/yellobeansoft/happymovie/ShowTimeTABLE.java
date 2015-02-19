@@ -2,13 +2,18 @@ package com.yellobeansoft.happymovie;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Jirawut-Jack on 23/01/2015.
@@ -32,9 +37,16 @@ public class ShowTimeTABLE {
     public static final String COLUMN_ITEM = "Item";
     public static final String COLUMN_TIME = "Time";
 
+
+    public static final String PREFS_NAME = "CINEMA_APP";
+    public static final String SHOWTIME = "SHOWTIME";
+
+    private Context sContext;
+
     //Constructor
     public ShowTimeTABLE(Context context) {
         objMyOpenHelper = new MyOpenHelper(context);
+        sContext = context;
         readSQLite = objMyOpenHelper.getReadableDatabase();
         writeSQLite = objMyOpenHelper.getWritableDatabase();
     }//Constructor
@@ -42,12 +54,6 @@ public class ShowTimeTABLE {
     public void deleteAllShowTime() {
         writeSQLite = objMyOpenHelper.getWritableDatabase();
         writeSQLite.delete(TABLE_SHOWTIME, null, null);
-    }
-
-    public Integer getRowCount(){
-        String strQuery = "SELECT CinemaName FROM showtimeTABLE";
-        Cursor objCursor = readSQLite.rawQuery(strQuery, null);
-        return objCursor.getCount();
     }
 
 
@@ -69,14 +75,35 @@ public class ShowTimeTABLE {
     }//addNewShowTime
 
 
+    public void addNewShowTimeJSON(ArrayList<ShowTime> showTimeList) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        editor = settings.edit();
+        Gson gson = new Gson();
+        String jsonFavorites = gson.toJson(showTimeList);
+        editor.putString(SHOWTIME, jsonFavorites);
+        editor.commit();
+    }
+
+    public void deleteShowTimeJSON() {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
+        showTimeList = null;
+        settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        editor = settings.edit();
+        Gson gson = new Gson();
+        String jsonFavorites = gson.toJson(showTimeList);
+        editor.putString(SHOWTIME, jsonFavorites);
+        editor.commit();
+    }
+
+
     //getShowTimeByCinema
-    public ArrayList<ShowTime> getShowTimeByCinema(String strCinema, String strTime) throws ParseException {
+    public ArrayList<ShowTime> getShowTimeByCinemaX(String strCinema, String strTime) throws ParseException {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
-
-//        String strQuery = "SELECT DISTINCT showtimeTABLE.* FROM showtimeTABLE INNER JOIN timeTABLE " +
-//                          "ON showtimeTABLE.Time_id = timeTABLE.Time_id " +
-//                          "WHERE showtimeTABLE.CinemaName = '" + strCinema + "'";
 
         String strQuery = "SELECT * FROM showtimeTABLE " +
                           "WHERE CinemaName = '" + strCinema + "'";
@@ -97,21 +124,6 @@ public class ShowTimeTABLE {
                 objShowTime.setTime(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TIME)));
                 objShowTime.setTimeList(strTime);
 
-//                Cursor objCursorT = readSQLite.rawQuery("SELECT * FROM timeTABLE WHERE Time_id  = "
-//                        + objShowTime.getTimeID() , null);
-//
-//                if (objCursorT.moveToFirst()) {
-//                    ArrayList<String> timeList = new ArrayList<String>();
-//                    do {
-//                        timeList.add(objCursorT.getString(objCursorT.getColumnIndexOrThrow(COLUMN_TIME)));
-//                    } while (objCursorT.moveToNext());
-//
-//                    if (objCursorT != null && !objCursorT.isClosed()) {
-//                        objCursorT.close();
-//                    }
-//                    objShowTime.setTimeList(timeList);
-//                } ;
-
                 if (objShowTime.getTimeList().size() > 0){
                     showTimeList.add(objShowTime);
                 }
@@ -129,6 +141,46 @@ public class ShowTimeTABLE {
             this.closeDB();
             return showTimeList;
         }
+    }//getShowTimeByCinema
+
+
+
+    //getShowTimeByCinema
+    public ArrayList<ShowTime> getShowTimeByCinema(String strCinema, String strTime) throws ParseException {
+
+        ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
+        ArrayList<ShowTime> newList = new ArrayList<ShowTime>();
+        List<ShowTime> ShowTimes;
+
+        SharedPreferences settings;
+
+        settings = sContext.getSharedPreferences(PREFS_NAME,
+                Context.MODE_PRIVATE);
+
+        if (settings.contains(SHOWTIME)) {
+            String jsonFavorites = settings.getString(SHOWTIME, null);
+            Gson gson = new Gson();
+            ShowTime[] ShowTimeItems = gson.fromJson(jsonFavorites,
+                    ShowTime[].class);
+
+            ShowTimes = Arrays.asList(ShowTimeItems);
+            showTimeList = new ArrayList<ShowTime>(ShowTimes);
+        } ;
+
+        for (int i = 0; i < showTimeList.size(); i++) {
+            ShowTime objShowTime = showTimeList.get(i);
+
+            if (objShowTime.getName().equals(strCinema)) {
+                objShowTime.setTimeList(strTime);
+                if (objShowTime.getTimeList().size() > 0){
+                    newList.add(objShowTime);
+                }
+            }
+
+        }
+
+        return newList;
+
     }//getShowTimeByCinema
 
 
@@ -158,21 +210,6 @@ public class ShowTimeTABLE {
                 objShowTime.setType(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TYPE)));
                 objShowTime.setTimeID(objCursor.getInt(objCursor.getColumnIndexOrThrow(COLUMN_TIMEID)));
                 objShowTime.setTimeList(strTime);
-
-//                Cursor objCursorT = readSQLite.rawQuery("SELECT * FROM timeTABLE WHERE Time_id  = "
-//                        + objShowTime.getTimeID() , null);
-//
-//                if (objCursorT.moveToFirst()) {
-//                    ArrayList<String> timeList = new ArrayList<String>();
-//                    do {
-//                        timeList.add(objCursorT.getString(objCursorT.getColumnIndexOrThrow(COLUMN_TIME)));
-//                    } while (objCursorT.moveToNext());
-//
-//                    if (objCursorT != null && !objCursorT.isClosed()) {
-//                        objCursorT.close();
-//                    }
-//                    objShowTime.setTimeList(timeList);
-//                } ;
 
                 if (objShowTime.getTimeList().size() > 0){
                     showTimeList.add(objShowTime);

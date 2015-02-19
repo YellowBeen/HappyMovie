@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -61,11 +62,9 @@ public class DataLoader {
     public void syncAll() {
         this.clearDateSetting();
 
-        Log.d("Sync Time", "Start");
-
         this.downloadServerDate();
-        this.syncShowTime();
         this.syncMovie();
+        this.syncShowTime();
         this.syncCinema();
     }//syncAll
 
@@ -99,12 +98,11 @@ public class DataLoader {
         }
     }//syncMovie
 
-
     //syncShowTme
     public void syncShowTime() {
         if (this.checkSync(SHOWTIME_LOC_TYP)) {
-            this.makeShowTimeRequest();
-//            this.makeTimeRequest();
+//            this.makeShowTimeRequest();
+            this.makeShowTimeRequestJSON();
         }
     }//syncShowTme
 
@@ -322,6 +320,7 @@ public class DataLoader {
     }//makeMovieRequest
 
 
+
     //makeShowTimeRequest
     private void makeShowTimeRequest() {
 
@@ -396,42 +395,50 @@ public class DataLoader {
     }//makeShowTimeRequest
 
 
-    //makeTimeRequest
-    private void makeTimeRequest() {
+    //makeShowTimeRequest
+    private void makeShowTimeRequestJSON() {
 
-        JsonArrayRequest req = new JsonArrayRequest(urlTime,
+        JsonArrayRequest req = new JsonArrayRequest(urlShowTime,
                 new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
+
                         try {
-                            objTimeTab = new TimeTABLE(sContext);
-                            objTimeTab.deleteAllTime();
-                            Log.d("Time", "Time deleted");
+                            ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
+                            ShowTimeTABLE objTab = new ShowTimeTABLE(sContext);
+                            objTab.deleteShowTimeJSON();
 
                             // Parsing json array response
                             // loop through each json object
                             for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonTime = response.getJSONObject(i);
-                                Integer intID = jsonTime.getInt("1");
-                                String strTime = jsonTime.getString("2");
-                                objTimeTab.addNewTime(intID, 0, strTime);
+                                JSONObject jsonShowTime = response.getJSONObject(i);
+                                ShowTime objShowTime = new ShowTime();
+                                objShowTime.setName(jsonShowTime.getString("3"));
+                                objShowTime.setMovieTitle(jsonShowTime.getString("2"));
+                                objShowTime.setDate(jsonShowTime.getString("4"));
+                                objShowTime.setScreen(jsonShowTime.getString("5"));
+                                Integer intTimeID = jsonShowTime.getInt("6");
+                                objShowTime.setTimeID(intTimeID);
+                                objShowTime.setType(jsonShowTime.getString("9"));
+                                objShowTime.setTime(jsonShowTime.getString("7"));
+                                showTimeList.add(objShowTime);
                             }
 
-                            objTimeTab.closeDB();
+                            objTab.addNewShowTimeJSON(showTimeList);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            objTimeTab.closeDB();
+                            objShowTimeTab.closeDB();
                             Toast.makeText(sContext,
-                                     "Time Error:  " + e.getMessage(),
+                                    "ShowTime Error:  " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
-                        }
 
+                        }
+                        Log.d("ShowTime", "Load Success");
                         setFlag(SHOWTIME_LOC_TYP, getFlag(SHOWTIME_SERV_TYP));
-                        Log.d("Time", "Time added");
                         Toast.makeText(sContext,
-                                "Load Time Success",
+                                "Load ShowTime Success",
                                 Toast.LENGTH_LONG).show();
 
                     }
@@ -448,14 +455,15 @@ public class DataLoader {
         }){
             @Override
             public Request.Priority getPriority() {
-                return Priority.LOW;
+                return Priority.HIGH;
             }
         };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req);
 
-    }//makeTimeRequest
+    }//makeShowTimeRequest
+
 
 
     private void makeUpdateFlagRequest(String strType) {
@@ -495,215 +503,5 @@ public class DataLoader {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-//    public void updateProgress() {
-//        Integer intProgress = 0;
-//
-//        intProgress = getProgress() + 1;
-//        SharedPreferences settings;
-//        SharedPreferences.Editor editor;
-//        settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-//        editor = settings.edit();
-//        editor.putInt("PROGRESS", intProgress);
-//        editor.commit();
-//    }
-//
-//    public Integer getProgress() {
-//        SharedPreferences settings;
-//        settings = sContext.getSharedPreferences(PREFS_NAME,
-//                Context.MODE_PRIVATE);
-//        return settings.getInt("PROGRESS", 0);
-//    }
-//
-//    public void resetProgress() {
-//        SharedPreferences settings;
-//        SharedPreferences.Editor editor;
-//        settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-//        editor = settings.edit();
-//        editor.putInt("PROGRESS", 0);
-//        editor.commit();
-//    }
-
-
-
-
-//---------------------- NOT USE -----------------------------------------------------
-//    //////  Sync   ////////
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//    //initJason
-//    private String initJason(String strPhp) {
-//
-//        //Setup Policy
-//        //เช็คว่าถ้า SDK มีค่า 9 (ginger bread เป็นต้นไป), ต้องเปิด Strict mode
-//        //ถ้าไม่ทำ จะ connect ไม่ได้
-//        if (Build.VERSION.SDK_INT > 9) {
-//            StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//            StrictMode.setThreadPolicy(myPolicy);
-//        }
-//
-//        //ทำ Streaming ข้อมูลจาก mySQL มาที่เครื่อง
-//        InputStream objInputStream = null; //ประกาศ obj กำหนดให้เป็นค่าว่าง
-//        String strJason = "";
-//
-//        //Create InputStream
-//        try {
-//            HttpClient objHttpClient = new DefaultHttpClient();
-//            HttpPost objHttpPost = new HttpPost(strPhp);
-//            HttpResponse objHttpResponse = objHttpClient.execute(objHttpPost);
-//            HttpEntity objHttpEntity = objHttpResponse.getEntity();
-//            objInputStream = objHttpEntity.getContent();
-//
-//        } catch (Exception e) {
-//            //ขึ้น error ที่ message log
-//            Log.d("Cinema", "Error from InputStream => " + e.toString());
-//        }
-//
-//        //Create strJSON --> convert InputStream ให้เป็น String
-//        try {
-//
-//            //ประกาศ Class Buffer
-//            BufferedReader objBufferedReader = new BufferedReader(new InputStreamReader(objInputStream, "UTF-8"));
-//            StringBuilder objStringBuilder = new StringBuilder();
-//            // String ท่อนเล็กๆ ที่ถูกตัด และหลังจากโหลดทั้งหมดเสร็จ ก็จะถูกรวมกันอีกทีด้วย StringBuilder
-//            String strLine = null;
-//
-//            while ((strLine = objBufferedReader.readLine()) != null) {
-//                objStringBuilder.append(strLine);
-//            }
-//
-//            objInputStream.close();
-//            strJason = objStringBuilder.toString();
-//
-//        } catch (Exception e) {
-//            //ขึ้น error ที่ message log
-//            Log.d("Cinema", "Error from strJSON => " + e.toString());
-//        }
-//
-//        return strJason;
-//
-//    }//initJason
-//
-//
-//    //updateCinemaTable
-//    private void updateCinemaTable(String strJason) {
-//        try {
-//
-//            final JSONArray objJsonArray = new JSONArray(strJason);
-//
-//            objCinemaTab = new CinemaTABLE(sContext);
-//            //objJsonArray.length คือจำนวน array หรือ record ของ data
-//            for (int i = 0; i < objJsonArray.length(); i++) {
-//                JSONObject objJSONObject = objJsonArray.getJSONObject(i);
-//                String strName = objJSONObject.getString("name_en");
-//                String strNameTH = objJSONObject.getString("name_th");
-//                String strPhone = objJSONObject.getString("phone");
-////                String strBrand = objJSONObject.getString("brand");
-//                String strBrand = "Major";
-//                String strGroup = objJSONObject.getString("subbrand");
-//                String strLat = objJSONObject.getString("lat");
-//                String strLong = objJSONObject.getString("lng");
-//                objCinemaTab.addNewCinema(strName, strNameTH, strPhone, strBrand, strGroup, strLat, strLong);
-//            }
-//
-//        } catch (Exception e) {
-//            //ขึ้น error ที่ message log
-//            Log.d("Cinema", "Error from update Movie SQLite => " + e.toString());
-//        }
-//
-//    }//updateCinemaTable
-//
-//
-//    //updateMovieTable
-//    private void updateMovieTable(String strJason) {
-//        //Update SQLite --> Loop strJason ลงใน table SQLite
-//        try {
-//
-//            final JSONArray objJsonArray = new JSONArray(strJason);
-//
-//            objMovieTab = new MovieTable(sContext);
-//            //objJsonArray.length คือจำนวน array หรือ record ของ data
-//            for (int i = 0; i < objJsonArray.length(); i++) {
-//                JSONObject objJSONObject = objJsonArray.getJSONObject(i);
-//                String strTitle = objJSONObject.getString("title_en");
-//                String strTitleTH = objJSONObject.getString("title_th");
-//                String strImage = objJSONObject.getString("image_url");
-//                String strLength = objJSONObject.getString("duration");
-//                String strYoutube = objJSONObject.getString("youtube_url");
-//                objMovieTab.addNewMovie(strTitle, strTitleTH, strImage, strLength, strYoutube);
-//            }
-//
-//        } catch (Exception e) {
-//            //ขึ้น error ที่ message log
-//            Log.d("Cinema", "Error from update Movie SQLite => " + e.toString());
-//        }
-//    }//updateMovieTable
-//
-//
-//    //updateShowTimeTable
-//    private void updateShowTimeTable(String strJason) {
-//        //Update SQLite --> Loop strJason ลงใน table SQLite
-//        try {
-//
-//            final JSONArray objJsonArray = new JSONArray(strJason);
-//
-//            objShowTab = new ShowTimeTABLE(sContext);
-//            //objJsonArray.length คือจำนวน array หรือ record ของ data
-//            for (int i = 0; i < objJsonArray.length(); i++) {
-//                JSONObject objJSONObject = objJsonArray.getJSONObject(i);
-//                String strName = objJSONObject.getString("name_en");
-//                String strTitle = objJSONObject.getString("title_en");
-//                String strScreen = objJSONObject.getString("screen");
-//                String strDate = objJSONObject.getString("date");
-//                String strTime = objJSONObject.getString("time_info");
-//                objShowTab.addNewShowTime(strName, strTitle, strScreen, strDate, strTime);
-//            }
-//
-//        } catch (Exception e) {
-//            //ขึ้น error ที่ message log
-//            Log.d("Cinema", "Error from update ShowTime SQLite => " + e.toString());
-//        }
-//    }//updateShowTimeTable
-//
-//
-//    //////  Async   ////////
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//    // Async Task to access the web
-//    private class JsonReadTask extends AsyncTask<String, Void, String> {
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//            HttpClient httpclient = new DefaultHttpClient();
-//            HttpPost httppost = new HttpPost(params[0]);
-//            try {
-//                HttpResponse response = httpclient.execute(httppost);
-//                jsonResult = inputStreamToString(
-//                        response.getEntity().getContent()).toString();
-//                updateMovieTable(jsonResult);
-//            } catch (ClientProtocolException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//
-//        private StringBuilder inputStreamToString(InputStream is) {
-//            String rLine = "";
-//            StringBuilder answer = new StringBuilder();
-//            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-//
-//            try {
-//                while ((rLine = rd.readLine()) != null) {
-//                    answer.append(rLine);
-//                }
-//            } catch (IOException e) {
-//
-//            }
-//            return answer;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//        }
-//    }// end async task
 
 }

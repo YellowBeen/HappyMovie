@@ -18,8 +18,6 @@ import java.util.Timer;
  * Created by Beboyz on 1/15/15 AD.
  */
 public class SplashScreen extends Activity {
-//        Set Duration of the Splash Screen
-    long Delay = 500;
 
     // Progress Dialog
     private ProgressDialog mProgress;
@@ -39,16 +37,13 @@ public class SplashScreen extends Activity {
         // Get the view from splash_screen.xml
         setContentView(R.layout.layout_splash);
 
-        // Create a Timer
-        Timer RunSplash = new Timer();
-
         Thread syncLoading = new Thread() {
 
             public void run() {
                 try {
                     DataLoader objLoader = new DataLoader(SplashScreen.this);
                     objLoader.syncAll();
-                    sleep(5000);
+                    sleep(2000);
                     while (!objLoader.checkShowTimeSyncDone()){
                     }
 
@@ -63,11 +58,9 @@ public class SplashScreen extends Activity {
             }
 
         };
+
         syncLoading.start();
     }
-
-
-
 
 }
 
