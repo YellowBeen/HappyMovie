@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/card_bg"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:padding="5dip" >
+
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dip"
+        android:id="@+id/vLayout">
+
+        <ImageView
+            android:id="@+id/imgMovie"
+            android:layout_width="55dip"
+            android:layout_height="80dip"
+            android:background="@drawable/image_bg"
+            android:padding="3dip"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_taken3"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Screen No."
+            android:id="@+id/txtScreen"
+            android:background="@drawable/gradient_bg"
+            android:layout_below="@+id/txtMovieNameTH"
+            android:layout_toRightOf="@+id/image"
+            android:padding="2dip"
+            android:layout_marginTop="3dip"
+            android:textSize="10dp"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtDuration"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff880a22"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:text="Movie Title"
+        android:layout_toRightOf="@+id/vLayout" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cinema Name TH"
+        android:id="@+id/txtMovieNameTH"
+        android:layout_below="@+id/txtDuration"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:textColor="#ff4a4a4a"
+        android:layout_toRightOf="@+id/vLayout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type"
+        android:id="@+id/txtType"
+        android:layout_below="@+id/txtMovieNameTH"
+        android:layout_toRightOf="@+id/vLayout"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtType"
+        android:id="@+id/ratinglayout"
+        android:layout_toRightOf="@+id/vLayout">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="19dp"
+            android:adjustViewBounds="true"
+            android:id="@+id/imgIMDB"
+            android:src="@drawable/ic_imdb" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Rating"
+            android:id="@+id/txtRating"
+            android:layout_below="@+id/txtDuration"
+            android:layout_toRightOf="@+id/image"
+            android:paddingLeft="5dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Showtime List"
+        android:id="@+id/txtShowtime"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/vLayout"
+        android:textStyle="bold|italic"
+        android:textColor="@android:color/darker_gray"
+        android:layout_below="@+id/ratinglayout" />
+
+
+</RelativeLayout>
+</FrameLayout>
