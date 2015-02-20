@@ -56,7 +56,7 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
           mShowtimeList = objShowTimeTABLE.getShowTimeByCinema(lists.get(i).getName(), "");
           objShowtimeGroup = new ShowtimeGroup(lists.get(i),mShowtimeList);
           objShowtimeGroupList.add(objShowtimeGroup);
-          objShowTimeTABLE.closeDB();
+          //objShowTimeTABLE.closeDB();pon test
       }
 
     }

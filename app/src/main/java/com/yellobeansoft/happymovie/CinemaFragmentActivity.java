@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 
@@ -72,6 +73,27 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
                             .setTabListener(this));
 
         }
+        setDefaultTab();
+    }//OnCreate
+
+    private void setDefaultTab() {
+//1.use fav tab if there is fav
+        CinemaFavorite objCinemaFav = new CinemaFavorite();
+        ArrayList<Cinema> cinemaList = objCinemaFav.getFavorites(getBaseContext());
+        if (cinemaList != null){
+            mViewPager.setCurrentItem(0);
+        }
+//2.use near by if GPS is on
+        else{
+                CinemaTABLE objCinemaTABLE = new CinemaTABLE(this);
+                cinemaList = objCinemaTABLE.getNearByCinemas();
+            if (cinemaList != null){
+                mViewPager.setCurrentItem(1);
+            }else{
+                mViewPager.setCurrentItem(2);
+            }
+        }
+//3.use all cinema if 1,2 not match
     }
 
     @Override
@@ -110,6 +132,7 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
@@ -140,7 +163,8 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
             //return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
-                    return new FavFragment();
+                    //return new FavFragment();
+                    return new ShowtimeFragment();//Pon ShowtimeFav
                 case 1:
                     return new NearbyFragment();
                 case 2:
