@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.etsy.android.grid.StaggeredGridView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +48,11 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
         MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
         ArrayList<Movies> movieList = new ArrayList<Movies>();
-        movieList = objMovieTab.getAllMovies();
+        try {
+            movieList = objMovieTab.getAllMovies();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
         mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.layout.layout_staggered_list, movieList);

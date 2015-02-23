@@ -1,5 +1,11 @@
 package com.yellobeansoft.happymovie;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 /**
  * Created by Beboyz on 1/10/15 AD.
  */
@@ -16,6 +22,23 @@ public class Movies {
     private String URLIMDB;
     private String Date;
     private String ReleaseDate;
+    private Boolean isNew;
+
+    public Boolean getIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew() throws ParseException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strToday = dateFormat.format(new java.util.Date());
+        long lDays = this.DATEDIFF(this.getDate(), strToday );
+
+        if (lDays > 7) {
+            this.isNew = false;
+        } else {
+            this.isNew = true;
+        }
+    }
 
     public String getReleaseDate() {
         return ReleaseDate;
@@ -105,5 +128,20 @@ public class Movies {
         this.URLTrailer = URLTrailer;
     }
 
+    private long DATEDIFF(String date1, String date2) {
+        long MILLISECS_PER_DAY = 24 * 60 * 60 * 1000;
+        long days = 0l;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // "dd/MM/yyyy HH:mm:ss");
+
+        Date dateIni = null;
+        Date dateFin = null;
+        try {
+            dateIni = (Date) format.parse(date1);
+            dateFin = (Date) format.parse(date2);
+            days = (dateFin.getTime() - dateIni.getTime())/MILLISECS_PER_DAY;
+        } catch (Exception e) {  e.printStackTrace();  }
+
+        return days;
+    }
 
 }
