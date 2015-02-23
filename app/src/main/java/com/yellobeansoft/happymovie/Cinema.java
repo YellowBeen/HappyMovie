@@ -1,9 +1,12 @@
 package com.yellobeansoft.happymovie;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Beboyz on 1/13/15 AD.
  */
-public class Cinema {
+public class Cinema implements Parcelable{
 
     private int id;
     private String name;
@@ -14,6 +17,10 @@ public class Cinema {
     private String latitude;
     private String longtitude;
     private Double distance;
+
+    public Cinema() {
+        ;
+    };
 
     public int getId() {
         return id;
@@ -87,5 +94,48 @@ public class Cinema {
         this.distance = distance;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.nameTH);
+        dest.writeString(this.brand);
+        dest.writeString(this.group);
+        dest.writeString(this.phone);
+        dest.writeString(this.latitude);
+        dest.writeString(this.longtitude);
+        dest.writeDouble(this.distance);
+    }
+
+    public static final Parcelable.Creator<Cinema> CREATOR
+            = new Parcelable.Creator<Cinema>() {
+
+        public Cinema createFromParcel(Parcel in) {
+            return new Cinema(in);
+        }
+
+        public Cinema[] newArray(int size) {
+            return new Cinema[size];
+        }
+    };
+
+    private Cinema(Parcel in){
+
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.nameTH = in.readString();
+        this.brand = in.readString();
+        this.group = in.readString();
+        this.phone = in.readString();
+        this.latitude = in.readString();
+        this.longtitude = in.readString();
+        this.distance = in.readDouble();
+    }
 
 }

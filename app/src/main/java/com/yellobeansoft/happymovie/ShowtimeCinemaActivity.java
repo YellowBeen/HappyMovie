@@ -1,9 +1,13 @@
 package com.yellobeansoft.happymovie;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -23,54 +27,136 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
-public class ShowtimeCinemaActivity extends ActionBarActivity implements MapFragment.OnFragmentInteractionListener {
+public class ShowtimeCinemaActivity extends ActionBarActivity {
 
     private ListView lvShowtime;
     private TextView txtCinemaNameTH;
     private TextView txtShowDate;
     private ShowtimeCinemaAdapter lvShowtimeAdapter;
-    private String chooseCinema;
-    private String chooseCinemaTH;
     private ShowTimeTABLE objShowTimeTABLE;
     private TimePickerDialog timePickerDialog;
     ArrayList<ShowTime> showTimesList;
     ArrayList<ShowTime> showTimesFilterList;
     private Button btnMap;
+    private Button btnPhone;
+    private Bundle bundle;
+    private Cinema chooseObjCinema;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_showtime_cinema);
 
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
+        // View Matching
         lvShowtime = (ListView) findViewById(R.id.lvShowtime);
         txtCinemaNameTH = (TextView) findViewById(R.id.txtCinemaNameTH);
         txtShowDate = (TextView) findViewById(R.id.txtShowDate);
         btnMap = (Button) findViewById(R.id.btnMap);
+        btnPhone = (Button) findViewById(R.id.btnPhone);
+
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              Fragment mapFragment = (Fragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
 
-              FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.remove(mapFragment).commit();
+                AlertDialog.Builder builder = new AlertDialog.Builder(
+                        ShowtimeCinemaActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("Navigation with Google Map");
+                builder.setMessage("Go to " + chooseObjCinema.getName()+" ?");
+                builder.setInverseBackgroundForced(true);
+                builder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.dismiss();
 
+                                final double latitude = Double.parseDouble(chooseObjCinema.getLatitude());
+                                final double longitude = Double.parseDouble(chooseObjCinema.getLongtitude());
+                                final double zoom = 11 ;
+                                final String label = chooseObjCinema.getName();
+                                String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=%f&q=%f,%f(%s)",
+                                        latitude, longitude, zoom, latitude, longitude, label);
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                                startActivity(intent);
+                            }
+                        });
+                builder.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+/*                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+                startActivity(intent);*/
+            }
+        });
+
+        btnPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(
+                        ShowtimeCinemaActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("Confirmation Call");
+                builder.setMessage("Call " + chooseObjCinema.getPhone() + " ?");
+                builder.setInverseBackgroundForced(true);
+                builder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.dismiss();
+                                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + chooseObjCinema.getPhone()));
+                                startActivity(intent);
+
+
+
+                            }
+                        });
+                builder.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
 
             }
         });
-        try {
-            addShowtimeData();
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+        // Get input extras
+        bundle = getIntent().getExtras();
+        if (bundle != null){
+            chooseObjCinema = bundle.getParcelable("chooseCinema");
+            actionBar.setTitle(chooseObjCinema.getName());
+            txtCinemaNameTH.setText(chooseObjCinema.getNameTH());
+            try {
+                addShowtimeData();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setupShowtimeAdapter();
         }
-        actionBar.setTitle(chooseCinema);
-        setupShowtimeAdapter();
-        txtCinemaNameTH.setText(chooseCinemaTH);
+
         Date date = new Date();
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
         txtShowDate.setText(dateFormat.format(date));
@@ -88,11 +174,9 @@ public class ShowtimeCinemaActivity extends ActionBarActivity implements MapFrag
 
         // Set Default Tab
         Intent intent = getIntent();
-        chooseCinema = intent.getStringExtra("Cinema");
-        chooseCinemaTH = intent.getStringExtra("CinemaTH");
-        if (!chooseCinema.equalsIgnoreCase(null)) {
+        if (!chooseObjCinema.getName().equalsIgnoreCase(null)) {
             objShowTimeTABLE = new ShowTimeTABLE(ShowtimeCinemaActivity.this);
-            showTimesList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, "");
+            showTimesList = objShowTimeTABLE.getShowTimeByCinema(chooseObjCinema.getName(), "");
         }
     }
 
@@ -110,7 +194,7 @@ public class ShowtimeCinemaActivity extends ActionBarActivity implements MapFrag
             objShowTimeTABLE = new ShowTimeTABLE(ShowtimeCinemaActivity.this);
             try {
                 showTimesList.clear();
-                showTimesFilterList = objShowTimeTABLE.getShowTimeByCinema(chooseCinema, filterTime.toString());
+                showTimesFilterList = objShowTimeTABLE.getShowTimeByCinema(chooseObjCinema.getName(), filterTime.toString());
                 showTimesList.addAll(showTimesFilterList);
                 lvShowtimeAdapter.notifyDataSetChanged();
             } catch (ParseException e) {
@@ -148,8 +232,4 @@ public class ShowtimeCinemaActivity extends ActionBarActivity implements MapFrag
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }

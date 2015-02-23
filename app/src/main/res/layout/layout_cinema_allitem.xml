@@ -47,7 +47,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5.5 km"
         android:id="@+id/txtDistance"
         android:textStyle="italic"
         android:layout_alignParentEnd="false"

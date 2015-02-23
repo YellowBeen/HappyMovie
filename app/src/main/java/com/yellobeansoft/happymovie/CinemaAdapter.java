@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,9 @@ public class CinemaAdapter extends BaseAdapter{
         objCinema = mCinemaList.get(position);
         double dist = objCinema.getDistance();
         String txtDistance = String.format("%.2f", dist);
-        mViewHolder.distance.setText(txtDistance+"km");
+        if (dist > 0){
+            mViewHolder.distance.setText(txtDistance+"km");
+        }
 
         int sdk = android.os.Build.VERSION.SDK_INT;
         if (objCinemaFav.checkExist(mContext, objCinema)){
@@ -116,8 +119,9 @@ public class CinemaAdapter extends BaseAdapter{
                 Toast.makeText(mContext, objCinema.getName(),
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
-                intent.putExtra("Cinema", objCinema.getName());
-                intent.putExtra("CinemaTH", objCinema.getNameTH());
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("chooseCinema",objCinema);
+                intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
 
             }

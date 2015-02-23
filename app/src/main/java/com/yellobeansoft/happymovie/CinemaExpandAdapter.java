@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,10 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
         objCinema = cinemaGroupList.get(groupPosition).getCinema().get(childPosition);
         double dist = objCinema.getDistance();
         String txtDistance = String.format("%.2f", dist);
-        distance.setText(txtDistance+"km");
+        if (dist > 0){
+            distance.setText(txtDistance+"km");
+        }
+
         int sdk = android.os.Build.VERSION.SDK_INT;
         if (objCinemaFav.checkExist(context, objCinema)){
             if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
@@ -93,8 +97,9 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
                 Toast.makeText(context, objCinema.getName(),
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
-                intent.putExtra("Cinema", objCinema.getName());
-                intent.putExtra("CinemaTH", objCinema.getNameTH());
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("chooseCinema",objCinema);
+                intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
 
             }

@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,30 +114,13 @@ public class CinemaNearbyAdapter extends BaseAdapter{
                 Toast.makeText(mContext, objCinema.getName(),
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
-                intent.putExtra("Cinema", objCinema.getName());
-                intent.putExtra("CinemaTH", objCinema.getNameTH());
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("chooseCinema",objCinema);
+                intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
 
             }
         });
-        //Jack
-    /*    convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContextProvider objContext = new ContextProvider();
-                CinemaFavorite objCinemaFav = new CinemaFavorite();
-                ArrayList<Cinema> cinemaFavList = objCinemaFav.getFavorites(objContext.getContext());
-                Cinema objCinema = mCinemaList.get(position);
-                if (objCinemaFav.checkExist(objContext.getContext(), objCinema)) {
-                    objCinemaFav.removeFavorite(objContext.getContext(), objCinema);
-                } else {
-                    objCinemaFav.addFavorite(objContext.getContext(), objCinema);
-                }
-                Toast.makeText(mContext, "Fav Button" + mCinemaList.get(position).getName(),
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });//Jack        */
 
         return convertView;
     }

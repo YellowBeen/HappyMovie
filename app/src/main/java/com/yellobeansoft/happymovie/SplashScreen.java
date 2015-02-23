@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +25,8 @@ import java.util.Timer;
  */
 public class SplashScreen extends Activity {
 
+    private ProgressBar spinner;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -33,7 +37,10 @@ public class SplashScreen extends Activity {
 
         // Get the view from splash_screen.xml
         setContentView(R.layout.layout_splash);
-
+        spinner = (ProgressBar)findViewById(R.id.progressBar);
+        spinner.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF,
+                PorterDuff.Mode.SRC_ATOP);
+        spinner.setVisibility(View.VISIBLE);
         DataLoader objLoader = new DataLoader(SplashScreen.this);
         if (!objLoader.connectivityCheck()) {
             AlertDialog alertDialog = new AlertDialog.Builder(this).create();
@@ -77,6 +84,7 @@ public class SplashScreen extends Activity {
         }
 
     }
+
 
 }
 

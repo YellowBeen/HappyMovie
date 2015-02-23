@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -164,8 +165,8 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
             //return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
-                    //return new FavFragment();
-                    return new ShowtimeFragment();//Pon ShowtimeFav
+                    return new FavFragment();
+                    //return new ShowtimeFragment();//Pon ShowtimeFav
                 case 1:
                     return new NearbyFragment();
                 case 2:
@@ -173,6 +174,7 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
             }
             return null;
         }
+
 
         @Override
         public int getCount() {

@@ -1,13 +1,18 @@
 package com.yellobeansoft.happymovie;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +42,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         TextView movieTitle;
         TextView movieRating;
         TextView movieLength;
-        TextView releaseDate;
+        ImageView imgReleased;
     }
 
     public MovieStaggeredAdapter(Activity activity, int resource, ArrayList<Movies> movies) {
@@ -61,7 +66,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
             viewHolder.movieTitle = (TextView) convertView.findViewById(R.id.txtMovieTitle);
             viewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
             viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtDuration);
-        //    viewHolder.releaseDate = (TextView) convertView.findViewById(R.id.txtDate);
+            viewHolder.imgReleased = (ImageView) convertView.findViewById(R.id.imgReleased);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -85,7 +90,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         viewHolder.movieTitle.setText(movie.getMovieTitle());
         viewHolder.movieRating.setText(movie.getRating() + "/10");
         viewHolder.movieLength.setText(movie.getMovieLength());
-        //viewHolder.releaseDate.setText(movie.getDate());
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -206,7 +206,12 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
 
         // Get data from movie class
         movieTable = new MovieTable(mContext);
-        objMovie = movieTable.getMovies(showtime.getMovieTitle());
+
+        try {
+            objMovie = movieTable.getMovies(showtime.getMovieTitle());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // Set image
         String path = objMovie.getMovieImg();

@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity{
             tv.setTextColor(Color.parseColor("#ffffff"));
         }
 
-        tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#CB3641")); // selected
+        tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#B90000")); // selected
         TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
         tv.setTextColor(Color.parseColor("#ffffff"));
 
@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity{
                     tv.setTextColor(Color.parseColor("#ffffff"));
                 }
 
-                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#CB3641")); // selected
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#B90000")); // selected
                 TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
                 tv.setTextColor(Color.parseColor("#ffffff"));
 

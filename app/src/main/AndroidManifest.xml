@@ -12,6 +12,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <permission
+        android:name="com.arshad.map.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <!-- Permission to receive Google Maps -->
+    <uses-permission android:name="com.arshad.map.permission.MAPS_RECEIVE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -26,7 +33,7 @@
         android:name=".AppController"
         android:logo="@drawable/ic_change_lang"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launch_hpmv"
+        android:icon="@drawable/ic_hpmv"
         android:label="@string/app_name"
         android:theme="@style/NoActionBar" >
         <activity
