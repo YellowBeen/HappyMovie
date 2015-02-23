@@ -42,7 +42,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         TextView movieTitle;
         TextView movieRating;
         TextView movieLength;
-        ImageView imgReleased;
+        //ImageView imgReleased;
     }
 
     public MovieStaggeredAdapter(Activity activity, int resource, ArrayList<Movies> movies) {
@@ -66,7 +66,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
             viewHolder.movieTitle = (TextView) convertView.findViewById(R.id.txtMovieTitle);
             viewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
             viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtDuration);
-            viewHolder.imgReleased = (ImageView) convertView.findViewById(R.id.imgReleased);
+            //viewHolder.imgReleased = (ImageView) convertView.findViewById(R.id.imgReleased);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
