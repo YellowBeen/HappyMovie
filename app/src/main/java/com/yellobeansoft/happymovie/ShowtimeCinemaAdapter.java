@@ -82,7 +82,11 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
 
         // Get data from movie class
         movieTable = new MovieTable(mContext);
-        objMovie = movieTable.getMovies(mShowtimeList.get(position).getMovieTitle());
+        try {
+            objMovie = movieTable.getMovies(mShowtimeList.get(position).getMovieTitle());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // Set image
         String path = objMovie.getMovieImg();

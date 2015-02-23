@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -39,7 +40,7 @@ public class MovieTable {
 
 
     // getAllMovies
-    public ArrayList<Movies> getAllMovies() {
+    public ArrayList<Movies> getAllMovies() throws ParseException {
 
         ArrayList<Movies> movieList = new ArrayList<Movies>();
         readSQLite = objMyOpenHelper.getReadableDatabase();
@@ -47,6 +48,83 @@ public class MovieTable {
         Cursor objCursor = readSQLite.query(TABLE_MOVIE,
                 new String[]{COLUMN_TITLE, COLUMN_TITLE_TH, COLUMN_IMAGE, COLUMN_LENGTH, COLUMN_INFO, COLUMN_YOUTUBE, COLUMN_RATING, COLUMN_IMDB, COLUMN_DATE, COLUMN_RDATE},
                 null, null, null, null, null);
+
+        if (objCursor.moveToFirst()) {
+            do {
+                Movies movies = new Movies();
+                movies.setMovieTitle(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE)));
+                movies.setMovieTitleTH(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE_TH)));
+                movies.setMovieImg(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMAGE)));
+                movies.setURLInfo(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_INFO)));
+                movies.setURLTrailer(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_YOUTUBE)));
+                movies.setMovieLength(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LENGTH)));
+                movies.setRating(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_RATING)));
+                movies.setURLIMDB(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMDB)));
+                movies.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
+                movies.setReleaseDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_RDATE)));
+                movies.setIsNew();
+                movieList.add(movies);
+            } while (objCursor.moveToNext());
+        }
+        if (objCursor != null && !objCursor.isClosed()) {
+            objCursor.close();
+        }
+
+        readSQLite.close();
+        return movieList;
+    } // getAllMovies
+
+
+    // getMovies
+    public Movies getMovies(String strName) throws ParseException {
+
+        Movies movies = new Movies();
+        readSQLite = objMyOpenHelper.getReadableDatabase();
+        Cursor objCursor = readSQLite.rawQuery("SELECT * FROM movieTABLE WHERE movieTitle  = '"
+                + strName + "'", null);
+
+        if (objCursor.moveToFirst()) {
+            do {
+                movies.setMovieTitle(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE)));
+                movies.setMovieTitleTH(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE_TH)));
+                movies.setMovieImg(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMAGE)));
+                movies.setURLInfo(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_INFO)));
+                movies.setURLTrailer(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_YOUTUBE)));
+                movies.setMovieLength(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LENGTH)));
+                movies.setRating(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_RATING)));
+                movies.setURLIMDB(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMDB)));
+                movies.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
+                movies.setReleaseDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_RDATE)));
+                movies.setIsNew();
+            } while (objCursor.moveToNext());
+        }
+
+        if (objCursor != null && !objCursor.isClosed()) {
+            objCursor.close();
+        }
+
+        readSQLite.close();
+        return movies;
+    } // getMovies
+
+
+    // getAllMoviesSortBy
+    public ArrayList<Movies> getAllMoviesSortBy(String strSort) {
+
+        ArrayList<Movies> movieList = new ArrayList<Movies>();
+        readSQLite = objMyOpenHelper.getReadableDatabase();
+        String strQuery = new String();
+
+        switch (strSort) {
+            case "Date":
+                strQuery = "SELECT * FROM movieTABLE ORDER BY DATETIME(Date) DESC, movieTitle ASC";
+            case "Rate":
+                strQuery = "SELECT * FROM movieTABLE ORDER BY imdb_rating DESC, movieTitle ASC";
+            case "Name":
+                strQuery = "SELECT * FROM movieTABLE ORDER BY movieTitle ASC";
+        }
+
+        Cursor objCursor = readSQLite.rawQuery(strQuery, null);
 
         if (objCursor.moveToFirst()) {
             do {
@@ -71,40 +149,6 @@ public class MovieTable {
 
         readSQLite.close();
         return movieList;
-    } // getAllMovies
-
-    // getMovies
-    public Movies getMovies(String strName) {
-
-        Movies movies = new Movies();
-
-        readSQLite = objMyOpenHelper.getReadableDatabase();
-
-        Cursor objCursor = readSQLite.rawQuery("SELECT * FROM movieTABLE WHERE movieTitle  = '"
-                + strName + "'", null);
-
-        if (objCursor.moveToFirst()) {
-            do {
-                movies.setMovieTitle(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE)));
-                movies.setMovieTitleTH(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE_TH)));
-                movies.setMovieImg(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMAGE)));
-                movies.setURLInfo(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_INFO)));
-                movies.setURLTrailer(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_YOUTUBE)));
-                movies.setMovieLength(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LENGTH)));
-                movies.setRating(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_RATING)));
-                movies.setURLIMDB(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMDB)));
-                movies.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
-                movies.setReleaseDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_RDATE)));
-
-            } while (objCursor.moveToNext());
-        }
-
-        if (objCursor != null && !objCursor.isClosed()) {
-            objCursor.close();
-        }
-
-        readSQLite.close();
-        return movies;
     } // getMovies
 
 
@@ -117,6 +161,11 @@ public class MovieTable {
 
     public void addNewMovie(String strTitle, String strTitleTH, String strImage, String strLength, String strYoutube, String strRating, String strDate, String strIMDB, String strRDate) throws IOException {
         writeSQLite = objMyOpenHelper.getWritableDatabase();
+
+        if (strIMDB.equals("n/A")) {
+            strIMDB = "-";
+        }
+
         try {
             ContentValues objContentValues = new ContentValues();
             objContentValues.put(COLUMN_TITLE, strTitle);
