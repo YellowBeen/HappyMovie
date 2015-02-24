@@ -142,7 +142,8 @@ public class DataLoader {
                 String strGroup = objJSONObject.getString("SubBrand");
                 String strLat = objJSONObject.getString("Latitude");
                 String strLong = objJSONObject.getString("Longitude");
-                objCinemaTab.addNewCinema(strName, strNameTH, "", strBrand, strGroup, strLat, strLong);
+                String strPhone = objJSONObject.getString("Phone");
+                objCinemaTab.addNewCinema(strName, strNameTH, strPhone, strBrand, strGroup, strLat, strLong);
             }
 
             objCinemaTab.closeDB();
