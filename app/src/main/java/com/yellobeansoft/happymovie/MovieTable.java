@@ -109,19 +109,20 @@ public class MovieTable {
 
 
     // getAllMoviesSortBy
-    public ArrayList<Movies> getAllMoviesSortBy(String strSort) {
+    public ArrayList<Movies> getAllMoviesSortBy(String strSort) throws ParseException {
 
         ArrayList<Movies> movieList = new ArrayList<Movies>();
         readSQLite = objMyOpenHelper.getReadableDatabase();
         String strQuery = new String();
 
-        switch (strSort) {
-            case "Date":
-                strQuery = "SELECT * FROM movieTABLE ORDER BY DATETIME(Date) DESC, movieTitle ASC";
-            case "Rate":
-                strQuery = "SELECT * FROM movieTABLE ORDER BY imdb_rating DESC, movieTitle ASC";
-            case "Name":
-                strQuery = "SELECT * FROM movieTABLE ORDER BY movieTitle ASC";
+        if (strSort.equals("Date")) {
+            strQuery = "SELECT * FROM movieTABLE ORDER BY DATETIME(Date) DESC, movieTitle ASC";
+        } else if (strSort.equals("Rate")) {
+            strQuery = "SELECT * FROM movieTABLE ORDER BY imdb_rating DESC, movieTitle ASC";
+        } else if (strSort.equals("Name")) {
+            strQuery = "SELECT * FROM movieTABLE ORDER BY movieTitle ASC";
+        } else {
+            strQuery = "SELECT * FROM movieTABLE ORDER BY DATETIME(Date) DESC, movieTitle ASC";
         }
 
         Cursor objCursor = readSQLite.rawQuery(strQuery, null);
@@ -139,6 +140,7 @@ public class MovieTable {
                 movies.setURLIMDB(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_IMDB)));
                 movies.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
                 movies.setReleaseDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_RDATE)));
+                movies.setIsNew();
                 movieList.add(movies);
             } while (objCursor.moveToNext());
         }
@@ -162,8 +164,8 @@ public class MovieTable {
     public void addNewMovie(String strTitle, String strTitleTH, String strImage, String strLength, String strYoutube, String strRating, String strDate, String strIMDB, String strRDate) throws IOException {
         writeSQLite = objMyOpenHelper.getWritableDatabase();
 
-        if (strIMDB.equals("n/A")) {
-            strIMDB = "-";
+        if (strRating.equals("n/A")) {
+            strRating = " - ";
         }
 
         try {
