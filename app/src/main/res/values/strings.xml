@@ -12,6 +12,9 @@
     <string name="viewpager2">Nearby</string>
     <string name="viewpager3">All Cinemas</string>
     <string name="progress">Loading...</string>
+    <string name="banner_ad_unit_id">ca-app-pub-4778817278811442/2583198418</string>
+    <string name="menu_about">About</string>
+    <string name="menu_feedback">Feedback</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_showtime_fragment">ShowtimeFragmentActivity</string>

@@ -42,7 +42,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         TextView movieTitle;
         TextView movieRating;
         TextView movieLength;
-        //ImageView imgReleased;
+        ImageView imgIsNew;
     }
 
     public MovieStaggeredAdapter(Activity activity, int resource, ArrayList<Movies> movies) {
@@ -65,8 +65,8 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
                     (DynamicHeightImageView) convertView.findViewById(R.id.image);
             viewHolder.movieTitle = (TextView) convertView.findViewById(R.id.txtMovieTitle);
             viewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
-            viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtDuration);
-            //viewHolder.imgReleased = (ImageView) convertView.findViewById(R.id.imgReleased);
+        //    viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtDuration);
+            viewHolder.imgIsNew = (ImageView) convertView.findViewById(R.id.imgReleased);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -85,11 +85,15 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
 
         ImageLoader imageLoader = MyVolleySingleton.getInstance(getContext()).getImageLoader();
         imageLoader.get(path, ImageLoader.getImageListener(
-                viewHolder.imageView, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
-
+        viewHolder.imageView, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+        if (movie.getIsNew()) {
+            viewHolder.imgIsNew.setBackgroundResource(R.drawable.ic_new_released);
+        } else {
+            viewHolder.imgIsNew.setBackgroundResource(0);
+        }
         viewHolder.movieTitle.setText(movie.getMovieTitle());
         viewHolder.movieRating.setText(movie.getRating() + "/10");
-        viewHolder.movieLength.setText(movie.getMovieLength());
+        //viewHolder.movieLength.setText(movie.getMovieLength());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -48,6 +48,9 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
         MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
         ArrayList<Movies> movieList = new ArrayList<Movies>();
+
+
+        //movieList = objMovieTab.getAllMoviesSortBy("Date");
         try {
             movieList = objMovieTab.getAllMovies();
         } catch (ParseException e) {
@@ -63,7 +66,7 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_movie, menu);
         return true;
     }
 
@@ -71,9 +74,9 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.action_settings:
+            case R.id.feedback:
                 return true;
-            case R.id.filter:
+            case R.id.about:
                 return true;
 
         }

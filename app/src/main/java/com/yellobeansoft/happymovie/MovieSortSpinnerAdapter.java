@@ -19,6 +19,8 @@ public class MovieSortSpinnerAdapter extends BaseAdapter{
     private ArrayList<SpinnerMoviesSort> spinnerSort;
     private Context context;
 
+
+
     public MovieSortSpinnerAdapter(ArrayList<SpinnerMoviesSort> spinnerSort, Context context) {
         this.spinnerSort = spinnerSort;
         this.context = context;

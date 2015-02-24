@@ -6,6 +6,8 @@
         android:minSdkVersion="17"
         android:targetSdkVersion="19" />
 
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -13,25 +15,18 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="com.arshad.map.permission.MAPS_RECEIVE" />
+
     <permission
         android:name="com.arshad.map.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <!-- Permission to receive Google Maps -->
-    <uses-permission android:name="com.arshad.map.permission.MAPS_RECEIVE" />
-
-    <uses-feature
+  <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
 
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
-
     <application
         android:name=".AppController"
-        android:logo="@drawable/ic_change_lang"
         android:allowBackup="true"
         android:icon="@drawable/ic_hpmv"
         android:label="@string/app_name"
@@ -53,13 +48,22 @@
             android:name=".CinemaFragmentActivity"
             android:label="@string/title_activity_cinema_fragment" >
         </activity>
+        <activity android:name=".ShowtimeCinemaActivity" >
+        </activity>
 
+        <!--Include the AdActivity configChanges and theme. -->
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <!--This meta-data tag is required to use Google Play Services.-->
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCG9e6hFUlGasNfEiKf_Yh7Hg9YWdtq4Mk" />
 
-        <activity android:name=".ShowtimeCinemaActivity" >
-        </activity>
+
     </application>
 
 </manifest>
