@@ -1,0 +1,72 @@
+package com.yellobeansoft.happymovie;
+
+import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+/**
+ * Created by Beboyz on 2/26/15 AD.
+ */
+public class SpinnerNavAdapter extends BaseAdapter {
+
+        private ImageView imgIcon;
+        private TextView txtSort;
+        private ArrayList<SpinnerNavItem> spinnerNavItem;
+        private Context context;
+
+        public SpinnerNavAdapter(Context context,
+                                      ArrayList<SpinnerNavItem> spinnerNavItem) {
+            this.spinnerNavItem = spinnerNavItem;
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return spinnerNavItem.size();
+        }
+
+        @Override
+        public Object getItem(int index) {
+            return spinnerNavItem.get(index);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                LayoutInflater mInflater = (LayoutInflater)
+                        context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                convertView = mInflater.inflate(R.layout.layout_sort_item, null);
+            }
+
+            txtSort = (TextView) convertView.findViewById(R.id.txtSort);
+            txtSort.setText(spinnerNavItem.get(position).getTitle());
+            return convertView;
+        }
+
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                LayoutInflater mInflater = (LayoutInflater)
+                        context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                convertView = mInflater.inflate(R.layout.layout_sort_item, null);
+            }
+
+            txtSort = (TextView) convertView.findViewById(R.id.txtSort);
+            txtSort.setText(spinnerNavItem.get(position).getTitle());
+            return convertView;
+        }
+
+    }

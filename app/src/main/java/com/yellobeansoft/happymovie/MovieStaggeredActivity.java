@@ -1,6 +1,8 @@
 package com.yellobeansoft.happymovie;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -33,6 +35,9 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
     private static long back_pressed;
     private int sortPosition;
 
+    // Title navigation Spinner data
+    private ArrayList<SpinnerNavItem> navSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +46,29 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setIcon(R.drawable.ic_launch_hpmv);
-        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+        navSpinner = new ArrayList<SpinnerNavItem>();
+        navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_date)));
+        navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_imdb)));
+        navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_name)));
+        navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_popular)));
+
+        // title drop down adapter
+        SpinnerNavAdapter spinneradapter = new SpinnerNavAdapter(getApplicationContext(), navSpinner);
+        // assigning the spinner navigation
+        actionBar.setListNavigationCallbacks(spinneradapter, this);
+        // Sort default by Movie Release Date
+        getMoviesListAndSetAdapter(getResources().getString(R.string.sort_date));
+
+
+    }
+    private void getMoviesListAndSetAdapter(String sortby) {
 
         MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
         ArrayList<Movies> movieList = new ArrayList<Movies>();
         try {
-            movieList = objMovieTab.getAllMoviesSortBy("Date");
+            movieList = objMovieTab.getAllMoviesSortBy(sortby);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -55,6 +77,18 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         mAdapter = new MovieStaggeredAdapter(MovieStaggeredActivity.this, R.layout.layout_staggered_list, movieList);
         mGridView.setAdapter(mAdapter);
 
+    }
+    @Override
+    public boolean onNavigationItemSelected(int i, long l) {
+        String sortby = new String();
+        switch (i) {
+            case 0: sortby = getResources().getString(R.string.sort_date); break;
+            case 1: sortby = getResources().getString(R.string.sort_imdb); break;
+            case 2: sortby = getResources().getString(R.string.sort_name); break;
+            case 3: sortby = getResources().getString(R.string.sort_name); break;
+        }
+        getMoviesListAndSetAdapter(sortby);
+        return true;
     }
 
     @Override
@@ -69,6 +103,11 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
         switch (item.getItemId()){
             case R.id.feedback:
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", getResources().getString(R.string.feedback_mail), null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feedback_subj));
+                emailIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.feedback_text));
+                startActivity(Intent.createChooser(emailIntent, getResources().getString(R.string.feedback_send_action)));
                 return true;
             case R.id.aboutus:
                 return true;
@@ -86,8 +125,5 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
     }
 
-    @Override
-    public boolean onNavigationItemSelected(int i, long l) {
-        return false;
-    }
+
 }

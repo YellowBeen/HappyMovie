@@ -54,6 +54,7 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mSectionsPagerAdapter.notifyDataSetChanged();
         // Add Tabstrip
         PagerTabStrip pagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
         pagerTabStrip.setTabIndicatorColor(Color.RED);
