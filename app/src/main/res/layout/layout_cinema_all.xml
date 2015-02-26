@@ -14,8 +14,8 @@
         android:background="@drawable/card_bg_cinema_item"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
         android:queryHint="Search Cinema" />
     </FrameLayout>
 

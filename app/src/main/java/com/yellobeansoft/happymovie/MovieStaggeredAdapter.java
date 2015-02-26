@@ -92,7 +92,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
             viewHolder.imgIsNew.setBackgroundResource(0);
         }
         viewHolder.movieTitle.setText(movie.getMovieTitle());
-        viewHolder.movieRating.setText(movie.getRating() + "/10");
+        viewHolder.movieRating.setText(movie.getRating());
         //viewHolder.movieLength.setText(movie.getMovieLength());
 
         convertView.setOnClickListener(new View.OnClickListener() {

@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.etsy.android.grid.StaggeredGridView;
@@ -22,11 +28,10 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
     private StaggeredGridView mGridView;
     private MovieStaggeredAdapter mAdapter;
     private ActionBar actionBar;
-    private ArrayList<SpinnerMoviesSort> sortSpinner;
-    private MovieSortSpinnerAdapter sortAdapter;
     // Progress Dialog
     private ProgressDialog pDialog;
     private static long back_pressed;
+    private int sortPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +40,8 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        actionBar.setIcon(getResources().getDrawable(R.drawable.ic_launch_hpmv));
-        // Spinner title navigation data
-        sortSpinner = new ArrayList<SpinnerMoviesSort>();
-        sortSpinner.add(new SpinnerMoviesSort("Sort by Date"));
-        sortSpinner.add(new SpinnerMoviesSort("Name"));
-        sortSpinner.add(new SpinnerMoviesSort("IMDB Rating"));
-
-        sortAdapter = new MovieSortSpinnerAdapter(sortSpinner, getApplicationContext());
-        actionBar.setListNavigationCallbacks(sortAdapter, this);
+        actionBar.setIcon(R.drawable.ic_launch_hpmv);
+        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
         MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
         ArrayList<Movies> movieList = new ArrayList<Movies>();
@@ -62,8 +59,8 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_movie, menu);
         return true;
     }
 
@@ -71,9 +68,9 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.action_settings:
+            case R.id.feedback:
                 return true;
-            case R.id.filter:
+            case R.id.aboutus:
                 return true;
 
         }

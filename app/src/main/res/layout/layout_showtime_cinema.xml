@@ -40,7 +40,7 @@
                 android:layout_height="30dp"
                 android:id="@+id/btnPhone"
                 android:layout_weight="1"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="7dp"
                 android:layout_gravity="top"
                 android:background="@drawable/ic_phone" />
 

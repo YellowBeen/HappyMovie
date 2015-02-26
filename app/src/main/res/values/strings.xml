@@ -20,4 +20,11 @@
     <string name="title_activity_showtime_fragment">ShowtimeFragmentActivity</string>
     <string name="title_activity_showtime_cinema">ShowtimeCinemaActivity</string>
 
+    <string-array name="sortmovie">
+        <item>Date</item>
+        <item>Name</item>
+        <item>Rating</item>
+    </string-array>
+
+
 </resources>
