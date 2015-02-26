@@ -9,6 +9,7 @@ import android.location.Location;
 import android.util.Log;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 
@@ -49,6 +50,10 @@ public class CinemaTABLE {
         return this.getAll("X");
     }//getAllCinemas
 
+    //getAllCinemasByMovie
+    public ArrayList<Cinema> getAllCinemasByMovie(String strMovie) throws ParseException {
+        return this.getAllByMovie(strMovie, "X");
+    }//getAllCinemas
 
     //getNearByCinemas
     public ArrayList<Cinema> getNearByCinemas() {
@@ -91,28 +96,79 @@ public class CinemaTABLE {
     }//getNearByCinemas
 
 
-    //getCinemaByMovie
-    public ArrayList<Cinema> getCinemaByMovie (String strMovie) {
+    //getNearByCinemas
+    public ArrayList<Cinema> getNearByCinemasByMovie(String strMovie) {
+
+        ArrayList<Cinema> allCinemaList = new ArrayList<Cinema>();
         ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
+
+        GPSTracker gps;
+
+        try {
+
+            gps = new GPSTracker(sContext);
+            if (gps.canGetLocation()) {
+                this.updateDistance(gps.getLocation());
+                allCinemaList = this.getAllByMovie(strMovie, "NEAR");
+
+                for (int i = 0; i < allCinemaList.size(); i++) {
+                    Cinema objCinema = (Cinema) allCinemaList.get(i);
+                    cinemaList.add(objCinema);
+
+                    if (i == 4) {
+                        i = allCinemaList.size() + 1;
+                    }
+                }
+
+                return cinemaList;
+
+            } else {
+//            gps.showSettingsAlert();
+                cinemaList = null;
+                return cinemaList;
+            }
+
+        } catch (Exception e) {
+            Log.d("CINEMA", "Error from getNearByCinemas => " + e.toString());
+            cinemaList = null;
+            return cinemaList;
+        }
+
+    }//getNearByCinemas
+
+    //getCinemaByMovie
+    private ArrayList<Cinema> getAllByMovie (String strMovie,String strSortType) throws ParseException {
+        ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
+        String strSort;
+
+        if (strSortType.equals("NEAR")) {
+            strSort = COLUMN_DIST + " ASC";
+        } else {
+            strSort = COLUMN_NAME + " ASC";
+        }
 
         readSQLite = objMyOpenHelper.getReadableDatabase();
 
-        Cursor objCursor = readSQLite.rawQuery("SELECT DISTINCT cinemaTABLE.* FROM cinemaTABLE INNER JOIN showtimeTABLE " +
-                "ON cinemaTABLE.CinemaName = showtimeTABLE.CinemaName WHERE showtimeTABLE.movieTitle = '" + strMovie + "'", null);
+        Cursor objCursor = readSQLite.query(TABLE_CINEMA, new String[]{COLUMN_NAME, COLUMN_NAME_TH, COLUMN_BRAND, COLUMN_SUB_BRAND,
+                COLUMN_PHONE, COLUMN_LAT, COLUMN_LONG, COLUMN_DIST}, null, null, null, null, strSort);
 
         if (objCursor.moveToFirst()) {
 
             do {
-                Cinema objCinema = new Cinema();
-                objCinema.setName(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME)));
-                objCinema.setNameTH(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME_TH)));
-                objCinema.setBrand(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_BRAND)));
-                objCinema.setGroup(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_SUB_BRAND)));
-                objCinema.setPhone(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_PHONE)));
-                objCinema.setLatitude(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LAT)));
-                objCinema.setLongtitude(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LONG)));
-                objCinema.setDistance(objCursor.getDouble(objCursor.getColumnIndexOrThrow(COLUMN_DIST)));
-                cinemaList.add(objCinema);
+                ShowTimeTABLE objShowTab = new ShowTimeTABLE(sContext);
+                if (objShowTab.checkCinemaShowTime(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME)),strMovie)){
+                    Cinema objCinema = new Cinema();
+                    objCinema.setName(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME)));
+                    objCinema.setNameTH(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME_TH)));
+                    objCinema.setBrand(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_BRAND)));
+                    objCinema.setGroup(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_SUB_BRAND)));
+                    objCinema.setPhone(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_PHONE)));
+                    objCinema.setLatitude(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LAT)));
+                    objCinema.setLongtitude(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LONG)));
+                    objCinema.setDistance(objCursor.getDouble(objCursor.getColumnIndexOrThrow(COLUMN_DIST)));
+                    cinemaList.add(objCinema);
+                }
+
             } while (objCursor.moveToNext());
 
             if (objCursor != null && !objCursor.isClosed()) {
@@ -126,7 +182,6 @@ public class CinemaTABLE {
         }
 
     }//getCinemaByMovie
-
 
     //getAll
     private ArrayList<Cinema> getAll(String strSortType) {
@@ -210,7 +265,6 @@ public class CinemaTABLE {
         writeSQLite = objMyOpenHelper.getWritableDatabase();
         writeSQLite.delete(TABLE_CINEMA, null, null);
 }
-
 
     public void addNewCinema(String strName, String strNameTH, String strPhone, String strBrand, String strGroup, String strLat, String strLong){
         try {

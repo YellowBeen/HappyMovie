@@ -3,17 +3,18 @@ package com.yellobeansoft.happymovie;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+
+import com.google.common.collect.*;
+import com.google.common.base.Predicate;
+import com.google.gson.Gson;
 
 /**
  * Created by Jirawut-Jack on 23/01/2015.
@@ -99,58 +100,57 @@ public class ShowTimeTABLE {
         editor.commit();
     }
 
-
     //getShowTimeByCinema
-    public ArrayList<ShowTime> getShowTimeByCinemaX(String strCinema, String strTime) throws ParseException {
-
-        ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
-
-        String strQuery = "SELECT * FROM showtimeTABLE " +
-                          "WHERE CinemaName = '" + strCinema + "'";
-
-        Cursor objCursor = readSQLite.rawQuery(strQuery, null);
-
-        if (objCursor.moveToFirst()) {
-
-            do {
-                ShowTime objShowTime = new ShowTime();
-                objShowTime.setName(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME)));
-                objShowTime.setMovieTitle(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE)));
-                objShowTime.setScreen(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_SCREEN)));
-                objShowTime.setScreen(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_SCREEN)));
-                objShowTime.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
-                objShowTime.setType(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TYPE)));
-                objShowTime.setTimeID(objCursor.getInt(objCursor.getColumnIndexOrThrow(COLUMN_TIMEID)));
-                objShowTime.setTime(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TIME)));
-                objShowTime.setTimeList(strTime);
-
-                if (objShowTime.getTimeList().size() > 0){
-                    showTimeList.add(objShowTime);
-                }
-
-            } while (objCursor.moveToNext());
-
-            if (objCursor != null && !objCursor.isClosed()) {
-                objCursor.close();
-            }
-            this.closeDB();
-            return showTimeList;
-
-        } else {
-            showTimeList = null;
-            this.closeDB();
-            return showTimeList;
-        }
-    }//getShowTimeByCinema
-
-
-
-    //getShowTimeByCinema
-    public ArrayList<ShowTime> getShowTimeByCinema(String strCinema, String strTime) throws ParseException {
+    public ArrayList<ShowTime> getShowTimeByCinema(final String strCinema, String strTime) throws ParseException {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
         ArrayList<ShowTime> newList = new ArrayList<ShowTime>();
         List<ShowTime> ShowTimes;
+        Collection<ShowTime> MyShowTimes;
+        SharedPreferences settings;
+
+        settings = sContext.getSharedPreferences(PREFS_NAME,
+                Context.MODE_PRIVATE);
+
+        if (settings.contains(SHOWTIME)) {
+            String jsonFavorites = settings.getString(SHOWTIME, null);
+            Gson gson = new Gson();
+            ShowTime[] ShowTimeItems = gson.fromJson(jsonFavorites,
+                    ShowTime[].class);
+
+            ShowTimes = Arrays.asList(ShowTimeItems);
+
+            Predicate<ShowTime> predicate = new Predicate<ShowTime>() {
+                @Override
+                public boolean apply(ShowTime input) {
+                    return input.getName().equals(strCinema);
+                }
+            };
+
+            MyShowTimes = Collections2.filter(ShowTimes, predicate);
+            showTimeList = new ArrayList<ShowTime>(MyShowTimes);
+        }
+
+        for (int i = 0; i < showTimeList.size(); i++) {
+            ShowTime objShowTime = showTimeList.get(i);
+            objShowTime.setTimeList(strTime);
+            if (objShowTime.getTimeList().size() > 0) {
+                newList.add(objShowTime);
+            }
+        }
+
+        return newList;
+
+    }//getShowTimeByCinema
+
+
+    //getShowTimeByMovieCinema
+    public ArrayList<ShowTime> getShowTimeByMovieCinema(final String strMovie, final String strCinema, String strTime) throws ParseException {
+
+        ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
+        ArrayList<ShowTime> newList = new ArrayList<ShowTime>();
+        List<ShowTime> ShowTimes;
+        Collection<ShowTime> MyShowTimes;
 
         SharedPreferences settings;
 
@@ -164,78 +164,38 @@ public class ShowTimeTABLE {
                     ShowTime[].class);
 
             ShowTimes = Arrays.asList(ShowTimeItems);
-            showTimeList = new ArrayList<ShowTime>(ShowTimes);
-        } ;
+
+            Predicate<ShowTime> predicate = new Predicate<ShowTime>() {
+                @Override
+                public boolean apply(ShowTime input) {
+                    return ( input.getName().equals(strCinema) && input.getMovieTitle().equals(strMovie));
+                }
+            };
+
+            MyShowTimes = Collections2.filter(ShowTimes, predicate);
+            showTimeList = new ArrayList<ShowTime>(MyShowTimes);
+        };
 
         for (int i = 0; i < showTimeList.size(); i++) {
             ShowTime objShowTime = showTimeList.get(i);
-
-            if (objShowTime.getName().equals(strCinema)) {
-                objShowTime.setTimeList(strTime);
-                if (objShowTime.getTimeList().size() > 0){
-                    newList.add(objShowTime);
-                }
+            objShowTime.setTimeList(strTime);
+            if (objShowTime.getTimeList().size() > 0) {
+                newList.add(objShowTime);
             }
-
         }
 
         return newList;
 
-    }//getShowTimeByCinema
-
-
-    //getShowTimeByMovie
-    public ArrayList<ShowTime> getShowTimeByMovieX(String strMovie, String strTime) throws ParseException {
-
-        ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
-
-//        String strQuery = "SELECT DISTINCT showtimeTABLE.* FROM showtimeTABLE INNER JOIN timeTABLE " +
-//                "ON showtimeTABLE.Time_id = timeTABLE.Time_id " +
-//                "WHERE showtimeTABLE.movieTitle = '" + strMovie + "'";
-
-        String strQuery = "SELECT * FROM showtimeTABLE " +
-                          "WHERE movieTitle = '" + strMovie + "'";
-
-        Cursor objCursor = readSQLite.rawQuery(strQuery, null);
-
-        if (objCursor.moveToFirst()) {
-
-            do {
-                ShowTime objShowTime = new ShowTime();
-                objShowTime.setName(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME)));
-                objShowTime.setMovieTitle(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TITLE)));
-                objShowTime.setScreen(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_SCREEN)));
-                objShowTime.setScreen(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_SCREEN)));
-                objShowTime.setDate(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_DATE)));
-                objShowTime.setType(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_TYPE)));
-                objShowTime.setTimeID(objCursor.getInt(objCursor.getColumnIndexOrThrow(COLUMN_TIMEID)));
-                objShowTime.setTimeList(strTime);
-
-                if (objShowTime.getTimeList().size() > 0){
-                    showTimeList.add(objShowTime);
-                }
-
-            } while (objCursor.moveToNext());
-
-            if (objCursor != null && !objCursor.isClosed()) {
-                objCursor.close();
-            }
-            this.closeDB();
-            return showTimeList;
-        } else {
-            showTimeList = null;
-            this.closeDB();
-            return showTimeList;
-        }
-    }//getShowTimeByMovie
+    }//getShowTimeByMovieCinema
 
 
     //getShowTimeByCinema
-    public ArrayList<ShowTime> getShowTimeByMovie(String strMovie, String strTime) throws ParseException {
+    public boolean checkCinemaShowTime(final String strCinema,final String strMovie) throws ParseException {
 
         ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
         ArrayList<ShowTime> newList = new ArrayList<ShowTime>();
         List<ShowTime> ShowTimes;
+        Collection<ShowTime> MyShowTimes;
 
         SharedPreferences settings;
 
@@ -249,22 +209,26 @@ public class ShowTimeTABLE {
                     ShowTime[].class);
 
             ShowTimes = Arrays.asList(ShowTimeItems);
-            showTimeList = new ArrayList<ShowTime>(ShowTimes);
-        } ;
 
-        for (int i = 0; i < showTimeList.size(); i++) {
-            ShowTime objShowTime = showTimeList.get(i);
-
-            if (objShowTime.getMovieTitle().equals(strMovie)) {
-                objShowTime.setTimeList(strTime);
-                if (objShowTime.getTimeList().size() > 0){
-                    newList.add(objShowTime);
+            Predicate<ShowTime> predicate = new Predicate<ShowTime>() {
+                @Override
+                public boolean apply(ShowTime input) {
+                    return (input.getName().equals(strCinema) && input.getMovieTitle().equals(strMovie));
                 }
+            };
+
+            MyShowTimes = Collections2.filter(ShowTimes, predicate);
+            showTimeList = new ArrayList<ShowTime>(MyShowTimes);
+
+            if (MyShowTimes.size() > 0) {
+                return true;
+            } else {
+                return false;
             }
 
-        }
+        } ;
 
-        return newList;
+        return false;
 
     }//getShowTimeByCinema
 
@@ -273,7 +237,6 @@ public class ShowTimeTABLE {
         writeSQLite.close();
         readSQLite.close();
     }
-
 
 
 }

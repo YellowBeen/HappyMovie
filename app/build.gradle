@@ -11,6 +11,12 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    repositories {
+        mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -18,7 +24,6 @@ android {
         }
     }
 }
-
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -31,6 +36,5 @@ dependencies {
     compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
     compile 'com.loopj.android:android-async-http:1.4.4'
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.1'
-    compile files('/Users/Beboyz/AndroidStudioProjects/HappyMovie/libs/google-gson-2.2.4/gson-2.2.4.jar')
-    compile files('/Users/Beboyz/AndroidStudioProjects/HappyMovie/libs/volley.jar')
+    compile group: 'com.google.guava', name: 'guava', version: '15.0'
 }
