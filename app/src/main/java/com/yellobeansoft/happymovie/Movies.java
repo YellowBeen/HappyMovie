@@ -23,6 +23,15 @@ public class Movies {
     private String Date;
     private String ReleaseDate;
     private Boolean isNew;
+    private Integer showtimeCount;
+
+    public Integer getShowtimeCount() {
+        return showtimeCount;
+    }
+
+    public void setShowtimeCount(Integer showtimeCount) {
+        this.showtimeCount = showtimeCount;
+    }
 
     public Boolean getIsNew() {
         return isNew;

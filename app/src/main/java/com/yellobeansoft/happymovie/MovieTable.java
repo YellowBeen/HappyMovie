@@ -30,6 +30,7 @@ public class MovieTable {
     public static final String COLUMN_IMDB = "imdb_url";
     public static final String COLUMN_DATE = "Date";
     public static final String COLUMN_RDATE = "Release_Date";
+    public static final String COLUMN_SHOWC = "ShowTimeCount";
 
     public static final String PREFS_NAME = "CINEMA_APP";
     public static final String SHOWTIME = "MOVIE";
@@ -121,6 +122,8 @@ public class MovieTable {
             strQuery = "SELECT * FROM movieTABLE ORDER BY imdb_rating DESC, movieTitle ASC";
         } else if (strSort.equals("Name")) {
             strQuery = "SELECT * FROM movieTABLE ORDER BY movieTitle ASC";
+        } else if (strSort.equals("Popular")) {
+            strQuery = "SELECT * FROM movieTABLE ORDER BY ShowTimeCount DESC";
         } else {
             strQuery = "SELECT * FROM movieTABLE ORDER BY DATETIME(Date) DESC, movieTitle ASC";
         }
@@ -161,7 +164,7 @@ public class MovieTable {
     }
 
 
-    public void addNewMovie(String strTitle, String strTitleTH, String strImage, String strLength, String strYoutube, String strRating, String strDate, String strIMDB, String strRDate) throws IOException {
+    public void addNewMovie(String strTitle, String strTitleTH, String strImage, String strLength, String strYoutube, String strRating, String strDate, String strIMDB, String strRDate, Integer intShowC) throws IOException {
         writeSQLite = objMyOpenHelper.getWritableDatabase();
 
         if (strRating.equals("n/A")) {
@@ -179,6 +182,7 @@ public class MovieTable {
             objContentValues.put(COLUMN_IMDB, strIMDB);
             objContentValues.put(COLUMN_DATE, strDate);
             objContentValues.put(COLUMN_RDATE, strRDate);
+            objContentValues.put(COLUMN_SHOWC, intShowC);
             writeSQLite.insertOrThrow(TABLE_MOVIE, null, objContentValues);
         } catch (Exception e) {
             writeSQLite.close();

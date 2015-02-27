@@ -96,7 +96,7 @@ public class CinemaTABLE {
     }//getNearByCinemas
 
 
-    //getNearByCinemas
+    //getNearByCinemasByMovie
     public ArrayList<Cinema> getNearByCinemasByMovie(String strMovie) {
 
         ArrayList<Cinema> allCinemaList = new ArrayList<Cinema>();
@@ -134,7 +134,7 @@ public class CinemaTABLE {
             return cinemaList;
         }
 
-    }//getNearByCinemas
+    }//getNearByCinemasByMovie
 
     //getCinemaByMovie
     private ArrayList<Cinema> getAllByMovie (String strMovie,String strSortType) throws ParseException {

@@ -85,7 +85,7 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
             case 0: sortby = getResources().getString(R.string.sort_date); break;
             case 1: sortby = getResources().getString(R.string.sort_imdb); break;
             case 2: sortby = getResources().getString(R.string.sort_name); break;
-            case 3: sortby = getResources().getString(R.string.sort_name); break;
+            case 3: sortby = getResources().getString(R.string.sort_popular); break;
         }
         getMoviesListAndSetAdapter(sortby);
         return true;
