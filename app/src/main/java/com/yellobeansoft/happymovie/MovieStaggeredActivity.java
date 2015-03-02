@@ -30,12 +30,7 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
     private StaggeredGridView mGridView;
     private MovieStaggeredAdapter mAdapter;
     private ActionBar actionBar;
-    // Progress Dialog
-    private ProgressDialog pDialog;
     private static long back_pressed;
-    private int sortPosition;
-
-    // Title navigation Spinner data
     private ArrayList<SpinnerNavItem> navSpinner;
 
     @Override
@@ -50,9 +45,10 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
         navSpinner = new ArrayList<SpinnerNavItem>();
         navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_date)));
+        navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_popular)));
         navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_imdb)));
         navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_name)));
-        navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_popular)));
+
 
         // title drop down adapter
         SpinnerNavAdapter spinneradapter = new SpinnerNavAdapter(getApplicationContext(), navSpinner);
@@ -83,9 +79,9 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         String sortby = new String();
         switch (i) {
             case 0: sortby = getResources().getString(R.string.sort_date); break;
-            case 1: sortby = getResources().getString(R.string.sort_imdb); break;
-            case 2: sortby = getResources().getString(R.string.sort_name); break;
-            case 3: sortby = getResources().getString(R.string.sort_popular); break;
+            case 1: sortby = getResources().getString(R.string.sort_popular); break;
+            case 2: sortby = getResources().getString(R.string.sort_imdb); break;
+            case 3: sortby = getResources().getString(R.string.sort_name); break;
         }
         getMoviesListAndSetAdapter(sortby);
         return true;

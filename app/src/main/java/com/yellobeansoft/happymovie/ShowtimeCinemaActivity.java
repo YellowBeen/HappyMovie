@@ -24,6 +24,7 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,7 +45,6 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
     private Button btnPhone;
     private Bundle bundle;
     private Cinema chooseObjCinema;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,9 +157,30 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
             setupShowtimeAdapter();
         }
 
-        Date date = new Date();
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
-        txtShowDate.setText(dateFormat.format(date));
+        txtShowDate.setText(GetShowtimeUpdatedDate());
+    }
+
+    public String GetShowtimeUpdatedDate() {
+        String txtShowtimeUpdDate;
+        Date dateShowtimeUpdDate = new Date();
+        DataLoader dataLoader = new DataLoader(this);
+        DateFormat dateToFormat = DateFormat.getDateInstance(DateFormat.FULL);
+
+        dateShowtimeUpdDate = ConvertToDate(dataLoader.getShowTimeDate());
+        txtShowtimeUpdDate = dateToFormat.format(dateShowtimeUpdDate);
+        return txtShowtimeUpdDate;
+    }
+
+    private Date ConvertToDate(String dateString){
+        SimpleDateFormat dateFromFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFromFormat.parse(dateString);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return convertedDate;
     }
 
     private void setupShowtimeAdapter() {

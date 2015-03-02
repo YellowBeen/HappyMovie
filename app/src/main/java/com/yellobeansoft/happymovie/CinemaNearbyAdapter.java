@@ -44,6 +44,7 @@ public class CinemaNearbyAdapter extends BaseAdapter{
         return position;
     }
 
+
     @Override
     public long getItemId(int position) {
         return position;

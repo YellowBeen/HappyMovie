@@ -23,9 +23,10 @@
 
    <!-- Sort spinner navigation parameter -->
     <string name="sort_date">Date</string>
+    <string name="sort_popular">Popular</string>
     <string name="sort_imdb">Rate</string>
     <string name="sort_name">Name</string>
-    <string name="sort_popular">Popular</string>
+
 
     <!-- Menu on Moviestaggered -->
     <string name="menu_about">About</string>
@@ -33,13 +34,17 @@
 
     <!-- Menu on spinner navigation-->
     <string name="spin_date">Sort By Date</string>
+    <string name="spin_popular">Popular</string>
     <string name="spin_imdb">IMDB Rating</string>
     <string name="spin_name">Movie Name</string>
-    <string name="spin_popular">Popular</string>
+
+
+
 
     <!-- Feedback text-->
     <string name="feedback_mail">feedback@yellowbeansoft.com</string>
     <string name="feedback_subj">Happy Movie Feedback</string>
     <string name="feedback_text">Add your issues or suggestions. We can keep improving for this app. Thanks for your help...</string>
     <string name="feedback_send_action">Sending mail...</string>
+    <string name="feedback_no_mail_app">There is no email application installed.</string>
 </resources>
