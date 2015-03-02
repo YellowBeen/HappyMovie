@@ -65,7 +65,7 @@ public class SplashScreen extends Activity {
 
                         objLoader.syncAll();
                         sleep(2000);
-                        while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone()) {
+                        while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone() || !objLoader.checkCinemaSyncDone()) {
                         }
 
                     } catch (InterruptedException e) {

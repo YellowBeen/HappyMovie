@@ -21,59 +21,15 @@ import com.google.gson.Gson;
  */
 public class ShowTimeTABLE {
 
-    //Explicit
-    private MyOpenHelper objMyOpenHelper;
-    private SQLiteDatabase writeSQLite, readSQLite;
-
-    public static final String TABLE_SHOWTIME = "showtimeTABLE";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "CinemaName";
-    public static final String COLUMN_TITLE = "movieTitle";
-    public static final String COLUMN_SCREEN = "Screen";
-    public static final String COLUMN_DATE = "Date";
-    public static final String COLUMN_TIMEID = "Time_id";
-    public static final String COLUMN_TYPE = "Type";
-
-    public static final String TABLE_TIME = "timeTABLE";
-    public static final String COLUMN_ITEM = "Item";
-    public static final String COLUMN_TIME = "Time";
-
-
     public static final String PREFS_NAME = "CINEMA_APP";
     public static final String SHOWTIME = "SHOWTIME";
-
     private Context sContext;
+
 
     //Constructor
     public ShowTimeTABLE(Context context) {
-        objMyOpenHelper = new MyOpenHelper(context);
         sContext = context;
-        readSQLite = objMyOpenHelper.getReadableDatabase();
-        writeSQLite = objMyOpenHelper.getWritableDatabase();
     }//Constructor
-
-    public void deleteAllShowTime() {
-        writeSQLite = objMyOpenHelper.getWritableDatabase();
-        writeSQLite.delete(TABLE_SHOWTIME, null, null);
-    }
-
-
-    //addNewShowTime
-    public void addNewShowTime(String strName, String strTitle, String strScreen, String strDate, Integer intTimeID, String strType, String strTime) throws IOException {
-        try {
-            ContentValues objContentValues = new ContentValues();
-            objContentValues.put(COLUMN_NAME, strName);
-            objContentValues.put(COLUMN_TITLE, strTitle);
-            objContentValues.put(COLUMN_SCREEN, strScreen);
-            objContentValues.put(COLUMN_DATE, strDate);
-            objContentValues.put(COLUMN_TIMEID, intTimeID);
-            objContentValues.put(COLUMN_TYPE, strType);
-            objContentValues.put(COLUMN_TIME, strTime);
-            writeSQLite.insertOrThrow(TABLE_SHOWTIME, null, objContentValues);
-        } catch (Exception e) {
-
-        }
-    }//addNewShowTime
 
 
     public void addNewShowTimeJSON(ArrayList<ShowTime> showTimeList) {
@@ -231,12 +187,5 @@ public class ShowTimeTABLE {
         return false;
 
     }//getShowTimeByCinema
-
-
-    public void closeDB() {
-        writeSQLite.close();
-        readSQLite.close();
-    }
-
 
 }

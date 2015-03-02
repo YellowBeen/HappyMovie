@@ -268,6 +268,7 @@ public class CinemaTABLE {
 
     public void addNewCinema(String strName, String strNameTH, String strPhone, String strBrand, String strGroup, String strLat, String strLong){
         try {
+            writeSQLite = objMyOpenHelper.getWritableDatabase();
             ContentValues objContentValues = new ContentValues();
             objContentValues.put(COLUMN_NAME, strName);
             objContentValues.put(COLUMN_NAME_TH, strNameTH);
@@ -277,6 +278,7 @@ public class CinemaTABLE {
             objContentValues.put(COLUMN_LAT, strLat);
             objContentValues.put(COLUMN_LONG, strLong);
             writeSQLite.insertOrThrow(TABLE_CINEMA, null, objContentValues);
+            writeSQLite.close();
         } catch (Exception e){
 
         }
@@ -288,5 +290,13 @@ public class CinemaTABLE {
     }
 
 
+    public boolean checkTableNotEmpty() {
+        ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
+        cinemaList = this.getAll("X");
+        if (cinemaList != null) {
+            return true;
+        }
+        return false;
+    }
 
 }
