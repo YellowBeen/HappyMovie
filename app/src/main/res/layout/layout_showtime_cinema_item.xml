@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/txtDuration"
+        android:id="@+id/txtMovieNameEN"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="#ff880a22"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:text="Cinema Name TH"
         android:id="@+id/txtMovieNameTH"
-        android:layout_below="@+id/txtDuration"
+        android:layout_below="@+id/txtMovieNameEN"
         android:textStyle="bold"
         android:textSize="15dp"
         android:textColor="#ff4a4a4a"
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:text="Rating"
             android:id="@+id/txtRating"
-            android:layout_below="@+id/txtDuration"
+            android:layout_below="@+id/txtMovieNameEN"
             android:layout_toRightOf="@+id/image"
             android:paddingLeft="5dp" />
     </LinearLayout>

@@ -19,7 +19,7 @@
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <Button
@@ -28,43 +28,54 @@
                     android:id="@+id/btnFavourite"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_favon"
-                    android:scaleType="centerCrop"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false" />
+                    android:scaleType="centerCrop"/>
 
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="โรงภาพยนตร์"
-                    android:textSize="14dp"
-                    android:padding="5dip"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:id="@+id/txtCinemaNameTH"
-                    android:layout_weight="9"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"/>
+                    android:layout_weight="8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:padding="5dip"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:id="@+id/txtCinemaNameEN"
+                        android:text="Theater" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="โรงภาพยนตร์"
+                        android:textSize="14dp"
+                        android:padding="5dip"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:id="@+id/txtCinemaNameTH"/>
+
+                </LinearLayout>
 
                 <Button
-                    android:layout_width="0dp"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:id="@+id/bntNavi"
-                    android:layout_weight="1"
-                    android:background="@drawable/ic_navi1"
+                    android:id="@+id/btnPhone"
                     android:layout_marginRight="3dp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"/>
+                    android:layout_gravity="top"
+                    android:background="@drawable/ic_phone"
+                    android:focusable="true" />
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/btnNavi"
+                    android:background="@drawable/ic_navi1"
+                    android:layout_gravity="right"
+                    android:focusable="true" />
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tel Number "
-                android:id="@+id/txtPhone"
-                android:textColor="#ffffffff"
-                android:paddingLeft="5dip"
-                android:textStyle="bold" />
 
         </LinearLayout>
     </FrameLayout>

@@ -159,6 +159,7 @@ public class MovieTable {
 
     public void deleteAllMovie() {
         writeSQLite = objMyOpenHelper.getWritableDatabase();
+        writeSQLite.isDbLockedByCurrentThread();
         writeSQLite.delete(TABLE_MOVIE, null, null);
         writeSQLite.close();
     }
@@ -171,7 +172,9 @@ public class MovieTable {
             strRating = " - ";
         }
 
+
         try {
+            writeSQLite = objMyOpenHelper.getWritableDatabase();
             ContentValues objContentValues = new ContentValues();
             objContentValues.put(COLUMN_TITLE, strTitle);
             objContentValues.put(COLUMN_TITLE_TH, strTitleTH);
@@ -184,12 +187,14 @@ public class MovieTable {
             objContentValues.put(COLUMN_RDATE, strRDate);
             objContentValues.put(COLUMN_SHOWC, intShowC);
             writeSQLite.insertOrThrow(TABLE_MOVIE, null, objContentValues);
-        } catch (Exception e) {
             writeSQLite.close();
+        } catch (Exception e) {
+            if (writeSQLite.isOpen()){
+                writeSQLite.close();
+            }
         }
-        writeSQLite.close();
+
 
     }
 
 }
-

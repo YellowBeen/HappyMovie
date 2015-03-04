@@ -1,14 +1,19 @@
 package com.yellobeansoft.happymovie;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +21,17 @@ import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Beboyz on 1/15/15 AD.
@@ -34,6 +43,7 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ViewHolder mViewHolder;
+    private GroupViewHolder mGroupViewHolder;
     private MovieTable movieTable;
     private Movies objMovie;
     private Cinema objCinema;
@@ -44,22 +54,44 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
     private ArrayList<ShowtimeGroup> objShowtimeGroupList;
     private ShowtimeGroup objShowtimeGroup;
     private CinemaFavorite objCinemaFav;
+    private ShowtimeFragmentAdapter mShowtimeFragmentAdaptor;//for notify changed data
+    private Intent mIntent;
+    private RelativeLayout mShowtimeLayout;//for share showtime info
 
-    public ShowtimeFragmentAdapter(Context context, ArrayList<Cinema> lists) throws ParseException {
+
+    public ShowtimeFragmentAdapter(Context context,Intent intent) throws ParseException {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         objShowtimeGroupList = new ArrayList<ShowtimeGroup>();
         objCinemaFav = new CinemaFavorite();
-
-      for (int i = 0;i < lists.size();i++){
-          objShowTimeTABLE = new ShowTimeTABLE(context);
-          mShowtimeList = objShowTimeTABLE.getShowTimeByCinema(lists.get(i).getName(), "");
-          objShowtimeGroup = new ShowtimeGroup(lists.get(i),mShowtimeList);
-          objShowtimeGroupList.add(objShowtimeGroup);
-          //objShowTimeTABLE.closeDB();pon test
-      }
-
+        mShowtimeFragmentAdaptor = this;
+        mIntent = intent;
+        showShowtimeFavor();
     }
+
+    private void showShowtimeFavor() {
+        String chooseMovie = mIntent.getStringExtra("MovieTitle");
+        ArrayList<Cinema> lists = objCinemaFav.getFavorites(mContext);
+        if (lists != null) {
+            for (int i = 0; i < lists.size(); i++) {
+                objShowTimeTABLE = new ShowTimeTABLE(mContext);
+                try {
+                    if (chooseMovie == null) {
+                        mShowtimeList = objShowTimeTABLE.getShowTimeByCinema(lists.get(i).getName(), "");
+                    }else{
+                        mShowtimeList = objShowTimeTABLE.getShowTimeByMovieCinema(chooseMovie,lists.get(i).getName().toString(),"");
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                objShowtimeGroup = new ShowtimeGroup(lists.get(i), mShowtimeList);
+                objShowtimeGroupList.add(objShowtimeGroup);
+                //objShowTimeTABLE.closeDB();pon test
+            }
+        }
+    }
+
 
     public static String JoinArray(List<String> list, String delim) {
 
@@ -68,10 +100,8 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
         String loopDelim = "";
 
         for(String s : list) {
-
             sb.append(loopDelim);
             sb.append(s);
-
             loopDelim = delim;
         }
 
@@ -79,7 +109,6 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
     }// JoinArray
 
     private void setShowtimeColor(TextView view, String fullShowtime, String currentTime, int eColor, int cColor, int lColor) {
-
         SpannableStringBuilder builder = new SpannableStringBuilder();
         if (!currentTime.equalsIgnoreCase("XXX")) {
             int cTimePosition = fullShowtime.indexOf(currentTime);
@@ -154,20 +183,27 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        ShowtimeGroup showtimeGroup = (ShowtimeGroup) getGroup(groupPosition);
+        final ShowtimeGroup showtimeGroup = (ShowtimeGroup) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.layout_showtime_fragment_group, null);
         }
-        TextView txtCinemaNameTH = (TextView) convertView.findViewById(R.id.txtCinemaNameTH);
-        Button favImg = (Button) convertView.findViewById(R.id.btnFavourite);
-        txtCinemaNameTH.setText(showtimeGroup.getShowtimeGroup().getNameTH().toString());
+        mGroupViewHolder = new GroupViewHolder();
+        mGroupViewHolder.cinemaEN = (TextView) convertView.findViewById(R.id.txtCinemaNameEN);
+        mGroupViewHolder.cinemaTH = (TextView) convertView.findViewById(R.id.txtCinemaNameTH);
+        mGroupViewHolder.favimg = (Button) convertView.findViewById(R.id.btnFavourite);
+        mGroupViewHolder.phone = (Button) convertView.findViewById(R.id.btnPhone);
+        mGroupViewHolder.map = (Button) convertView.findViewById(R.id.btnNavi);
+        mGroupViewHolder.cinemaTH.setText(showtimeGroup.getShowtimeGroup().getNameTH().toString());
+        mGroupViewHolder.cinemaEN.setText(showtimeGroup.getShowtimeGroup().getName().toString());
 
-        favImg.setOnClickListener(new View.OnClickListener() {
+
+        mGroupViewHolder.favimg.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                objCinema = objShowtimeGroup.getShowtimeGroup();
+
+                objCinema = showtimeGroup.getShowtimeGroup();
                 if (objCinemaFav.checkExist(mContext, objCinema)) {
                     objCinemaFav.removeFavorite(mContext, objCinema);
                     objShowtimeGroupList.remove(groupPosition);
@@ -175,22 +211,90 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
                     objCinemaFav.addFavorite(mContext, objCinema);
                 }
 
-                notifyDataSetChanged();
+                mShowtimeFragmentAdaptor.notifyDataSetChanged();
             }
         });
+
+        mGroupViewHolder.phone.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setCancelable(true);
+                builder.setTitle("Confirmation Call");
+                builder.setMessage("Call" + showtimeGroup.getShowtimeGroup().getPhone().toString() + '?');
+                builder.setInverseBackgroundForced(true);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + showtimeGroup.getShowtimeGroup().getPhone().toString()));
+                        mContext.startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+        mGroupViewHolder.map.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setCancelable(true);
+                builder.setTitle("Navigation with Google Map");
+                builder.setMessage("Go to " + showtimeGroup.getShowtimeGroup().getName()+" ?");
+                builder.setInverseBackgroundForced(true);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        final double latitude = Double.parseDouble(showtimeGroup.getShowtimeGroup().getLatitude());
+                        final double longitude = Double.parseDouble(showtimeGroup.getShowtimeGroup().getLongtitude());
+                        final double zoom = 11 ;
+                        final String label = showtimeGroup.getShowtimeGroup().getName();
+                        String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=%f&q=%f,%f(%s)",
+                                latitude, longitude, zoom, latitude, longitude, label);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+
+                        mContext.startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
+        });
+
         return convertView;
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ShowTime showtime = (ShowTime) getChild(groupPosition, childPosition);
+    public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        final ShowTime showtime = (ShowTime) getChild(groupPosition, childPosition);
         if (convertView == null) {
 
             LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.layout_showtime_fragment_item, null);
 
             mViewHolder = new ViewHolder();
-            mViewHolder.movieName = (TextView) convertView.findViewById(R.id.txtDuration);
+            mViewHolder.movieName = (TextView) convertView.findViewById(R.id.txtMovieNameEN);
             mViewHolder.movieNameTH = (TextView) convertView.findViewById(R.id.txtMovieNameTH);
             mViewHolder.movieImg = (ImageView) convertView.findViewById(R.id.imgMovie);
             mViewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
@@ -199,6 +303,7 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
             mViewHolder.screen = (TextView) convertView.findViewById(R.id.txtScreen);
             mViewHolder.showtimeType = (TextView) convertView.findViewById(R.id.txtType);
             convertView.setTag(mViewHolder);
+
 
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
@@ -246,6 +351,26 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
         imageLoader.get(path, ImageLoader.getImageListener(
                 mViewHolder.movieImg, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
 
+        mShowtimeLayout = (RelativeLayout) convertView.findViewById(R.id.ShowtimeLayout);
+        mShowtimeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String showtimeinfo = new String();
+                ShowtimeGroup mShowtimeGroup = objShowtimeGroupList.get(groupPosition);
+                Date date = new Date();
+                DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
+                showtimeinfo = objMovie.getMovieTitle() + "/" +
+                        objMovie.getMovieTitleTH() +
+                        System.getProperty("line.separator") +
+                        showtime.getName() + "/" + mShowtimeGroup.getShowtimeGroup().getNameTH() +
+                        System.getProperty("line.separator") +
+                        showtime.getTime() +
+                        System.getProperty("line.separator") +
+                        dateFormat.format(date);
+                ShareLine share = new ShareLine(mContext);
+                share.sendTextHandler(v,showtimeinfo);
+            }
+        });
         return convertView;
     }
 
@@ -270,5 +395,17 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
         public TextView screen;
 
     }// class ViewHolder
+    private static class GroupViewHolder {
+        public TextView cinemaEN;
+        public TextView cinemaTH;
+        public Button favimg;
+        public Button phone;
+        public Button map;
 
+    }// class GroupViewHolder
+    @Override
+    public void notifyDataSetChanged() {
+        //showShowtimeFavor();
+        super.notifyDataSetChanged();
+    }
 }

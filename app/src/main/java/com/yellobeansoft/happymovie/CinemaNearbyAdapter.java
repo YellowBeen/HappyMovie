@@ -104,7 +104,9 @@ public class CinemaNearbyAdapter extends BaseAdapter{
                     objCinemaFav.addFavorite(mContext, objCinema);
                 }
 
+                notifyDataSetChanged();
                 mCinemaAdapter.notifyDataSetChanged();
+
             }
         });
 

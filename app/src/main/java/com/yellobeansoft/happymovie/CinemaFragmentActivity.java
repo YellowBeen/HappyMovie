@@ -93,6 +93,11 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
         CinemaFavorite objCinemaFav = new CinemaFavorite();
         ArrayList<Cinema> cinemaList = objCinemaFav.getFavorites(getBaseContext());
         if (cinemaList != null){
+            if (cinemaList.size()==0){
+                cinemaList = null;
+            }
+        }
+        if (cinemaList != null){
             mViewPager.setCurrentItem(0);
         }
 //2.use near by if GPS is on
@@ -102,10 +107,11 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
             if (cinemaList != null){
                 mViewPager.setCurrentItem(1);
             }else{
+//3.use all cinema if 1,2 not match
                 mViewPager.setCurrentItem(2);
             }
         }
-//3.use all cinema if 1,2 not match
+
     }
 
     @Override
@@ -178,8 +184,8 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
             //return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
-                    return new FavFragment();
-                    //return new ShowtimeFragment();//Pon ShowtimeFav
+                    //return new FavFragment();
+                    return new ShowtimeFragment();//Pon ShowtimeFav
                 case 1:
                     return new NearbyFragment();
                 case 2:

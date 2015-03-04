@@ -24,7 +24,7 @@ public class CinemaAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
     ArrayList<Cinema> mCinemaList;
     private ViewHolder mViewHolder;
-    private CinemaAdapter mCinemaAdapter;
+    public CinemaAdapter mCinemaAdapter;//Pon:need to update fav from showtimefragment
     private Cinema objCinema;
     private CinemaFavorite objCinemaFav;
     public CinemaAdapter(Context context, ArrayList<Cinema> lists) {
@@ -32,6 +32,10 @@ public class CinemaAdapter extends BaseAdapter{
         mInflater = LayoutInflater.from(context);
         mCinemaList = lists;
         mCinemaAdapter = this;
+    }
+
+    public CinemaAdapter getmCinemaAdapter() {
+        return mCinemaAdapter;
     }
 
     @Override

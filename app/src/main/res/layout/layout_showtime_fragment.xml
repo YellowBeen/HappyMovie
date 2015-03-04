@@ -29,6 +29,60 @@
                 android:id="@+id/txtShowtimeDate"
                 android:layout_gravity="center_horizontal|bottom"
                 android:gravity="center_horizontal" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="gone"
+                android:id="@+id/llMovie">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dip"
+                    android:id="@+id/linearLayout" >
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="55dip"
+                        android:layout_height="80dip"
+                        android:background="@drawable/image_bg"
+                        android:padding="3dip"
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/ic_taken3" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ff880a22"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:text="Movie Title"
+                        android:layout_toRightOf="@+id/vLayout" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cinema Name TH"
+                        android:id="@+id/textView2"
+                        android:layout_below="@+id/txtMovieNameEN"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:textColor="#ff4a4a4a"
+                        android:layout_toRightOf="@+id/vLayout" />
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
 
     </FrameLayout>
@@ -38,4 +92,23 @@
         android:layout_height="match_parent"
         android:id="@+id/expShowtimeList"
         android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/llempty"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/emptyFav"
+            android:id="@+id/txtEmpty"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#ffa9a9a9" />
+    </LinearLayout>
+
 </LinearLayout>

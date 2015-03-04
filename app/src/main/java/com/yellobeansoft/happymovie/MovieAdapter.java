@@ -52,7 +52,7 @@ public class MovieAdapter extends BaseAdapter{
            // mViewHolder.title = (TextView) convertView.findViewById(R.id.txtMovieName);
             mViewHolder.image = (ImageView) convertView.findViewById(R.id.imgMovie);
             mViewHolder.rating = (TextView) convertView.findViewById(R.id.txtRating);
-            mViewHolder.length = (TextView) convertView.findViewById(R.id.txtDuration);
+            mViewHolder.length = (TextView) convertView.findViewById(R.id.txtMovieNameEN);
 
             mViewHolder.title.setText(mMovieList.get(position).getMovieTitle());
             mViewHolder.image.setImageDrawable(mMovieList.get(position).getMovieImg());

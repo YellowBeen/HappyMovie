@@ -66,7 +66,7 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
             convertView = mInflater.inflate(R.layout.layout_showtime_cinema_item, null);
 
             mViewHolder = new ViewHolder();
-            mViewHolder.movieName = (TextView) convertView.findViewById(R.id.txtDuration);
+            mViewHolder.movieName = (TextView) convertView.findViewById(R.id.txtMovieNameEN);
             mViewHolder.movieNameTH = (TextView) convertView.findViewById(R.id.txtMovieNameTH);
             mViewHolder.movieImg = (ImageView) convertView.findViewById(R.id.imgMovie);
             mViewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);

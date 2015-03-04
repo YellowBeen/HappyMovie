@@ -70,6 +70,8 @@ public class MainActivity extends ActionBarActivity{
                     TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
                     tv.setTextColor(Color.parseColor("#ffffff"));
                 }
+                //clear select movie
+                intentCinema.removeExtra("MovieTitle");
 
                 tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#B90000")); // selected
                 TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
@@ -100,6 +102,7 @@ public class MainActivity extends ActionBarActivity{
         // Set Default Tab
         Intent intent = getIntent();
         String chooseMovie = intent.getStringExtra("MovieTitle");
+        intentCinema.putExtra("MovieTitle",chooseMovie);
         if (chooseMovie != null) {
                 tabHost.setCurrentTab(1);
             chooseMovie = null;
