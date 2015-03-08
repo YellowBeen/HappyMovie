@@ -48,9 +48,12 @@
             android:name=".CinemaFragmentActivity"
             android:label="@string/title_activity_cinema_fragment" >
         </activity>
-        <activity android:name=".ShowtimeCinemaActivity" >
+        <activity android:name=".ShowtimeCinemaActivity"
+                  android:screenOrientation="portrait">
         </activity>
-
+        <activity android:name=".ShowtimeMovieActivity"
+                  android:screenOrientation="portrait">
+        </activity>
         <!--Include the AdActivity configChanges and theme. -->
         <activity android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"

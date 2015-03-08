@@ -3,6 +3,7 @@ package com.yellobeansoft.happymovie;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,14 @@ public class NearbyFragment extends Fragment {
     private TextView emptyNearby;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    public static NearbyFragment newInstance() {
+        NearbyFragment fragment = new NearbyFragment();
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("onCreateView", "Nearby");
         View view = inflater.inflate(R.layout.layout_cinema_nearby,container,false);
         lvCinema = (ListView) view.findViewById(R.id.lvCinema);
         emptyNearby = (TextView) view.findViewById(R.id.txtEmptyNearby);
@@ -55,6 +62,11 @@ public class NearbyFragment extends Fragment {
         cinemaList = objCinemaTABLE.getNearByCinemas();
     }
 
+    @Override
+    public void onDestroyView() {
+        Log.d("onDestroyView", "Nearby");
+        super.onDestroyView();
+    }
 
 }
 

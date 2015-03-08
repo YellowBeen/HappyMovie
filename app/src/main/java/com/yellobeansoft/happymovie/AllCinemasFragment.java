@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +26,14 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
     private ArrayList<CinemaGroup> cinemaGroups = new ArrayList<CinemaGroup>();
     private ArrayList<Cinema> cinemaList;
 
+    public static AllCinemasFragment newInstance() {
+        AllCinemasFragment fragment = new AllCinemasFragment();
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        Log.d("onCreateView", "AllCinema");
         View view = inflater.inflate(R.layout.layout_cinema_all,container,false);
         lvExpCinema = (ExpandableListView) view.findViewById(R.id.lvExp);
 
@@ -172,6 +178,12 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
         lvCinemaAdapter.filterData(query);
         expandAll();
         return false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        Log.d("onDestroyView", "AllCinema");
+        super.onDestroyView();
     }
 }
 

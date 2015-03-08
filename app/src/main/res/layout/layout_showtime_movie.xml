@@ -1,0 +1,128 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#191919"
+    android:orientation="vertical">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="#ff383737">
+
+            <!--  ListRow Left sied Thumbnail image -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:id="@+id/vLayout">
+
+                <ImageView
+                    android:id="@+id/imgMovie"
+                    android:layout_width="70dip"
+                    android:layout_height="100dip"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/ic_taken3"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtMovieNameEN"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:text="Movie Title"
+                android:layout_toRightOf="@+id/vLayout" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movie Name TH"
+                android:id="@+id/txtMovieNameTH"
+                android:layout_below="@+id/txtMovieNameEN"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:textColor="#ffff000a"
+                android:layout_toRightOf="@+id/vLayout" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratinglayout"
+                android:layout_toRightOf="@+id/vLayout"
+                android:layout_below="@+id/txtMovieNameTH">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="19dp"
+                    android:adjustViewBounds="true"
+                    android:id="@+id/imgIMDB"
+                    android:src="@drawable/ic_imdb" />
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rating"
+                    android:id="@+id/txtRating"
+                    android:layout_below="@+id/txtMovieNameEN"
+                    android:layout_toRightOf="@+id/image"
+                    android:paddingLeft="5dp"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Released Date"
+                android:id="@+id/txtReleaseDate"
+                android:layout_below="@+id/ratinglayout"
+                android:textSize="15dp"
+                android:layout_toRightOf="@+id/vLayout"
+                android:textColor="#ffffff" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Today Date"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:background="#ff6d6d6d"
+            android:textStyle="bold"
+            android:id="@+id/txtShowDate"
+            android:layout_gravity="center_horizontal|bottom"
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    </FrameLayout>
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/pager_showtime"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        tools:context="com.yellobeansoft.happymovie.CinemaFragmentActivity" >
+
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/pager_showtime_strip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:textColor="#fff"
+            android:background="#000000"/>
+
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

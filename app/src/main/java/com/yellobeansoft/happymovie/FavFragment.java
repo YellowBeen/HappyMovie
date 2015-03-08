@@ -3,6 +3,7 @@ package com.yellobeansoft.happymovie;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,14 @@ public class FavFragment extends Fragment {
     private TextView emptyFav;
     private CinemaFavorite objCinemaFav = new CinemaFavorite();
 
+    public static FavFragment newInstance() {
+        FavFragment fragment = new FavFragment();
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("onCreateView", "Fav");
         // Inflate layout
         View view = inflater.inflate(R.layout.layout_cinema_fav,container,false);
         // Matching View
@@ -67,5 +74,11 @@ public class FavFragment extends Fragment {
         cinemaList = objCinemaFav.getFavorites(getActivity());
     }
 
+    
 
+    @Override
+    public void onDestroyView() {
+        Log.d("onDestroyView", "Fav");
+        super.onDestroyView();
+    }
 }

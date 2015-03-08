@@ -1,5 +1,10 @@
 package com.yellobeansoft.happymovie;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.android.gms.internal.id;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,7 +14,7 @@ import java.util.Date;
 /**
  * Created by Beboyz on 1/10/15 AD.
  */
-public class Movies {
+public class Movies implements Parcelable {
 
     private String movieImg;
     private String movieTitle;
@@ -24,6 +29,10 @@ public class Movies {
     private String ReleaseDate;
     private Boolean isNew;
     private Integer showtimeCount;
+
+    public Movies() {
+        ;
+    };
 
     public Integer getShowtimeCount() {
         return showtimeCount;
@@ -153,4 +162,55 @@ public class Movies {
         return days;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.movieImg);
+        dest.writeString(this.movieTitle);
+        dest.writeString(this.movieTitleTH);
+        dest.writeString(this.movieLength);
+        dest.writeString(this.showtime);
+        dest.writeString(this.rating);
+        dest.writeString(this.URLInfo);
+        dest.writeString(this.URLTrailer);
+        dest.writeString(this.URLIMDB);
+        dest.writeString(this.Date);
+        dest.writeString(this.ReleaseDate);
+        //dest.writeBooleanArray(this.isNew);
+        //dest.writeInt(this.showtimeCount);
+
+    }
+
+    public static final Parcelable.Creator<Movies> CREATOR
+            = new Parcelable.Creator<Movies>() {
+
+        public Movies createFromParcel(Parcel in) {
+            return new Movies(in);
+        }
+
+        public Movies[] newArray(int size) {
+            return new Movies[size];
+        }
+    };
+
+
+    private Movies(Parcel in){
+        this.movieImg = in.readString();
+        this.movieTitle = in.readString();
+        this.movieTitleTH = in.readString();
+        this.movieLength = in.readString();
+        this.showtime = in.readString();
+        this.rating = in.readString();
+        this.URLInfo = in.readString();
+        this.URLTrailer = in.readString();
+        this.URLIMDB = in.readString();
+        this.Date = in.readString();
+        this.ReleaseDate = in.readString();
+//        this.isNew = in.readBooleanArray();
+//        this.showtimeCount = in.readInt();
+    }
 }

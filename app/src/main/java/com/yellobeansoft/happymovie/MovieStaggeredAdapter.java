@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -99,12 +100,12 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-
+                Intent intent = new Intent(v.getContext(), ShowtimeMovieActivity.class);
                 movie = mMovies.get(position);
-                Log.d("click", Integer.toString(position));
-                Toast.makeText(getContext(), movie.getMovieTitle(), Toast.LENGTH_SHORT).show();
-                intent.putExtra("MovieTitle", movie.getMovieTitle());
+                Log.d("click", movie.getMovieTitle());
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("chooseMovie",movie);
+                intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
 
 

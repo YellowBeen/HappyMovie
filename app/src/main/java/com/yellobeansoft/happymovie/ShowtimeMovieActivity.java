@@ -1,12 +1,9 @@
 package com.yellobeansoft.happymovie;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
@@ -16,37 +13,49 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
 
-public class CinemaFragmentActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
 
+
     /**
-     * The {@link ViewPager} that will host the section contents.
+     * The {@link android.support.v4.view.ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    private static long back_pressed;
-
+    private TextView txtMovieNameTH;
+    private TextView txtMovieNameEN;
+    private TextView txtRating;
+    private TextView txtShowDate;
+    private TextView txtReleasedDate;
+    private ImageView imgMovie;
+    private Bundle bundle;
+    private Movies chooseObjMovie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_cinema_fragment);
+        setContentView(R.layout.layout_showtime_movie);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -55,15 +64,42 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
+        // View Matching
+        imgMovie = (ImageView) findViewById(R.id.imgMovie);
+        txtMovieNameTH = (TextView) findViewById(R.id.txtMovieNameTH);
+        txtMovieNameEN = (TextView) findViewById(R.id.txtMovieNameEN);
+        txtRating = (TextView) findViewById(R.id.txtRating);
+        txtReleasedDate = (TextView) findViewById(R.id.txtReleaseDate);
+        txtShowDate = (TextView) findViewById(R.id.txtShowDate);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+
+        mViewPager = (ViewPager) findViewById(R.id.pager_showtime);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mSectionsPagerAdapter.notifyDataSetChanged();
         // Add Tabstrip
-        PagerTabStrip pagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
+        PagerTabStrip pagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_showtime_strip);
         pagerTabStrip.setTabIndicatorColor(Color.RED);
+
+// Get input extras
+        bundle = getIntent().getExtras();
+        if (bundle != null){
+            chooseObjMovie = bundle.getParcelable("chooseMovie");
+            txtMovieNameEN.setText(chooseObjMovie.getMovieTitle());
+            txtMovieNameTH.setText(chooseObjMovie.getMovieTitleTH());
+            txtReleasedDate.setText("Released date: "+chooseObjMovie.getReleaseDate());
+            txtRating.setText(chooseObjMovie.getRating());
+            // Set image
+            String path = chooseObjMovie.getMovieImg();
+            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+            imageLoader.get(path, ImageLoader.getImageListener(
+                    imgMovie, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+        }
+
+        txtShowDate.setText(GetShowtimeUpdatedDate());
+
+
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
         // a reference to the Tab.
@@ -89,6 +125,29 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
         }
         setDefaultTab();
     }//OnCreate
+
+    public String GetShowtimeUpdatedDate() {
+        String txtShowtimeUpdDate;
+        Date dateShowtimeUpdDate = new Date();
+        DataLoader dataLoader = new DataLoader(this);
+        DateFormat dateToFormat = DateFormat.getDateInstance(DateFormat.FULL);
+
+        dateShowtimeUpdDate = ConvertToDate(dataLoader.getShowTimeDate());
+        txtShowtimeUpdDate = dateToFormat.format(dateShowtimeUpdDate);
+        return txtShowtimeUpdDate;
+    }
+
+    private Date ConvertToDate(String dateString){
+        SimpleDateFormat dateFromFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFromFormat.parse(dateString);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return convertedDate;
+    }
 
     private void setDefaultTab() {
 //1.use fav tab if there is fav
@@ -152,16 +211,8 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
-        else Toast.makeText(getBaseContext(), getString(R.string.back_exit), Toast.LENGTH_SHORT).show();
-        back_pressed = System.currentTimeMillis();
-
-    }
-
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
@@ -180,12 +231,11 @@ public class CinemaFragmentActivity extends ActionBarActivity implements ActionB
 
             switch (position) {
                 case 0:
-                    return FavFragment.newInstance();
-                //return new ShowtimeFragment();//Pon ShowtimeFav
+                    return ShowtimeFavFragment.newInstance(chooseObjMovie.getMovieTitle());
                 case 1:
-                    return NearbyFragment.newInstance();
+                    return ShowtimeNearbyFragment.newInstance(chooseObjMovie.getMovieTitle());
                 case 2:
-                    return AllCinemasFragment.newInstance();
+                    return ShowtimeAllFragment.newInstance(chooseObjMovie.getMovieTitle());
             }
             return null;
         }

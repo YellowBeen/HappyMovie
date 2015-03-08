@@ -1,6 +1,7 @@
 package com.yellobeansoft.happymovie;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -105,12 +106,37 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
                 emailIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.feedback_text));
                 startActivity(Intent.createChooser(emailIntent, getResources().getString(R.string.feedback_send_action)));
                 return true;
+            case R.id.review:
+                Intent reviewIntent = new Intent(Intent.ACTION_VIEW);
+                //Try Google play
+                reviewIntent.setData(Uri.parse(getString(R.string.review_market)));
+                if (!toStartActivity(reviewIntent)) {
+                    //Market (Google play) app seems not installed, let's try to open a webbrowser
+                    reviewIntent.setData(Uri.parse(getString(R.string.review_http)));
+                    if (!toStartActivity(reviewIntent)) {
+                        //Well if this also fails, we have run out of options, inform the user.
+                        Toast.makeText(this, getString(R.string.review_errmsg), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                return true;
             case R.id.aboutus:
                 return true;
 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean toStartActivity(Intent intent) {
+        try
+        {
+            startActivity(intent);
+            return true;
+        }
+        catch (ActivityNotFoundException e)
+        {
+            return false;
+        }
     }
 
     @Override
@@ -120,6 +146,5 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         back_pressed = System.currentTimeMillis();
 
     }
-
 
 }
