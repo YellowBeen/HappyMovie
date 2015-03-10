@@ -23,7 +23,7 @@ public class ShowtimeNearbyFragment extends Fragment {
     private ArrayList<Cinema> cinemaList;
     private ShowtimeExpandAdapter showtimeExpandAdapter;
     private Cinema cinema = new Cinema();
-    private TextView emptyNearby;
+    private TextView emptyExp;
     private String cinemaName;
     private ShowTimeTABLE objShowTimeTABLE;
     ArrayList<ShowTime> showTimesList;
@@ -42,8 +42,9 @@ public class ShowtimeNearbyFragment extends Fragment {
         View view = inflater.inflate(R.layout.layout_showtime_movie_expand,container,false);
         lvExpShowtime = (ExpandableListView) view.findViewById(R.id.lvExpShowtime);
         // Matching View
-        emptyNearby = (TextView) view.findViewById(R.id.txtEmptyFav);
-        lvExpShowtime.setEmptyView(emptyNearby);
+        emptyExp = (TextView) view.findViewById(R.id.txtEmptyExp);
+        emptyExp.setText(getString(R.string.emptyNearby));
+        lvExpShowtime.setEmptyView(emptyExp);
         addShowtimeData();
         try {
             setupShowtimeAdapter();

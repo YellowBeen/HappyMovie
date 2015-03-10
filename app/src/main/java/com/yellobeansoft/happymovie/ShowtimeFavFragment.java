@@ -23,7 +23,7 @@ public class ShowtimeFavFragment extends Fragment {
     private ArrayList<Cinema> cinemaList;
     private ShowtimeExpandAdapter showtimeExpandAdapter;
     private Cinema cinema = new Cinema();
-    private TextView emptyFav;
+    private TextView emptyExp;
     private String cinemaName;
     private CinemaFavorite objCinemaFav = new CinemaFavorite();
     private ShowTimeTABLE objShowTimeTABLE;
@@ -44,8 +44,9 @@ public class ShowtimeFavFragment extends Fragment {
         lvExpShowtime = (ExpandableListView) view.findViewById(R.id.lvExpShowtime);
         lvExpShowtime.setGroupIndicator(null);
         // Matching View
-        emptyFav = (TextView) view.findViewById(R.id.txtEmptyFav);
-        lvExpShowtime.setEmptyView(emptyFav);
+        emptyExp = (TextView) view.findViewById(R.id.txtEmptyExp);
+        emptyExp.setText(getString(R.string.emptyShFav));
+        lvExpShowtime.setEmptyView(emptyExp);
         addShowtimeData();
         try {
             setupShowtimeAdapter();
