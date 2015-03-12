@@ -149,14 +149,14 @@ public class CinemaTABLE {
 
         readSQLite = objMyOpenHelper.getReadableDatabase();
 
-        Cursor objCursor = readSQLite.query(TABLE_CINEMA, new String[]{COLUMN_NAME, COLUMN_NAME_TH, COLUMN_BRAND, COLUMN_SUB_BRAND,
-                COLUMN_PHONE, COLUMN_LAT, COLUMN_LONG, COLUMN_DIST}, null, null, null, null, strSort);
+        String strQuery = "SELECT cinemaTABLE.* FROM cinemaTABLE LEFT OUTER JOIN showtimeTABLE on cinemaTABLE.CinemaName = showtimeTABLE.CinemaName "
+                + "WHERE showtimeTABLE.movieTitle = '" + strMovie + "' ORDER BY " + strSort;
+        Cursor objCursor = readSQLite.rawQuery(strQuery, null);
 
         if (objCursor.moveToFirst()) {
 
             do {
                 ShowTimeTABLE objShowTab = new ShowTimeTABLE(sContext);
-                if (objShowTab.checkCinemaShowTime(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME)),strMovie)){
                     Cinema objCinema = new Cinema();
                     objCinema.setName(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME)));
                     objCinema.setNameTH(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_NAME_TH)));
@@ -167,7 +167,6 @@ public class CinemaTABLE {
                     objCinema.setLongtitude(objCursor.getString(objCursor.getColumnIndexOrThrow(COLUMN_LONG)));
                     objCinema.setDistance(objCursor.getDouble(objCursor.getColumnIndexOrThrow(COLUMN_DIST)));
                     cinemaList.add(objCinema);
-                }
 
             } while (objCursor.moveToNext());
 

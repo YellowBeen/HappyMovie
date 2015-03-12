@@ -2,6 +2,7 @@ package com.yellobeansoft.happymovie;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -10,6 +11,7 @@ import com.android.volley.toolbox.StringRequest;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import android.database.DatabaseUtils.InsertHelper;
 
 /**
  * Created by Jirawut-Jack on 22/01/2015
@@ -34,16 +37,16 @@ public class DataLoader {
 
     //Explicit
     public static final String PREFS_NAME = "CINEMA_APP";
-
     private static final String MOVIE_LOC_TYP = "MOVIE_LOC";
     private static final String MOVIE_SERV_TYP = "MOVIE_SERV";
     private static final String SHOWTIME_LOC_TYP = "SHOWTIME_LOC";
     private static final String SHOWTIME_SERV_TYP = "SHOWTIME_SERV";
+    private static final String CINEMA_LOC_TYP = "CINEMA_LOC";
+    private static final String CINEMA_SERV_TYP = "CINEMA_SERV";
 
     private MovieTable objMovieTab;
     private CinemaTABLE objCinemaTab;
     private String urlMovie = "http://happymovie.elasticbeanstalk.com/php_get_movie.php";
-//    private String urlCinema = "http://happymovie.esy.es/php_get_cinema.php";
     private String urlShowTime = "http://happymovie.elasticbeanstalk.com/php_get_showtime_concat_short.php";
     private String urlOverView = "http://happymovie.elasticbeanstalk.com/php_get_overview.php";
     private Context sContext;
@@ -60,33 +63,56 @@ public class DataLoader {
         this.clearServerDate();
         this.downloadServerDate();
 
-        if (!getDate(MOVIE_LOC_TYP).equals(getDate(MOVIE_SERV_TYP))) {
+        CinemaTABLE objCinemaTab = new CinemaTABLE(sContext);
+
+        if (!objCinemaTab.checkTableNotEmpty()) {
+            Log.d("All Sync", "All tables are empty --> Start sync all");
+            this.clearLocalDate();
             this.makeMovieRequest();
-        }
-        this.makeShowTimeRequestJSON();
-        if (!getDate(SHOWTIME_LOC_TYP).equals(getDate(SHOWTIME_SERV_TYP))) {
-            this.makeShowTimeRequestJSON();
+            this.makeShowTimeRequest();
+            this.syncCinema();
+        } else {
+
+            if (!getDate(MOVIE_LOC_TYP).equals(getDate(MOVIE_SERV_TYP))) {
+                Log.d("Movie Sync", "Start Sync");
+                this.makeMovieRequest();
+            } else {
+                Log.d("Movie Sync", "Not Sync");
+            }
+
+            if (!getDate(SHOWTIME_LOC_TYP).equals(getDate(SHOWTIME_SERV_TYP))) {
+                Log.d("ShowTime Sync", "Start Sync");
+                this.makeShowTimeRequest();
+            } else {
+                Log.d("ShowTime Sync", "Not Sync");
+            }
+
+            if (!getDate(CINEMA_LOC_TYP).equals(getDate(CINEMA_SERV_TYP))) {
+                Log.d("Cinema Sync", "Start Sync");
+                this.syncCinema();
+            } else {
+                Log.d("Cinema Sync", "Not Sync");
+            }
+
         }
 
-        this.syncCinema();
     }//syncAll
-
 
 
     // clearServerDate
     private void clearServerDate() {
-        SharedPreferences settings;
-        SharedPreferences.Editor editor;
-        settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        editor = settings.edit();
-
-        editor.putString(MOVIE_SERV_TYP, "");
-        editor.commit();
-
-        editor.putString(SHOWTIME_SERV_TYP, "");
-        editor.commit();
+        setDate(MOVIE_SERV_TYP, "");
+        setDate(SHOWTIME_SERV_TYP, "");
+        setDate(SHOWTIME_SERV_TYP, "");
     }// clearServerDate
 
+
+    // clearLocalDate
+    private void clearLocalDate() {
+        setDate(MOVIE_LOC_TYP, "");
+        setDate(SHOWTIME_LOC_TYP, "");
+        setDate(SHOWTIME_LOC_TYP, "");
+    }// clearLocalDate
 
 
     //downloadServerDate
@@ -95,7 +121,6 @@ public class DataLoader {
         while (getDate(MOVIE_SERV_TYP).equals("") || getDate(SHOWTIME_SERV_TYP).equals("")) {
         };
     }//downloadServerDate
-
 
     //checkMovieSyncDone
     public Boolean checkMovieSyncDone() {
@@ -107,6 +132,16 @@ public class DataLoader {
     }//checkMovieSyncDone
 
 
+    //checkCinemaSyncDone
+    public Boolean checkCinemaSyncDone() {
+        if (getDate(CINEMA_LOC_TYP).equals(getDate(CINEMA_SERV_TYP))) {
+            return true;
+        } else {
+            return false;
+        }
+    }//checkCinemaSyncDone
+
+
     //checkShowTimeSyncDone
     public Boolean checkShowTimeSyncDone() {
         if (getDate(SHOWTIME_LOC_TYP).equals(getDate(SHOWTIME_SERV_TYP))) {
@@ -116,14 +151,10 @@ public class DataLoader {
         }
     }//checkShowTimeSyncDone
 
-
-
     //getShowTimeDate
     public String getShowTimeDate() {
         return getDate(SHOWTIME_LOC_TYP);
     }//getShowTimeDate
-
-
 
     //syncCinema
     private void syncCinema() {
@@ -164,6 +195,7 @@ public class DataLoader {
             }
 
             objCinemaTab.closeDB();
+            setDate(CINEMA_LOC_TYP, getDate(CINEMA_SERV_TYP));
             Log.d("Cinema", "Cinema Done!");
 
         } catch (IOException ex) {
@@ -290,11 +322,14 @@ public class DataLoader {
     }//makeMovieRequest
 
 
-    //makeShowTimeRequestJSON
-    private void makeShowTimeRequestJSON() {
+    //makeShowTimeRequest
+    private void makeShowTimeRequest() {
 
         JsonArrayRequest req = new JsonArrayRequest(urlShowTime,
                 new Response.Listener<JSONArray>() {
+
+                    MyOpenHelper objMyOpenHelper = new MyOpenHelper(sContext);
+                    SQLiteDatabase writeSQLite = objMyOpenHelper.getWritableDatabase();
 
                     @Override
                     public void onResponse(JSONArray response) {
@@ -302,25 +337,28 @@ public class DataLoader {
                         try {
                             ArrayList<ShowTime> showTimeList = new ArrayList<ShowTime>();
                             ShowTimeTABLE objTab = new ShowTimeTABLE(sContext);
-                            objTab.deleteShowTimeJSON();
+                            objTab.deleteAllShowTime();
+
+                            writeSQLite.beginTransaction();
 
                             // Parsing json array response
                             // loop through each json object
                             for (int i = 0; i < response.length(); i++) {
+                                ContentValues objContentValues = new ContentValues();
                                 JSONObject jsonShowTime = response.getJSONObject(i);
-                                ShowTime objShowTime = new ShowTime();
-                                objShowTime.setName(jsonShowTime.getString("3"));
-                                objShowTime.setMovieTitle(jsonShowTime.getString("2"));
-                                objShowTime.setDate(jsonShowTime.getString("4"));
-                                objShowTime.setScreen(jsonShowTime.getString("5"));
-                                Integer intTimeID = jsonShowTime.getInt("6");
-                                objShowTime.setTimeID(intTimeID);
-                                objShowTime.setType(jsonShowTime.getString("9"));
-                                objShowTime.setTime(jsonShowTime.getString("7"));
-                                showTimeList.add(objShowTime);
+                                objContentValues.put("CinemaName", jsonShowTime.getString("3"));
+                                objContentValues.put("movieTitle", jsonShowTime.getString("2"));
+                                objContentValues.put("Date", jsonShowTime.getString("4"));
+                                objContentValues.put("Screen", jsonShowTime.getString("5"));
+                                objContentValues.put("Time_id", jsonShowTime.getString("6"));
+                                objContentValues.put("Type", jsonShowTime.getString("9"));
+                                objContentValues.put("Time", jsonShowTime.getString("7"));
+                                writeSQLite.insertOrThrow("showtimeTABLE", null, objContentValues);
                             }
 
-                            objTab.addNewShowTimeJSON(showTimeList);
+                            writeSQLite.setTransactionSuccessful();
+                            writeSQLite.endTransaction();
+                            writeSQLite.close();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -348,7 +386,7 @@ public class DataLoader {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req);
 
-    }//makeShowTimeRequestJSON
+    }//makeShowTimeRequest
 
 
     //makeOverViewRequest
@@ -369,8 +407,13 @@ public class DataLoader {
 
                                 if (jsonOverView.getString("tab_name").equals("movie")) {
                                     setDate(MOVIE_SERV_TYP, jsonOverView.getString("last_update"));
+                                    Log.d("Get Server Date", "Movie" + jsonOverView.getString("last_update"));
                                 } else if (jsonOverView.getString("tab_name").equals("showtime_concat")) {
                                     setDate(SHOWTIME_SERV_TYP, jsonOverView.getString("last_update"));
+                                    Log.d("Get Server Date", "ShowTime" + jsonOverView.getString("last_update"));
+                                } else if (jsonOverView.getString("tab_name").equals("cinema")) {
+                                    setDate(CINEMA_SERV_TYP, jsonOverView.getString("last_update"));
+                                    Log.d("Get Server Date", "Cinema" + jsonOverView.getString("last_update"));
                                 }
 
                             }
@@ -415,6 +458,4 @@ public class DataLoader {
 
         alertDialog.show();
     }
-
-
 }

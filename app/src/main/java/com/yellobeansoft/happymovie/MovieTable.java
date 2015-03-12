@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+
 /**
  * Created by Jirawut-Jack on 14/01/2015.
  */
@@ -173,6 +174,7 @@ public class MovieTable {
         }
 
 
+
         try {
             writeSQLite = objMyOpenHelper.getWritableDatabase();
             ContentValues objContentValues = new ContentValues();
@@ -187,6 +189,7 @@ public class MovieTable {
             objContentValues.put(COLUMN_RDATE, strRDate);
             objContentValues.put(COLUMN_SHOWC, intShowC);
             writeSQLite.insertOrThrow(TABLE_MOVIE, null, objContentValues);
+
             writeSQLite.close();
         } catch (Exception e) {
             if (writeSQLite.isOpen()){
