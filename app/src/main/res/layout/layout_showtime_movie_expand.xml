@@ -28,7 +28,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:textSize="30dp"
                 android:textStyle="bold"
-                android:textColor="#ffa9a9a9" />
+                android:textColor="#ffa9a9a9"
+                android:text="Empty Listview" />
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

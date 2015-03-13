@@ -46,9 +46,9 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
     ViewPager mViewPager;
     private TextView txtMovieNameTH;
     private TextView txtMovieNameEN;
+    private TextView txtMovieLength;
     private TextView txtRating;
     private TextView txtShowDate;
-    private TextView txtReleasedDate;
     private ImageView imgMovie;
     private Bundle bundle;
     private Movies chooseObjMovie;
@@ -68,8 +68,8 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
         imgMovie = (ImageView) findViewById(R.id.imgMovie);
         txtMovieNameTH = (TextView) findViewById(R.id.txtMovieNameTH);
         txtMovieNameEN = (TextView) findViewById(R.id.txtMovieNameEN);
+        txtMovieLength = (TextView) findViewById(R.id.txtMovieLength);
         txtRating = (TextView) findViewById(R.id.txtRating);
-        txtReleasedDate = (TextView) findViewById(R.id.txtReleaseDate);
         txtShowDate = (TextView) findViewById(R.id.txtShowDate);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -88,7 +88,7 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
             chooseObjMovie = bundle.getParcelable("chooseMovie");
             txtMovieNameEN.setText(chooseObjMovie.getMovieTitle());
             txtMovieNameTH.setText(chooseObjMovie.getMovieTitleTH());
-            txtReleasedDate.setText("Released date: "+chooseObjMovie.getReleaseDate());
+            txtMovieLength.setText("Runtime : "+chooseObjMovie.getMovieLength());
             txtRating.setText(chooseObjMovie.getRating());
             // Set image
             String path = chooseObjMovie.getMovieImg();
@@ -235,7 +235,7 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
                 case 1:
                     return ShowtimeNearbyFragment.newInstance(chooseObjMovie.getMovieTitle());
                 case 2:
-                    return ShowtimeAllFragment.newInstance(chooseObjMovie.getMovieTitle());
+                    return ShowtimeAllFragment.newInstance(chooseObjMovie);
             }
             return null;
         }

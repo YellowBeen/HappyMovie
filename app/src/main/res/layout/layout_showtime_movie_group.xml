@@ -32,21 +32,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14dp"
-                        android:padding="5dip"
                         android:textColor="@android:color/white"
                         android:textStyle="bold"
                         android:id="@+id/txtCinemaNameEN"
-                        android:text="Theater" />
+                        android:text="Theater"
+                        android:paddingLeft="2dip"
+                        android:paddingTop="2dip" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="โรงภาพยนตร์"
                         android:textSize="14dp"
-                        android:padding="5dip"
                         android:textColor="@android:color/white"
                         android:textStyle="bold"
-                        android:id="@+id/txtCinemaNameTH"/>
+                        android:id="@+id/txtCinemaNameTH"
+                        android:paddingLeft="2dip"
+                        android:paddingTop="2dip" />
 
                 </LinearLayout>
 

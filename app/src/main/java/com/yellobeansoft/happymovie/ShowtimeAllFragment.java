@@ -28,12 +28,12 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
     private TextView emptyExp;
     private ArrayList<CinemaGroup> cinemaGroups = new ArrayList<CinemaGroup>();
     private ArrayList<Cinema> cinemaList;
-    private static String mChooseMovie;
+    private static Movies mChooseObjMovie;
     private CinemaGroup cinemaGroup;
 
-    public static ShowtimeAllFragment newInstance(String chooseMovie) {
+    public static ShowtimeAllFragment newInstance(Movies chooseObjMovie) {
         ShowtimeAllFragment fragment = new ShowtimeAllFragment();
-        mChooseMovie = chooseMovie;
+        mChooseObjMovie = chooseObjMovie;
         return fragment;
     }
 
@@ -44,6 +44,7 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
         lvExpCinema = (ExpandableListView) view.findViewById(R.id.lvExp);
         emptyExp = (TextView) view.findViewById(R.id.txtEmptyExp);
         emptyExp.setText(getString(R.string.emptyShAll));
+        lvExpCinema.setEmptyView(emptyExp);
 
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         search = (SearchView) view.findViewById(R.id.search);
@@ -66,16 +67,16 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
 
         addShowtimeData();
 
-        lvCinemaAdapter = new ShowtimeAllExpandAdapter(getActivity(), cinemaGroups);
+        lvCinemaAdapter = new ShowtimeAllExpandAdapter(getActivity(), cinemaGroups, mChooseObjMovie);
         lvExpCinema.setAdapter(lvCinemaAdapter);
 
     }
 
     private void addShowtimeData() {
-        if (!mChooseMovie.equalsIgnoreCase(null)) {
+        if (!mChooseObjMovie.getMovieTitle().equalsIgnoreCase(null)) {
             CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
             try {
-                cinemaList = objCinemaTABLE.getAllCinemasByMovie(mChooseMovie);
+                cinemaList = objCinemaTABLE.getAllCinemasByMovie(mChooseObjMovie.getMovieTitle());
             } catch (ParseException e) {
                 e.printStackTrace();
             }

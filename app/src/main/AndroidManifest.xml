@@ -54,6 +54,9 @@
         <activity android:name=".ShowtimeMovieActivity"
                   android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".ShowtimeMovieCinemaActivity"
+            android:screenOrientation="portrait">
+        </activity>
         <!--Include the AdActivity configChanges and theme. -->
         <activity android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"

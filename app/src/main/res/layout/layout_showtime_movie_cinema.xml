@@ -64,9 +64,9 @@
                 android:layout_height="wrap_content"
                 android:text="Runtime"
                 android:id="@+id/txtMovieLength"
+                android:textColor="#ffffff"
                 android:layout_below="@+id/ratinglayout"
-                android:layout_toRightOf="@+id/vLayout"
-                android:textColor="#ffffff" />
+                android:layout_toRightOf="@+id/vLayout" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -106,22 +106,74 @@
             android:id="@+id/txtShowDate"
             android:layout_gravity="center_horizontal|bottom"
             android:gravity="center_horizontal" />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_bg_header_no_round"
+            android:orientation="vertical" >
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:id="@+id/txtCinemaNameEN"
+                        android:text="Theater"
+                        android:paddingLeft="2dip"
+                        android:paddingTop="2dip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="โรงภาพยนตร์"
+                        android:textSize="14dp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:id="@+id/txtCinemaNameTH"
+                        android:paddingLeft="2dip"
+                        android:paddingTop="2dip" />
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/btnPhone"
+                    android:layout_marginRight="3dp"
+                    android:layout_gravity="top"
+                    android:background="@drawable/ic_phone"
+                    android:focusable="true" />
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/btnNavi"
+                    android:background="@drawable/ic_navi"
+                    android:layout_gravity="right"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <ListView
+            android:id="@+id/lvShowtimeMovie"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     </FrameLayout>
-    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/pager_showtime"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        tools:context="com.yellobeansoft.happymovie.CinemaFragmentActivity" >
-
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/pager_showtime_strip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:textColor="#fff"
-            android:background="#000000"/>
-
-    </android.support.v4.view.ViewPager>
 </LinearLayout>

@@ -46,6 +46,10 @@ public class GPSTracker extends Service implements LocationListener{
         getLocation();
     }
 
+    public Boolean isGPSOpen() {
+        return isGPSEnabled;
+    }
+
 
     /////////////////////////////////////////////////////////////
     public Location getLocation() {

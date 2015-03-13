@@ -58,15 +58,17 @@ public class ShowtimeNearbyFragment extends Fragment {
 
 
     private void setupShowtimeAdapter() throws ParseException {
-        showtimeExpandAdapter = new ShowtimeExpandAdapter(getActivity(),showtimeGroups);
-        lvExpShowtime.setAdapter(showtimeExpandAdapter);
-        lvExpShowtime.setGroupIndicator(null);
+        if(showtimeGroups!=null) {
+            showtimeExpandAdapter = new ShowtimeExpandAdapter(getActivity(), showtimeGroups);
+            lvExpShowtime.setAdapter(showtimeExpandAdapter);
+            lvExpShowtime.setGroupIndicator(null);
+        }
     }
 
     private void addShowtimeData() {
         if (!mChooseMovie.equalsIgnoreCase(null)) {
             CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
-            cinemaList = objCinemaTABLE.getNearByCinemas();
+            cinemaList = objCinemaTABLE.getNearByCinemasByMovie(mChooseMovie);
             objShowTimeTABLE = new ShowTimeTABLE(getActivity());
             for (int i = 0; i < cinemaList.size(); i++) {
                 try {

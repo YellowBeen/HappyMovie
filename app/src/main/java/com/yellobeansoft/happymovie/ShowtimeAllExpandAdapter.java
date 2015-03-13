@@ -24,13 +24,15 @@ public class ShowtimeAllExpandAdapter extends BaseExpandableListAdapter {
     private ArrayList<CinemaGroup> cinemaGroupList;
     private ArrayList<CinemaGroup> cinemaGroupOriList;
     private Cinema objCinema;
+    private Movies objChooseMovie;
 
-    public ShowtimeAllExpandAdapter(Context context, ArrayList<CinemaGroup> cinemaGroupList) {
+    public ShowtimeAllExpandAdapter(Context context, ArrayList<CinemaGroup> cinemaGroupList, Movies chooseMovies) {
         this.context = context;
         this.cinemaGroupList = new ArrayList<CinemaGroup>();
         this.cinemaGroupList.addAll(cinemaGroupList);
         this.cinemaGroupOriList = new ArrayList<CinemaGroup>();
         this.cinemaGroupOriList.addAll(cinemaGroupList);
+        this.objChooseMovie = chooseMovies;
     }
 
     @Override
@@ -74,9 +76,11 @@ public class ShowtimeAllExpandAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 objCinema = cinemaGroupList.get(groupPosition).getCinema().get(childPosition);
-                Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
+                Intent intent = new Intent(v.getContext(), ShowtimeMovieCinemaActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("chooseCinema",objCinema);
+                intent.putExtras(bundle);
+                bundle.putParcelable("chooseMovie",objChooseMovie);
                 intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
 
