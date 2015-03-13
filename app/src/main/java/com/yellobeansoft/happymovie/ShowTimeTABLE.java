@@ -24,11 +24,7 @@ public class ShowTimeTABLE {
 
     private MyOpenHelper objMyOpenHelper;
     private SQLiteDatabase writeSQLite, readSQLite;
-
-    public static final String PREFS_NAME = "CINEMA_APP_SHOWTIME";
-    public static final String SHOWTIME = "SHOWTIME";
     private Context sContext;
-
 
     //Constructor
     public ShowTimeTABLE(Context context) {
@@ -37,27 +33,13 @@ public class ShowTimeTABLE {
     }//Constructor
 
 
-    public void addNewShowTimeJSON(ArrayList<ShowTime> showTimeList, String strCinema ) {
-        SharedPreferences settings;
-        SharedPreferences.Editor editor;
-        settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        editor = settings.edit();
-        Gson gson = new Gson();
-        String jsonFavorites = gson.toJson(showTimeList);
-//        editor.putString(SHOWTIME, jsonFavorites);
-        editor.putString(strCinema, jsonFavorites);
-        editor.apply();
-    }
-
-
-
-
     public void deleteAllShowTime() {
         writeSQLite = objMyOpenHelper.getWritableDatabase();
         writeSQLite.isDbLockedByCurrentThread();
         writeSQLite.delete("showtimeTABLE", null, null);
         writeSQLite.close();
     }
+
 
     //getShowTimeByMovieCinema
     public ArrayList<ShowTime> getShowTimeByMovieCinema(final String strMovie, final String strCinema, String strTime) throws ParseException {
@@ -89,15 +71,17 @@ public class ShowTimeTABLE {
 
         readSQLite.close();
 
-        for (int i = 0; i < showTimeList.size(); i++) {
-            ShowTime objShowTime = showTimeList.get(i);
-            objShowTime.setTimeList(strTime);
-            if (objShowTime.getTimeList().size() > 0) {
-                newList.add(objShowTime);
-            }
-        }
+        return showTimeList;
 
-        return newList;
+//        for (int i = 0; i < showTimeList.size(); i++) {
+//            ShowTime objShowTime = showTimeList.get(i);
+//            objShowTime.setTimeList(strTime);
+//            if (objShowTime.getTimeList().size() > 0) {
+//                newList.add(objShowTime);
+//            }
+//        }
+//
+//        return newList;
 
     }//getShowTimeByMovieCinema
 
@@ -140,6 +124,19 @@ public class ShowTimeTABLE {
         return newList;
     }//getShowTimeByMovieCinema
 
+
+
+//    public void addNewShowTimeJSON(ArrayList<ShowTime> showTimeList, String strCinema ) {
+//        SharedPreferences settings;
+//        SharedPreferences.Editor editor;
+//        settings = sContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+//        editor = settings.edit();
+//        Gson gson = new Gson();
+//        String jsonFavorites = gson.toJson(showTimeList);
+////        editor.putString(SHOWTIME, jsonFavorites);
+//        editor.putString(strCinema, jsonFavorites);
+//        editor.apply();
+//    }
 
 //    public void deleteShowTimeJSON() {
 //        SharedPreferences settings;
