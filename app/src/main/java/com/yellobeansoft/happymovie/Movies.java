@@ -22,6 +22,16 @@ public class Movies implements Parcelable {
     private String movieLength;
     private String showtime;
     private String rating;
+    private String TomatoRating;
+
+    public String getTomatoRating() {
+        return TomatoRating;
+    }
+
+    public void setTomatoRating(String tomatoRating) {
+        TomatoRating = tomatoRating;
+    }
+
     private String URLInfo;
     private String URLTrailer;
     private String URLIMDB;

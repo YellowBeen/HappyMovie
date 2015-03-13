@@ -45,12 +45,16 @@ public class ShowtimeNearbyFragment extends Fragment {
         emptyExp = (TextView) view.findViewById(R.id.txtEmptyExp);
         emptyExp.setText(getString(R.string.emptyNearby));
         lvExpShowtime.setEmptyView(emptyExp);
-        addShowtimeData();
-        try {
-            setupShowtimeAdapter();
-            expandAll();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        
+        GPSTracker objGPS = new GPSTracker(getActivity());
+        if (objGPS.isGPSEnabled) {
+            addShowtimeData();
+            try {
+                setupShowtimeAdapter();
+                expandAll();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         return view;

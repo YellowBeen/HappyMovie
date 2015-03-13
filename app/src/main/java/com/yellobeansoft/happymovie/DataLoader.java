@@ -259,6 +259,9 @@ public class DataLoader {
         JsonArrayRequest req = new JsonArrayRequest(urlMovie,
                 new Response.Listener<JSONArray>() {
 
+                    MyOpenHelper objMyOpenHelper = new MyOpenHelper(sContext);
+                    SQLiteDatabase writeSQLite = objMyOpenHelper.getWritableDatabase();
+
                     @Override
                     public void onResponse(JSONArray response) {
 
@@ -266,30 +269,31 @@ public class DataLoader {
                             objMovieTab = new MovieTable(sContext);
                             objMovieTab.deleteAllMovie();
 
-                            // Parsing json array response
-                            // loop through each json object
+                            writeSQLite.beginTransaction();
+
                             for (int i = 0; i < response.length(); i++) {
+                                ContentValues objContentValues = new ContentValues();
                                 JSONObject jsonMovie = (JSONObject) response.get(i);
-                                String strTitle = jsonMovie.getString("title_en");
-                                String strTitleTH = jsonMovie.getString("title_th");
-                                String strImage = jsonMovie.getString("image_url");
-                                String strLength = jsonMovie.getString("duration");
-                                String strYoutube = jsonMovie.getString("youtube_url");
-                                String strRating = jsonMovie.getString("imdb_rating");
-                                String strIMDB = jsonMovie.getString("imdb_url");
-                                String strDate = jsonMovie.getString("create_date");
-//                                String strReleaseDate = jsonMovie.getString("release_date");
-                                String strReleaseDate = "";
-                                Integer intShowTimeCount = jsonMovie.getInt("showtime_count");
-                                objMovieTab.addNewMovie(strTitle, strTitleTH, strImage, strLength, strYoutube, strRating,
-                                                        strDate, strIMDB, strReleaseDate, intShowTimeCount);
+                                objContentValues.put("movieTitle", jsonMovie.getString("title_en"));
+                                objContentValues.put("movieTitle_TH", jsonMovie.getString("title_th"));
+                                objContentValues.put("Image", jsonMovie.getString("image_url"));
+                                objContentValues.put("Length", jsonMovie.getString("duration"));
+                                objContentValues.put("Url_Info", "");
+                                objContentValues.put("Url_Youtube", jsonMovie.getString("youtube_url"));
+                                objContentValues.put("Date", jsonMovie.getString("create_date"));
+                                objContentValues.put("imdb_rating", jsonMovie.getString("imdb_rating"));
+                                objContentValues.put("imdb_url", jsonMovie.getString("imdb_url"));
+                                objContentValues.put("Release_Date", "");
+                                objContentValues.put("ShowTimeCount", jsonMovie.getString("showtime_count"));
+                                objContentValues.put("rotten_rating", jsonMovie.getString("rotten_rating"));
+                                writeSQLite.insertOrThrow("movieTABLE", null, objContentValues);
                             }
 
+                            writeSQLite.setTransactionSuccessful();
+                            writeSQLite.endTransaction();
+                            writeSQLite.close();
+
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.d("Volley", "Movie Error: " + e.getMessage());
-                            showErrorDialog();
-                        } catch (IOException e) {
                             e.printStackTrace();
                             Log.d("Volley", "Movie Error: " + e.getMessage());
                             showErrorDialog();
