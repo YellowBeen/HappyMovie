@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <com.etsy.android.grid.StaggeredGridView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,3 +11,5 @@
     app:item_margin="0dp"
     app:column_count="2"
     android:background="@color/all_bg" />
+</RelativeLayout>
+

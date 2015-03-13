@@ -2,9 +2,14 @@ package com.yellobeansoft.happymovie;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +28,8 @@ import com.etsy.android.grid.util.DynamicHeightImageView;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static java.lang.Thread.*;
 
 /**
  * Created by Beboyz on 1/18/15 AD.
@@ -33,6 +41,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
     private ArrayList<Movies> mMovies;
     private Movies movie;
     private Activity mActivity;
+    private Context mContext;
 
     private static final SparseArray<Double> sPositionHeightRatios =
             new SparseArray<Double>();
@@ -100,14 +109,20 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
             @Override
             public void onClick(View v) {
 
+                mContext = v.getContext();
+                GPSTracker objGPS = new GPSTracker(mContext);
+
+                if (objGPS.isGPSEnabled) {
+                    new WaitDialog().execute();
+                }
+
                 Intent intent = new Intent(v.getContext(), ShowtimeMovieActivity.class);
                 movie = mMovies.get(position);
                 Log.d("click", movie.getMovieTitle());
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("chooseMovie",movie);
+                bundle.putParcelable("chooseMovie", movie);
                 intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
-
 
             }
         });
@@ -132,5 +147,44 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         return (mRandom.nextDouble() / 2.0) + 1.0; // height will be 1.0 - 1.5 the width
     }
 
+    class WaitDialog extends AsyncTask<String, Integer, String> {
 
-}
+        private ProgressDialog mProgress;
+
+        @Override
+        protected void onPreExecute() {
+            mProgress = new ProgressDialog(mContext, R.style.Happy_Dialog_Style);
+            mProgress.setMessage("Loading...");
+            mProgress.setCancelable(true);
+            mProgress.setIndeterminate(true);
+            mProgress.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... integers) {
+            super.onProgressUpdate(integers);
+        }
+
+
+        @Override
+        protected void onPostExecute(String testStr) {
+            mProgress.dismiss();
+
+        }
+
+    }
+
+
+
+    }
