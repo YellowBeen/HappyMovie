@@ -149,7 +149,7 @@ public class CinemaTABLE {
 
         readSQLite = objMyOpenHelper.getReadableDatabase();
 
-        String strQuery = "SELECT cinemaTABLE.* FROM cinemaTABLE LEFT OUTER JOIN showtimeTABLE on cinemaTABLE.CinemaName = showtimeTABLE.CinemaName "
+        String strQuery = "SELECT DISTINCT cinemaTABLE.* FROM cinemaTABLE LEFT OUTER JOIN showtimeTABLE on cinemaTABLE.CinemaName = showtimeTABLE.CinemaName "
                 + "WHERE showtimeTABLE.movieTitle = '" + strMovie + "' ORDER BY " + strSort;
         Cursor objCursor = readSQLite.rawQuery(strQuery, null);
 

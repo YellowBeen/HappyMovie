@@ -64,7 +64,7 @@ public class SplashScreen extends Activity {
                         DataLoader objLoader = new DataLoader(SplashScreen.this);
 
                         objLoader.syncAll();
-                        sleep(2000);
+                        sleep(1000);
                         while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone() || !objLoader.checkMovieSyncDone()) {
                         }
 
