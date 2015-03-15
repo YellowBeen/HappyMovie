@@ -37,6 +37,7 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
     private TextView txtMovieNameTH;
     private TextView txtMovieNameEN;
     private TextView txtMovieLength;
+    private TextView txtTomatoRating;
     private ImageView imgMovie;
     private TextView txtRating;
     private TextView txtShowDate;
@@ -63,17 +64,18 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
         txtMovieNameEN = (TextView) findViewById(R.id.txtMovieNameEN);
         txtMovieNameTH = (TextView) findViewById(R.id.txtMovieNameTH);
         txtRating = (TextView) findViewById(R.id.txtRating);
+        txtTomatoRating = (TextView) findViewById(R.id.txtTomatoRating);
         txtMovieLength = (TextView) findViewById(R.id.txtMovieLength);
         txtShowDate = (TextView) findViewById(R.id.txtShowDate);
 
         txtCinemaNameEN = (TextView) findViewById(R.id.txtCinemaNameEN);
         txtCinemaNameTH = (TextView) findViewById(R.id.txtCinemaNameTH);
 
-        btnMap = (Button) findViewById(R.id.btnMap);
+        btnMap = (Button) findViewById(R.id.btnNavi);
         btnPhone = (Button) findViewById(R.id.btnPhone);
         lvShowtime = (ListView) findViewById(R.id.lvShowtimeMovie);
 
-        /*btnMap.setOnClickListener(new View.OnClickListener() {
+        btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -112,7 +114,7 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
                 alert.show();
 
             }
-        });*/
+        });
 
         btnPhone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +163,7 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
             txtMovieNameEN.setText(chooseObjMovie.getMovieTitle());
             txtMovieLength.setText("Runtime : "+chooseObjMovie.getMovieLength());
             txtRating.setText(chooseObjMovie.getRating());
-
+            txtTomatoRating.setText(chooseObjMovie.getTomatoRating());
             // Set image
             String path = chooseObjMovie.getMovieImg();
             ImageLoader imageLoader = AppController.getInstance().getImageLoader();

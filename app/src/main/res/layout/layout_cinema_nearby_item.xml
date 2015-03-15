@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight">
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:orientation="vertical"
+    android:background="@drawable/card_bg_cinema_item"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginBottom="0dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView android:id="@+id/txtCinema" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp" android:text="Cinema Name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15dp"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/white" />
+
+    <TextView android:id="@+id/txtCinemaTH" android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="โรงภาพยนตร์"
+        android:textColor="#FBFBFB"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/txtCinema"
+        android:textSize="15dp"
+        android:paddingTop="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDistance"
+        android:textStyle="italic"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textColor="#777777" />
+
+
+</RelativeLayout>
+</FrameLayout>

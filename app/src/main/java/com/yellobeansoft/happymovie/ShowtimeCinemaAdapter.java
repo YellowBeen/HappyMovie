@@ -71,6 +71,7 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
             mViewHolder.movieImg = (ImageView) convertView.findViewById(R.id.imgMovie);
             mViewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
             mViewHolder.movieShowtime = (TextView) convertView.findViewById(R.id.txtShowtime);
+            mViewHolder.txtTomatoRating = (TextView) convertView.findViewById(R.id.txtTomatoRating);
             //mViewHolder.movieDate = (TextView) convertView.findViewById(R.id.txtDate);
             mViewHolder.screen = (TextView) convertView.findViewById(R.id.txtScreen);
             mViewHolder.showtimeType = (TextView) convertView.findViewById(R.id.txtType);
@@ -110,7 +111,8 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
         // Set Textview (Movie object)
         mViewHolder.movieName.setText(objMovie.getMovieTitle());
         mViewHolder.movieNameTH.setText(objMovie.getMovieTitleTH());
-        mViewHolder.movieRating.setText(objMovie.getRating()+"/10");
+        mViewHolder.movieRating.setText(objMovie.getRating());
+        mViewHolder.txtTomatoRating.setText(objMovie.getTomatoRating());
         //mViewHolder.movieDate.setText(objMovie.getDate());
         // Set Textview (Showtime object)
         mViewHolder.showtimeType.setText(mShowtimeList.get(position).getType());
@@ -176,6 +178,7 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
         public TextView movieName;
         public TextView movieNameTH;
         public TextView movieRating;
+        public TextView txtTomatoRating;
         public TextView movieShowtime;
         public TextView movieDate;
         public TextView showtimeType;

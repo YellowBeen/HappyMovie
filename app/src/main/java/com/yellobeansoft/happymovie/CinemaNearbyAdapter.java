@@ -56,12 +56,11 @@ public class CinemaNearbyAdapter extends BaseAdapter{
 
         if (convertView == null) {
 
-            convertView = mInflater.inflate(R.layout.layout_cinema_allitem, null);
+            convertView = mInflater.inflate(R.layout.layout_cinema_nearby_item, null);
 
             mViewHolder = new ViewHolder();
             mViewHolder.cinemaName = (TextView) convertView.findViewById(R.id.txtCinema);
             mViewHolder.cinemaNameTH = (TextView) convertView.findViewById(R.id.txtCinemaTH);
-            mViewHolder.favImg = (Button) convertView.findViewById(R.id.btnFavourite);
             mViewHolder.distance = (TextView) convertView.findViewById(R.id.txtDistance);
             convertView.setTag(mViewHolder);
 
@@ -76,39 +75,6 @@ public class CinemaNearbyAdapter extends BaseAdapter{
         mViewHolder.cinemaNameTH.setText(mCinemaList.get(position).getNameTH());
         objCinemaFav = new CinemaFavorite();
         objCinema = mCinemaList.get(position);
-
-        int sdk = Build.VERSION.SDK_INT;
-        if (objCinemaFav.checkExist(mContext, objCinema)){
-            if(sdk < Build.VERSION_CODES.JELLY_BEAN) {
-                mViewHolder.favImg.setBackgroundDrawable(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
-            } else {
-                mViewHolder.favImg.setBackground(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
-            }
-        } else {
-            if(sdk < Build.VERSION_CODES.JELLY_BEAN) {
-                mViewHolder.favImg.setBackgroundDrawable(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favoff));
-            } else {
-                mViewHolder.favImg.setBackground(mViewHolder.favImg.getContext().getResources().getDrawable(R.drawable.ic_favoff));
-            }
-
-        }
-
-        mViewHolder.favImg.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View v) {
-                objCinema = mCinemaList.get(position);
-                if (objCinemaFav.checkExist(mContext, objCinema)) {
-                    objCinemaFav.removeFavorite(mContext, objCinema);
-                } else {
-                    objCinemaFav.addFavorite(mContext, objCinema);
-                }
-
-                notifyDataSetChanged();
-                mCinemaAdapter.notifyDataSetChanged();
-
-            }
-        });
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +95,6 @@ public class CinemaNearbyAdapter extends BaseAdapter{
     }
 
     private static class ViewHolder {
-        public Button favImg;
         public TextView cinemaName;
         public TextView cinemaNameTH;
         public TextView distance;

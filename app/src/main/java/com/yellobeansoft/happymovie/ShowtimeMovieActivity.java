@@ -47,6 +47,7 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
     private TextView txtMovieNameTH;
     private TextView txtMovieNameEN;
     private TextView txtMovieLength;
+    private TextView txtTomatoRating;
     private TextView txtRating;
     private TextView txtShowDate;
     private ImageView imgMovie;
@@ -69,6 +70,7 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
         txtMovieNameTH = (TextView) findViewById(R.id.txtMovieNameTH);
         txtMovieNameEN = (TextView) findViewById(R.id.txtMovieNameEN);
         txtMovieLength = (TextView) findViewById(R.id.txtMovieLength);
+        txtTomatoRating = (TextView) findViewById(R.id.txtTomatoRating);
         txtRating = (TextView) findViewById(R.id.txtRating);
         txtShowDate = (TextView) findViewById(R.id.txtShowDate);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -88,6 +90,7 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
             chooseObjMovie = bundle.getParcelable("chooseMovie");
             txtMovieNameEN.setText(chooseObjMovie.getMovieTitle());
             txtMovieNameTH.setText(chooseObjMovie.getMovieTitleTH());
+            txtTomatoRating.setText(chooseObjMovie.getTomatoRating());
             txtMovieLength.setText("Runtime : "+chooseObjMovie.getMovieLength());
             txtRating.setText(chooseObjMovie.getRating());
             // Set image

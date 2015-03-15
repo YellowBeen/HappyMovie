@@ -53,24 +53,54 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="0dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="5dp"
+            android:background="@color/background_material_dark"
+            android:touchscreenBlocksFocus="false"
+            android:weightSum="1">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="19dp"
-                android:id="@+id/imgIMDB"
-                android:src="@drawable/ic_imdb" />
-
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="Rating"
-                android:background="@color/background_material_dark"
-                android:id="@+id/txtRating"
-                android:layout_gravity="bottom"
-                android:paddingLeft="5dp"
-                android:textColor="#ffffffff"
-                android:textStyle="bold" />
+                android:layout_weight="0.5">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="19dp"
+                    android:id="@+id/imgIMDB"
+                    android:src="@drawable/ic_imdb" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Rating"
+                    android:id="@+id/txtRating"
+                    android:layout_gravity="bottom"
+                    android:paddingLeft="5dp"
+                    android:textColor="#ffffffff"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="19dp"
+                    android:id="@+id/imgTomato"
+                    android:src="@drawable/ic_tomato" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tomato Rating"
+                    android:id="@+id/txtRatingTomato"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
         </LinearLayout>
 

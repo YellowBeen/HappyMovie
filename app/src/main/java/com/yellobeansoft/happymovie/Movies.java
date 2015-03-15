@@ -23,15 +23,6 @@ public class Movies implements Parcelable {
     private String showtime;
     private String rating;
     private String TomatoRating;
-
-    public String getTomatoRating() {
-        return TomatoRating;
-    }
-
-    public void setTomatoRating(String tomatoRating) {
-        TomatoRating = tomatoRating;
-    }
-
     private String URLInfo;
     private String URLTrailer;
     private String URLIMDB;
@@ -66,6 +57,14 @@ public class Movies implements Parcelable {
         } else {
             this.isNew = true;
         }
+    }
+
+    public String getTomatoRating() {
+        return TomatoRating;
+    }
+
+    public void setTomatoRating(String tomatoRating) {
+        TomatoRating = tomatoRating;
     }
 
     public String getReleaseDate() {
@@ -190,6 +189,7 @@ public class Movies implements Parcelable {
         dest.writeString(this.URLIMDB);
         dest.writeString(this.Date);
         dest.writeString(this.ReleaseDate);
+        dest.writeString(this.TomatoRating);
         //dest.writeBooleanArray(this.isNew);
         //dest.writeInt(this.showtimeCount);
 
@@ -220,6 +220,7 @@ public class Movies implements Parcelable {
         this.URLIMDB = in.readString();
         this.Date = in.readString();
         this.ReleaseDate = in.readString();
+        this.TomatoRating = in.readString();
 //        this.isNew = in.readBooleanArray();
 //        this.showtimeCount = in.readInt();
     }

@@ -53,6 +53,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         TextView movieRating;
         TextView movieLength;
         ImageView imgIsNew;
+        TextView txtTomatoRating;
     }
 
     public MovieStaggeredAdapter(Activity activity, int resource, ArrayList<Movies> movies) {
@@ -75,7 +76,8 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
                     (DynamicHeightImageView) convertView.findViewById(R.id.image);
             viewHolder.movieTitle = (TextView) convertView.findViewById(R.id.txtMovieTitle);
             viewHolder.movieRating = (TextView) convertView.findViewById(R.id.txtRating);
-        //    viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtDuration);
+            viewHolder.txtTomatoRating = (TextView) convertView.findViewById(R.id.txtRatingTomato);
+            //    viewHolder.movieLength = (TextView) convertView.findViewById(R.id.txtDuration);
             viewHolder.imgIsNew = (ImageView) convertView.findViewById(R.id.imgReleased);
             convertView.setTag(viewHolder);
         } else {
@@ -95,7 +97,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
 
         ImageLoader imageLoader = MyVolleySingleton.getInstance(getContext()).getImageLoader();
         imageLoader.get(path, ImageLoader.getImageListener(
-        viewHolder.imageView, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+                viewHolder.imageView, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
         if (movie.getIsNew()) {
             viewHolder.imgIsNew.setBackgroundResource(R.drawable.ic_new_released);
         } else {
@@ -103,6 +105,7 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         }
         viewHolder.movieTitle.setText(movie.getMovieTitle());
         viewHolder.movieRating.setText(movie.getRating());
+        viewHolder.txtTomatoRating.setText(movie.getTomatoRating());
         //viewHolder.movieLength.setText(movie.getMovieLength());
 
         convertView.setOnClickListener(new View.OnClickListener() {
