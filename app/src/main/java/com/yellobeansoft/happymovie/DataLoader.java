@@ -285,7 +285,14 @@ public class DataLoader {
                                 objContentValues.put("imdb_url", jsonMovie.getString("imdb_url"));
                                 objContentValues.put("Release_Date", "");
                                 objContentValues.put("ShowTimeCount", jsonMovie.getString("showtime_count"));
-                                objContentValues.put("rotten_rating", jsonMovie.getString("rotten_rating"));
+
+                                if (jsonMovie.getString("rotten_rating").equals("0") || jsonMovie.getString("rotten_rating").equals("-")
+                                        || jsonMovie.getString("rotten_rating").equals("")){
+                                    objContentValues.put("rotten_rating", "-");
+                                } else {
+                                    objContentValues.put("rotten_rating", jsonMovie.getString("rotten_rating") + "%");
+                                }
+
                                 writeSQLite.insertOrThrow("movieTABLE", null, objContentValues);
                             }
 
