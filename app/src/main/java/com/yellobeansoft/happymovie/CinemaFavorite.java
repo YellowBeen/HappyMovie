@@ -51,8 +51,9 @@ public class CinemaFavorite {
 
             favorites = Arrays.asList(favoriteItems);
             favorites = new ArrayList<Cinema>(favorites);
-        } else
-            return null;
+        } else {
+            favorites = new ArrayList<Cinema>();
+        }
 
         return (ArrayList<Cinema>) favorites;
     }
