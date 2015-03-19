@@ -3,5 +3,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 <item android:id="@+id/action_filterCinema"
     android:icon="@drawable/ic_timefilter"
     android:title="Filter"
+
     app:showAsAction="always"  />
 </menu>

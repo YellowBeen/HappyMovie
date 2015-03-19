@@ -70,16 +70,6 @@
                         android:text="Movie Title"
                         android:layout_toRightOf="@+id/vLayout" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Cinema Name TH"
-                        android:id="@+id/textView2"
-                        android:layout_below="@+id/txtMovieNameEN"
-                        android:textStyle="bold"
-                        android:textSize="15dp"
-                        android:textColor="#ff4a4a4a"
-                        android:layout_toRightOf="@+id/vLayout" />
                 </LinearLayout>
             </LinearLayout>
 
