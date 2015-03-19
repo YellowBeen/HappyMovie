@@ -219,7 +219,6 @@ public class DataLoader {
     }// setDate
 
 
-
     //getDate
     private String getDate(String strTyp) {
         SharedPreferences settings;
@@ -227,7 +226,6 @@ public class DataLoader {
                 Context.MODE_PRIVATE);
         return settings.getString(strTyp, "");
     }//getDate
-
 
 
     //connectivityCheck
@@ -250,7 +248,6 @@ public class DataLoader {
 
     //////  Valley   ////////
     //////////////////////////////////////////////////////////////////////////////////////////////
-
     //makeMovieRequest
     private void makeMovieRequest() {
 
@@ -286,7 +283,8 @@ public class DataLoader {
                                 objContentValues.put("Release_Date", "");
                                 objContentValues.put("ShowTimeCount", jsonMovie.getString("showtime_count"));
 
-                                if (jsonMovie.getString("rotten_rating").equals("0") || jsonMovie.getString("rotten_rating").equals("-")
+                                if (jsonMovie.getString("rotten_rating").equals("0")
+                                        || jsonMovie.getString("rotten_rating").equals("-")
                                         || jsonMovie.getString("rotten_rating").equals("")){
                                     objContentValues.put("rotten_rating", "-");
                                 } else {
@@ -308,9 +306,9 @@ public class DataLoader {
 
                         setDate(MOVIE_LOC_TYP, getDate(MOVIE_SERV_TYP));
                         Log.d("Movie", "Load Success");
-                        Toast.makeText(sContext,
-                                "Load Movie Success",
-                                Toast.LENGTH_LONG).show();
+//                        Toast.makeText(sContext,
+//                                "Load Movie Success",
+//                                Toast.LENGTH_LONG).show();
                     }
 
                 }, new Response.ErrorListener() {
@@ -418,13 +416,13 @@ public class DataLoader {
 
                                 if (jsonOverView.getString("tab_name").equals("movie")) {
                                     setDate(MOVIE_SERV_TYP, jsonOverView.getString("last_update"));
-                                    Log.d("Get Server Date", "Movie" + jsonOverView.getString("last_update"));
+                                    Log.d("Get Server Date", "Movie " + jsonOverView.getString("last_update"));
                                 } else if (jsonOverView.getString("tab_name").equals("showtime_concat")) {
                                     setDate(SHOWTIME_SERV_TYP, jsonOverView.getString("last_update"));
-                                    Log.d("Get Server Date", "ShowTime" + jsonOverView.getString("last_update"));
+                                    Log.d("Get Server Date", "ShowTime " + jsonOverView.getString("last_update"));
                                 } else if (jsonOverView.getString("tab_name").equals("cinema")) {
                                     setDate(CINEMA_SERV_TYP, jsonOverView.getString("last_update"));
-                                    Log.d("Get Server Date", "Cinema" + jsonOverView.getString("last_update"));
+                                    Log.d("Get Server Date", "Cinema " + jsonOverView.getString("last_update"));
                                 }
 
                             }
