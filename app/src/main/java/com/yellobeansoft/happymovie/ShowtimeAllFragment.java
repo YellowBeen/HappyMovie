@@ -66,7 +66,6 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
     private void displayList() {
 
         addShowtimeData();
-
         lvCinemaAdapter = new ShowtimeAllExpandAdapter(getActivity(), cinemaGroups, mChooseObjMovie);
         lvExpCinema.setAdapter(lvCinemaAdapter);
 

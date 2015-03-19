@@ -8,7 +8,7 @@
     <string name="title_activity_cinema_fragment">CinemaFragmentActivity</string>
     <string name="back_exit">Click back again to Exit</string>
     <string name="emptyFav">Please add your favourite cinema</string>
-    <string name="emptyNearby">Please open your location and swipe down to refresh</string>
+    <string name="emptyNearby">Please turn on your GPS and swipe down to refresh</string>
     <string name="emptyShFav">No showtime in your favourite cinemas</string>
     <string name="emptyShNearby">No showtime in your nearby cinemas</string>
     <string name="emptyShAll">No showtime </string>

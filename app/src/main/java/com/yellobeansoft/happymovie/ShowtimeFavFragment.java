@@ -27,6 +27,7 @@ public class ShowtimeFavFragment extends Fragment {
     private String cinemaName;
     private CinemaFavorite objCinemaFav = new CinemaFavorite();
     private ShowTimeTABLE objShowTimeTABLE;
+    private String mEmptyText;
     ArrayList<ShowTime> showTimesList;
     private static String mChooseMovie;
 
@@ -45,8 +46,7 @@ public class ShowtimeFavFragment extends Fragment {
         lvExpShowtime.setGroupIndicator(null);
         // Matching View
         emptyExp = (TextView) view.findViewById(R.id.txtEmptyExp);
-        emptyExp.setText(getString(R.string.emptyShFav));
-        lvExpShowtime.setEmptyView(emptyExp);
+
         addShowtimeData();
         try {
             setupShowtimeAdapter();
@@ -54,7 +54,8 @@ public class ShowtimeFavFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+        emptyExp.setText(mEmptyText);
+        lvExpShowtime.setEmptyView(emptyExp);
         return view;
     }
 
@@ -68,20 +69,27 @@ public class ShowtimeFavFragment extends Fragment {
     private void addShowtimeData() {
         objCinemaFav = new CinemaFavorite();
         ArrayList<Cinema> cinemas = objCinemaFav.getFavorites(getActivity());
-        if (!mChooseMovie.equalsIgnoreCase(null)) {
-            objShowTimeTABLE = new ShowTimeTABLE(getActivity());
-            for (int i = 0; i < cinemas.size(); i++) {
-                try {
-                    cinema = cinemas.get(i);
-                    cinemaName = cinema.getName();
-                    showTimesList = objShowTimeTABLE.getShowTimeByMovieCinema(mChooseMovie, cinemaName, "");
-                    if (showTimesList.size()!=0) {
-                        ArrayList<ShowTime> showTime = new ArrayList<ShowTime>();
-                        ShowtimeGroup showtimeGroup = new ShowtimeGroup(cinema, showTimesList);
-                        showtimeGroups.add(showtimeGroup);
+        if ( cinemas.size() == 0 ) {
+            mEmptyText = getString(R.string.emptyFav);
+        }else {
+            if (!mChooseMovie.equalsIgnoreCase(null)) {
+                objShowTimeTABLE = new ShowTimeTABLE(getActivity());
+                for (int i = 0; i < cinemas.size(); i++) {
+                    try {
+                        cinema = cinemas.get(i);
+                        cinemaName = cinema.getName();
+                        showTimesList = objShowTimeTABLE.getShowTimeByMovieCinema(mChooseMovie, cinemaName, "");
+                        if (showTimesList.size() != 0) {
+                            ArrayList<ShowTime> showTime = new ArrayList<ShowTime>();
+                            ShowtimeGroup showtimeGroup = new ShowtimeGroup(cinema, showTimesList);
+                            showtimeGroups.add(showtimeGroup);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                }
+                if (showTimesList.size() == 0) {
+                    mEmptyText = getString(R.string.emptyShFav);
                 }
             }
         }

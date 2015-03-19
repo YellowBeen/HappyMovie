@@ -8,6 +8,12 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipeRefreshLayout"
+            android:background="@color/all_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <ExpandableListView
         android:id="@+id/lvExpShowtime"
         android:divider="@null"
@@ -15,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:childDivider="@color/dark_light" />
+        </android.support.v4.widget.SwipeRefreshLayout>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
