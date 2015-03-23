@@ -80,7 +80,6 @@ public class DataLoader {
                 Log.d("Movie Sync", "Not Sync");
             }
 
-            this.makeShowTimeRequest();
             if (!getDate(SHOWTIME_LOC_TYP).equals(getDate(SHOWTIME_SERV_TYP))) {
                 Log.d("ShowTime Sync", "Start Sync");
                 this.makeShowTimeRequest();
