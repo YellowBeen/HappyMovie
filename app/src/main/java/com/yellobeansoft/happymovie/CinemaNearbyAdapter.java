@@ -80,8 +80,8 @@ public class CinemaNearbyAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 objCinema = mCinemaList.get(position);
-                Toast.makeText(mContext, objCinema.getName(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, objCinema.getName(),
+//                        Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("chooseCinema",objCinema);

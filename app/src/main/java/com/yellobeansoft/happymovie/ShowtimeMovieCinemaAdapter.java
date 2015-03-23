@@ -80,7 +80,7 @@ public class ShowtimeMovieCinemaAdapter extends BaseAdapter{
 
         }
 
-        mViewHolder.txtScreen.setText("Screen no. : "+mShowtimeList.get(position).getScreen());
+        mViewHolder.txtScreen.setText("Screen: "+mShowtimeList.get(position).getScreen());
         mViewHolder.txtType.setText(mShowtimeList.get(position).getType());
 
 // Concatenate showtime

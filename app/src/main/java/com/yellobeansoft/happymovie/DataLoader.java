@@ -80,6 +80,7 @@ public class DataLoader {
                 Log.d("Movie Sync", "Not Sync");
             }
 
+            this.makeShowTimeRequest();
             if (!getDate(SHOWTIME_LOC_TYP).equals(getDate(SHOWTIME_SERV_TYP))) {
                 Log.d("ShowTime Sync", "Start Sync");
                 this.makeShowTimeRequest();
@@ -358,7 +359,13 @@ public class DataLoader {
                                 objContentValues.put("CinemaName", jsonShowTime.getString("3"));
                                 objContentValues.put("movieTitle", jsonShowTime.getString("2"));
                                 objContentValues.put("Date", jsonShowTime.getString("4"));
-                                objContentValues.put("Screen", jsonShowTime.getString("5"));
+
+                                if (jsonShowTime.getString("5").equals("")){
+                                    objContentValues.put("Screen", "-");
+                                } else {
+                                    objContentValues.put("Screen", jsonShowTime.getString("5"));
+                                }
+
                                 objContentValues.put("Time_id", jsonShowTime.getString("6"));
                                 objContentValues.put("Type", jsonShowTime.getString("9"));
                                 objContentValues.put("Time", jsonShowTime.getString("7"));

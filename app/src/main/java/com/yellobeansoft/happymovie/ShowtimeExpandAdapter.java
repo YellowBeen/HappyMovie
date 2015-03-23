@@ -76,7 +76,7 @@ public class ShowtimeExpandAdapter extends BaseExpandableListAdapter {
 
         objShowtime = showtimeGroupList.get(groupPosition).getShowtime().get(childPosition);
 
-        txtScreen.setText("Screen no. : "+showtime.getScreen());
+        txtScreen.setText("Screen: "+showtime.getScreen());
         txtType.setText(showtime.getType());
 
         // Concatenate showtime

@@ -94,8 +94,8 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 objCinema = cinemaGroupList.get(groupPosition).getCinema().get(childPosition);
-                Toast.makeText(context, objCinema.getName(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, objCinema.getName(),
+//                        Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("chooseCinema",objCinema);
