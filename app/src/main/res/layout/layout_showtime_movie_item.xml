@@ -36,7 +36,8 @@
         android:id="@+id/txtShowtime"
             android:textStyle="bold|italic"
         android:textColor="@android:color/darker_gray"
-        android:layout_below="@+id/txtType" />
+        android:layout_below="@+id/txtType"
+            android:textSize="20dp" />
     </LinearLayout>
 
 </FrameLayout>

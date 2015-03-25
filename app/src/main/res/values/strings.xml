@@ -41,7 +41,7 @@
     <string name="menu_review">Rate this app</string>
 
     <!-- Menu on spinner navigation-->
-    <string name="spin_date">Sort By Date</string>
+    <string name="spin_date">Sort By Released Date</string>
     <string name="spin_popular">Popular</string>
     <string name="spin_imdb">IMDB Rating</string>
     <string name="spin_name">Movie Name</string>

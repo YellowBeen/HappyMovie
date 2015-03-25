@@ -103,8 +103,7 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="19dp"
-            android:id="@+id/imgTomatoRating"
-            android:src="@drawable/ic_tomato" />
+            android:id="@+id/imgTomatoRating" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -124,7 +123,8 @@
         android:layout_toRightOf="@+id/vLayout"
         android:textStyle="bold|italic"
         android:textColor="@android:color/darker_gray"
-        android:layout_below="@+id/ratinglayout" />
+        android:layout_below="@+id/ratinglayout"
+        android:textSize="20sp" />
 
 
 </RelativeLayout>

@@ -87,17 +87,9 @@ public class ShowtimeNearbyFragment extends Fragment {
     }
 
     private void addShowtimeData() {
-
-        GPSTracker objGPS = new GPSTracker(getActivity());
-
-        if (objGPS.isGPSEnabled == true) {
-
         if (!mChooseMovie.equalsIgnoreCase(null)) {
             CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
             cinemaList = objCinemaTABLE.getNearByCinemasByMovie(mChooseMovie);
-
-            if (cinemaList != null){
-
             objShowTimeTABLE = new ShowTimeTABLE(getActivity());
             for (int i = 0; i < cinemaList.size(); i++) {
                 try {
@@ -112,11 +104,9 @@ public class ShowtimeNearbyFragment extends Fragment {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-            } }
-
+            }
         }
 
-        }
 
     }
 

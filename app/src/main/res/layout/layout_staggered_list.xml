@@ -90,8 +90,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="19dp"
-                    android:id="@+id/imgTomato"
-                    android:src="@drawable/ic_tomato" />
+                    android:id="@+id/imgTomato" />
 
                 <TextView
                     android:layout_width="match_parent"

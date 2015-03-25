@@ -156,16 +156,17 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
 //1.use fav tab if there is fav
         CinemaFavorite objCinemaFav = new CinemaFavorite();
         ArrayList<Cinema> cinemaList = objCinemaFav.getFavorites(getBaseContext());
-        if (cinemaList.size() != 0){
+
+        if (cinemaList.size() != 0 ){
             mViewPager.setCurrentItem(0);
         }
 //2.use near by if GPS is on
-        else{
-                CinemaTABLE objCinemaTABLE = new CinemaTABLE(this);
-                cinemaList = objCinemaTABLE.getNearByCinemas();
-            if (cinemaList != null){
+        else {
+            CinemaTABLE objCinemaTABLE = new CinemaTABLE(this);
+            cinemaList = objCinemaTABLE.getNearByCinemas();
+            if (cinemaList != null) {
                 mViewPager.setCurrentItem(1);
-            }else{
+            } else {
                 mViewPager.setCurrentItem(2);
             }
         }

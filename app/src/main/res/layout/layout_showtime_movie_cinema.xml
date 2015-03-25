@@ -93,8 +93,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="19dp"
-                    android:id="@+id/imgTomatoRating"
-                    android:src="@drawable/ic_tomato" />
+                    android:id="@+id/imgTomatoRating" />
 
                 <TextView
                     android:layout_width="wrap_content"
