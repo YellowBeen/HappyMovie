@@ -90,20 +90,26 @@ public class ShowtimeNearbyFragment extends Fragment {
         if (!mChooseMovie.equalsIgnoreCase(null)) {
             CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
             cinemaList = objCinemaTABLE.getNearByCinemasByMovie(mChooseMovie);
-            objShowTimeTABLE = new ShowTimeTABLE(getActivity());
-            for (int i = 0; i < cinemaList.size(); i++) {
-                try {
-                    cinema = cinemaList.get(i);
-                    cinemaName = cinema.getName();
-                    showTimesList = objShowTimeTABLE.getShowTimeByMovieCinema(mChooseMovie, cinemaName, "");
-                    if (showTimesList.size() != 0) {
-                        ArrayList<ShowTime> showTime = new ArrayList<ShowTime>();
-                        ShowtimeGroup showtimeGroup = new ShowtimeGroup(cinema, showTimesList);
-                        showtimeGroups.add(showtimeGroup);
+
+            if (cinemaList != null) {
+
+                objShowTimeTABLE = new ShowTimeTABLE(getActivity());
+                showtimeGroups.clear();
+                for (int i = 0; i < cinemaList.size(); i++) {
+                    try {
+                        cinema = cinemaList.get(i);
+                        cinemaName = cinema.getName();
+                        showTimesList = objShowTimeTABLE.getShowTimeByMovieCinema(mChooseMovie, cinemaName, "");
+                        if (showTimesList.size() != 0) {
+                            ArrayList<ShowTime> showTime = new ArrayList<ShowTime>();
+                            ShowtimeGroup showtimeGroup = new ShowtimeGroup(cinema, showTimesList);
+                            showtimeGroups.add(showtimeGroup);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
+
             }
         }
 
