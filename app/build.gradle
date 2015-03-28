@@ -16,6 +16,7 @@ android {
         flatDir {
             dirs 'libs'
         }
+
     }
     buildTypes {
         release {
@@ -36,6 +37,7 @@ dependencies {
     compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
     compile 'com.loopj.android:android-async-http:1.4.4'
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.1'
+    compile 'com.viewpagerindicator:library:2.4.1@aar'
 //    compile group: 'com.google.guava', name: 'guava', version: '15.0'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'

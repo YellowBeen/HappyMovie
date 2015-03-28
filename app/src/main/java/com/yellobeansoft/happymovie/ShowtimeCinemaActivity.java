@@ -172,7 +172,7 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
     }
 
     private Date ConvertToDate(String dateString){
-        SimpleDateFormat dateFromFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat dateFromFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date convertedDate = new Date();
         try {
             convertedDate = dateFromFormat.parse(dateString);

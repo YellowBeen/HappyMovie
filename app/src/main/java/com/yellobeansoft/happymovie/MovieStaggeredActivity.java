@@ -99,6 +99,10 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
+            case R.id.instruction:
+
+                return true;
+
             case R.id.feedback:
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", getResources().getString(R.string.feedback_mail), null));

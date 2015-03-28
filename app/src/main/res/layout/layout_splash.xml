@@ -9,7 +9,7 @@
         android:id="@+id/imgLogo"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/ic_ss_hpmv" />
+        android:background="@drawable/ic_ss_cyst" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -40,7 +40,7 @@
         android:textColor="#ffffff"
         android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:text="www.yellowbeansoft.com"
+        android:text="\@YellowbeansoftStudio"
         android:id="@+id/textView" />
 
 </RelativeLayout>
