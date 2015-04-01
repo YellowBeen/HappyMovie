@@ -3,5 +3,5 @@
     <color name="all_bg">#191919</color>
     <color name="all_stoke">#383737</color>
     <color name="group_head">#B90000</color>
-
+    <color name="transparent">#00000000</color>
 </resources>

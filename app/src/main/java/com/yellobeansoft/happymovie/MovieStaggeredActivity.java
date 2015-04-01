@@ -100,7 +100,8 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
         switch (item.getItemId()){
             case R.id.instruction:
-
+                Intent i = new Intent(getBaseContext(), TutorialFragmentActivity.class);
+                startActivity(i);
                 return true;
 
             case R.id.feedback:

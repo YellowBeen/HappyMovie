@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff000000">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#373737"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgFilmUp"
+        android:background="@drawable/ic_film_up" />
+
+    <Button
+        android:layout_width="15dp"
+        android:layout_height="0dp"
+        android:id="@+id/btnExit"
+        android:layout_weight="0.04"
+        android:layout_gravity="right"
+        android:background="@drawable/ic_exit"
+        android:layout_marginRight="10dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/imgTutor"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_weight="0.30"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/tutor1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tutorial Page 1"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.15"
+        android:id="@+id/txtTutor"
+        android:textColor="#ffffff"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgFilmDown"
+        android:background="@drawable/ic_film_down" />
+
+</LinearLayout>
+
+</FrameLayout>
