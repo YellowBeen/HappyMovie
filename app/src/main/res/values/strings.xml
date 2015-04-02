@@ -47,16 +47,15 @@
     <string name="spin_name">Sort By Movie Name</string>
 
     <!-- Tutorial TH language-->
-    <string name="tutor_th1">กดเลือกภาพยนต์ที่ต้องการเพื่อดูรายละเอียดรอบฉาย</string>
-    <string name="tutor_th2">เปลี่ยนวิธีการเรียงข้อมูลภาพยนต์ตามวันที่เข้าฉาย, ความนิยม, คะแนนจากWeb IMDb และ ตามชื่อภาพยนต์</string>
-    <string name="tutor_th3">กดที่ CINEMA เพื่อเลือกดูรอบฉายตามโรงภาพยนต์</string>
+    <string name="tutor_th1">กดเลือกภาพยนตร์ที่ต้องการเพื่อดูรายละเอียดรอบฉาย</string>
+    <string name="tutor_th2">เปลี่ยนวิธีการเรียงลำดับภาพยนตร์ตามวันที่เข้าฉาย, ความนิยม, คะแนนจาก IMDb และ ตามชื่อภาพยนตร์</string>
+    <string name="tutor_th3">กดที่ CINEMA เพื่อเลือกดูรอบฉายตามโรงภาพยนตร์</string>
     <string name="tutor_th4">กดที่รูปเก้าอี้หน้าโรงภาพยนตร์เพื่อเลือกเป็นรายการที่ใช้ประจำ และกดซ้ำเพื่อยกเลิก
-	โดนโรงภาพยนต์ที่เลือกใช้ประจำจะไปแสดงอยู่ในส่วน FAVOURITE </string>
-    <string name="tutor_th5">สามารถค้นหาโรงภาพยนต์จากส่วนหนึ่งส่วนใดของคำสำคัญที่ต้องการ</string>
-    <string name="tutor_th6">กดที่รูปนาฬิกามุมขวาบนเพื่อกรองข้อมูลให้แสดงรอบฉายเฉพาะเวลาที่ต้องการ</string>
+	โดยโรงภาพยนตร์ที่เลือกใช้ประจำจะไปแสดงอยู่ในส่วน FAVOURITE </string>
+    <string name="tutor_th5">สามารถค้นหาโรงภาพยนตร์จากส่วนหนึ่งส่วนใดของคำสำคัญที่ต้องการ</string>
+    <string name="tutor_th6">กดที่รูปนาฬิกามุมขวาบนเพื่อกรองข้อมูลรอบฉายให้แสดงเฉพาะเวลาที่ต้องการ</string>
     <string name="tutor_th7">กดที่รูปโทรศัพท์เพื่อโทรออก และ กดที่รูป Location Icon เพื่อนำทาง</string>
-    <string name="tutor_th8">เปิด GPS เพื่อให้โปรแกรมค้นหาโรงภาพยนต์ที่ใกล้ที่สุด 5 โรง
-	ในส่วนของ CINEMA</string>
+    <string name="tutor_th8">เปิด GPS เพื่อให้โปรแกรมค้นหาโรงภาพยนตร์ที่ใกล้ที่สุด 5 โรง</string>
 
     <string name="tutor_en1">tutorial in eng 1</string>
     <string name="tutor_en2">tutorial in eng 2</string>
