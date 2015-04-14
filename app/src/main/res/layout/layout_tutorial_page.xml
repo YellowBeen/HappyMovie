@@ -17,14 +17,33 @@
         android:id="@+id/imgFilmUp"
         android:background="@drawable/ic_film_up" />
 
-    <Button
-        android:layout_width="15dp"
-        android:layout_height="0dp"
-        android:id="@+id/btnExit"
-        android:layout_weight="0.04"
-        android:layout_gravity="right"
-        android:background="@drawable/ic_exit"
-        android:layout_marginRight="10dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff000000">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tutor Title"
+            android:id="@+id/txtTutorTitle"
+            android:textStyle="bold"
+            android:layout_weight=".96"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/btnExit"
+            android:background="@drawable/ic_exit"
+            android:layout_weight=".04"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
@@ -44,10 +63,20 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_weight="0.15"
+        android:layout_weight="0.1"
         android:id="@+id/txtTutor"
         android:textColor="#ffffff"
         android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tutorial En"
+        android:id="@+id/txtTutorEn"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.1"
+        android:textColor="#ffffff" />
 
     <ImageView
         android:layout_width="wrap_content"

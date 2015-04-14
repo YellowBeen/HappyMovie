@@ -46,6 +46,15 @@
     <string name="spin_imdb">Sort By Rating</string>
     <string name="spin_name">Sort By Movie Name</string>
 
+    <string name="tutor_tt1">tutorial Title 1</string>
+    <string name="tutor_tt2">tutorial Title 2</string>
+    <string name="tutor_tt3">tutorial Title 3</string>
+    <string name="tutor_tt4">tutorial Title 4</string>
+    <string name="tutor_tt5">tutorial Title 5</string>
+    <string name="tutor_tt6">tutorial Title 6</string>
+    <string name="tutor_tt7">tutorial Title 7</string>
+    <string name="tutor_tt8">tutorial Title 8</string>
+
     <!-- Tutorial TH language-->
     <string name="tutor_th1">กดเลือกภาพยนต์ที่ต้องการเพื่อดูรายละเอียดรอบฉาย</string>
     <string name="tutor_th2">เปลี่ยนวิธีการเรียงข้อมูลภาพยนต์ตามวันที่เข้าฉาย, ความนิยม, คะแนนจากWeb IMDb และ ตามชื่อภาพยนต์</string>
