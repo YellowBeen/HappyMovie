@@ -46,18 +46,18 @@
     <string name="spin_imdb">Sort By Rating</string>
     <string name="spin_name">Sort By Movie Name</string>
 
-    <string name="tutor_tt1">หน้าหลัก - เลือกภาพยนตร์</string>
-    <string name="tutor_tt2">หน้าหลัก - จัดเรียงภาพยนตร์</string>
+    <string name="tutor_tt1">หน้าหลัก - ดูรอบฉายของหนัง</string>
+    <string name="tutor_tt2">หน้าหลัก - จัดเรียงโปสเตอร์หนัง</string>
     <string name="tutor_tt3">หน้าหลัก - ดูรอบฉายตามโรง</string>
     <string name="tutor_tt4">หน้า CINEMA - เลือกโรงหนังที่ใช้ประจำ</string>
     <string name="tutor_tt5">หน้า CINEMA - ค้นหาโรงหนังจากชื่อ</string>
-    <string name="tutor_tt6">หน้า CINEMA - กรองรอบฉายตามเวลา</string>
+    <string name="tutor_tt6">หน้า CINEMA - แสดงรอบฉายตามเวลา</string>
     <string name="tutor_tt7">หน้า CINEMA - ติอต่อโรงหนังและนำทาง</string>
     <string name="tutor_tt8">ค้นหารอบฉายจากตำแหน่งใกล้เคียง</string>
 
     <!-- Tutorial TH language-->
-    <string name="tutor_th1">กดเลือกภาพยนตร์ที่ต้องการเพื่อดูรอบฉาย</string>
-    <string name="tutor_th2">เลือกเรียงลำดับภาพยนตร์ตามวันที่เข้าฉาย,ความนิยม,คะแนนจาก IMDb และ ชื่อภาพยนตร์</string>
+    <string name="tutor_th1">กดเลือกโปสเตอร์หนังที่ต้องการเพื่อดูรอบฉาย</string>
+    <string name="tutor_th2">เลือกเรียงลำดับหนังตามวันที่เข้าฉาย,ความนิยม,คะแนนจาก IMDb และ ชื่อภาพยนตร์</string>
     <string name="tutor_th3">กดที่ปุ่ม CINEMA เพื่อเลือกดูรอบฉายตามโรงหนังที่สะดวก</string>
     <string name="tutor_th4">กดที่รูปเก้าอี้หน้าชื่อโรงหนังเพื่อเลือกเป็นโรงที่ใช้ประจำ และกดซ้ำเพื่อยกเลิก
 	โดยโรงหนังที่เลือกจะไปแสดงอยู่ในส่วน FAVOURITE </string>
