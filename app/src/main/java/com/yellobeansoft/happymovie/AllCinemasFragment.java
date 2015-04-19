@@ -112,7 +112,7 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
                    case "PARAGON CINEPLEX":
                        cinemaPARAGON.add(cinemaList.get(i));
                        break;
-                   case "Quartier CineArt":
+                   case "QUARTIER CINEART":
                        cinemaQuartier.add(cinemaList.get(i));
                        break;
                    case "SFX CINEMA":
@@ -143,7 +143,7 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
             cinemaGroups.add(cinemaGroup);
             cinemaGroup = new CinemaGroup("PARAGON CINEPLEX", cinemaPARAGON);
             cinemaGroups.add(cinemaGroup);
-            cinemaGroup = new CinemaGroup("Quartier CineArt", cinemaQuartier);
+            cinemaGroup = new CinemaGroup("QUARTIER CINEART", cinemaQuartier);
             cinemaGroups.add(cinemaGroup);
             cinemaGroup = new CinemaGroup("SF CINEMA CITY", cinemaSF);
             cinemaGroups.add(cinemaGroup);

@@ -121,7 +121,7 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
                     case "PARAGON CINEPLEX":
                         cinemaPARAGON.add(cinema);
                         break;
-                    case "Quartier CineArt":
+                    case "QUARTIER CINEART":
                         cinemaQuartier.add(cinema);
                         break;
                     case "SFX CINEMA":
@@ -168,7 +168,7 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
                 cinemaGroups.add(cinemaGroup);
             }
             if (cinemaQuartier.size()!=0) {
-                cinemaGroup = new CinemaGroup("Quartier CineArt", cinemaQuartier);
+                cinemaGroup = new CinemaGroup("QUARTIER CINEART", cinemaQuartier);
                 cinemaGroups.add(cinemaGroup);
             }
             if (cinemaSF.size()!=0) {
