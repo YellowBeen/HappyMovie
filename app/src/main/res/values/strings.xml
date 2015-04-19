@@ -70,7 +70,7 @@
     <string name="tutor_en2">You can sort the movie list by release date, popularity, IMDB score and movie name</string>
     <string name="tutor_en3">Select a cinema to see its showtime</string>
     <string name="tutor_en4">Select the chair icon in front of the cinema to save as your favourite cinema, and select it again to cancel</string>
-    <string name="tutor_en5">Search for prefer cinema by part of its name</string>
+    <string name="tutor_en5">Search for a cinema by any part of its name</string>
     <string name="tutor_en6">Select the clock icon to filter showtime by time</string>
     <string name="tutor_en7">Select at phone icon to call cinema, and select at location icon to navigate</string>
     <string name="tutor_en8">Turn on phone GPS to allow searching for the nearest cinemas</string>

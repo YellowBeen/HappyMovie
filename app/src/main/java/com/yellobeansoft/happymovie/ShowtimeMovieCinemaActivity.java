@@ -123,7 +123,7 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
                         ShowtimeMovieCinemaActivity.this);
                 builder.setCancelable(true);
                 builder.setTitle("Confirmation Call");
-                builder.setMessage("Call " + chooseObjCinema.getPhone() + " ?");
+                builder.setMessage("Call " + chooseObjCinema.getName() + " at "+ chooseObjCinema.getPhone() + " ?");
                 builder.setInverseBackgroundForced(true);
                 builder.setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {

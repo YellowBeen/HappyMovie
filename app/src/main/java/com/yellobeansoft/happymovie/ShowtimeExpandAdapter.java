@@ -197,7 +197,7 @@ public class ShowtimeExpandAdapter extends BaseExpandableListAdapter {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setCancelable(true);
                 builder.setTitle("Confirmation Call");
-                builder.setMessage("Call" + finalCinema.getPhone() + '?');
+                builder.setMessage("Call " + finalCinema.getName() + " at " + finalCinema.getPhone() + '?');
                 builder.setInverseBackgroundForced(true);
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override

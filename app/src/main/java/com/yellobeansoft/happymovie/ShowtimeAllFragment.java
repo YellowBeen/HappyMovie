@@ -54,9 +54,12 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
 
         search.setOnCloseListener(this);
 
+
         int id = search.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = (TextView) search.findViewById(id);
         textView.setTextColor(Color.WHITE);
+
+
 
         displayList();
         expandAll();
@@ -87,6 +90,7 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
             ArrayList<Cinema> cinemaMEGA = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaPARADISE = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaPARAGON = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaQuartier = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaSF = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaSFX = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaSFWORLD = new ArrayList<Cinema>();
@@ -116,6 +120,9 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
                         break;
                     case "PARAGON CINEPLEX":
                         cinemaPARAGON.add(cinema);
+                        break;
+                    case "Quartier CineArt":
+                        cinemaQuartier.add(cinema);
                         break;
                     case "SFX CINEMA":
                         cinemaSFX.add(cinema);
@@ -158,6 +165,10 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
             }
             if (cinemaPARAGON.size()!=0) {
                 cinemaGroup = new CinemaGroup("PARAGON CINEPLEX", cinemaPARAGON);
+                cinemaGroups.add(cinemaGroup);
+            }
+            if (cinemaQuartier.size()!=0) {
+                cinemaGroup = new CinemaGroup("Quartier CineArt", cinemaQuartier);
                 cinemaGroups.add(cinemaGroup);
             }
             if (cinemaSF.size()!=0) {
