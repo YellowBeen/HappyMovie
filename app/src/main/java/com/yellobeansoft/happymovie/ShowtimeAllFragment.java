@@ -54,9 +54,12 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
 
         search.setOnCloseListener(this);
 
+
         int id = search.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = (TextView) search.findViewById(id);
         textView.setTextColor(Color.WHITE);
+
+
 
         displayList();
         expandAll();
