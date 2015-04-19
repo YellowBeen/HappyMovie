@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/instruction"
         android:icon="@drawable/ic_instruction"
-        android:title="Filter"
+        android:title="Instruction"
         app:showAsAction="always"  />
     <item
         android:id="@+id/feedback"

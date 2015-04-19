@@ -15,6 +15,9 @@ import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import java.util.Timer;
@@ -31,7 +34,6 @@ public class SplashScreen extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         // Remove the Title Bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 

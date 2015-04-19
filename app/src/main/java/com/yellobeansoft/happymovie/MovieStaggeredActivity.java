@@ -97,7 +97,6 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.instruction:
                 Intent i = new Intent(getBaseContext(), TutorialFragmentActivity.class);
@@ -125,6 +124,8 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
                 }
                 return true;
             case R.id.aboutus:
+                Intent j = new Intent(getBaseContext(), AboutActivity.class);
+                startActivity(j);
                 return true;
 
         }

@@ -14,6 +14,19 @@
     <string name="emptyShNearby">No showtime in your nearby cinemas</string>
     <string name="emptyShAll">No showtime </string>
 
+    <!-- About -->
+    <string name="lastupdated">Last updated: 20/04/2015</string>
+    <string name="contactus">Contact us</string>
+    <string name="feature"> Features: \n
+    version 1.0\n
+    -ค้นหารอบฉายจากภาพยนตร์หรือโรงภาพยนตร์\n
+    -สามารถนำทางไปยังโรงภาพยนตร์ผ่าน app นำทาง\n
+    -สามารถโทรติดต่อไปยังโรงภาพยนตร์\n
+    -สามารถกรองเวลารอบฉาย\n
+    -สามารถเรียงลำดับตาม วันเข้าฉาย ความนิยม คะแนนจากเวป IMDB หรือ ชื่อภาพยนตร์\n
+    -สามารถแสดงรอบฉายโรงภาพยนตร์ที่ใกล้ตำแหน่งที่เราอยู่มากที่สุด 5 โรงภาพยนตร์\n
+    -สามารถค้นหาชื่อโรงภาพยนตร์โดยพิมพ์ชื่อโรงภาพยนตร์เพียงบางส่วนเท่านั้น</string>
+
     <string name="progress">Loading...</string>
     <string name="banner_ad_unit_id">ca-app-pub-4778817278811442/2583198418</string>
 
@@ -37,7 +50,7 @@
     <string name="review_http">http://play.google.com/store/apps/details?id=com.yellowbeansoft.happymovie</string>
 
     <!-- Menu on Moviestaggered -->
-    <string name="menu_about">About</string>
+    <string name="menu_about">About app</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_review">Rate this app</string>
 
@@ -84,4 +97,7 @@
     <string name="feedback_send_action">Sending mail...</string>
     <string name="feedback_no_mail_app">There is no email application installed.</string>
     <string name="title_activity_instruction">InstructionActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
