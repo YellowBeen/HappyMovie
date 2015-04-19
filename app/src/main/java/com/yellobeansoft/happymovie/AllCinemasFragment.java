@@ -82,6 +82,7 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
             ArrayList<Cinema> cinemaSF = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaSFX = new ArrayList<Cinema>();
             ArrayList<Cinema> cinemaSFWORLD = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaQuartier = new ArrayList<Cinema>();
 
             CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
             cinemaList = objCinemaTABLE.getAllCinemas();
@@ -111,6 +112,9 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
                    case "PARAGON CINEPLEX":
                        cinemaPARAGON.add(cinemaList.get(i));
                        break;
+                   case "Quartier CineArt":
+                       cinemaQuartier.add(cinemaList.get(i));
+                       break;
                    case "SFX CINEMA":
                        cinemaSFX.add(cinemaList.get(i));
                        break;
@@ -138,6 +142,8 @@ public class AllCinemasFragment extends Fragment implements SearchView.OnQueryTe
             cinemaGroup = new CinemaGroup("PARADISE CINEPLEX", cinemaPARADISE);
             cinemaGroups.add(cinemaGroup);
             cinemaGroup = new CinemaGroup("PARAGON CINEPLEX", cinemaPARAGON);
+            cinemaGroups.add(cinemaGroup);
+            cinemaGroup = new CinemaGroup("Quartier CineArt", cinemaQuartier);
             cinemaGroups.add(cinemaGroup);
             cinemaGroup = new CinemaGroup("SF CINEMA CITY", cinemaSF);
             cinemaGroups.add(cinemaGroup);
