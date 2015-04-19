@@ -163,7 +163,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:id="@+id/btnPhone"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginRight="10dp"
                     android:layout_gravity="top"
                     android:background="@drawable/ic_phone"
                     android:focusable="true" />

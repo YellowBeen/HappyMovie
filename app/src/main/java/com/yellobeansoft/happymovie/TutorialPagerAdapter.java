@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
  * Created by Beboyz on 3/30/15 AD.
  */
-    public class TutorialPagerAdapter extends FragmentPagerAdapter {
+    public class TutorialPagerAdapter extends FragmentStatePagerAdapter {
         private final int NUM_ITEMS = 8;
 
         public TutorialPagerAdapter(FragmentManager fm) {
