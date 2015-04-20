@@ -18,7 +18,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="15dp"
         android:layout_alignParentTop="true"
-        android:textColor="@color/white" />
+        android:textColor="#FFFFFF" />
 
     <TextView android:id="@+id/txtCinemaTH" android:layout_width="260dp"
         android:layout_height="wrap_content"
