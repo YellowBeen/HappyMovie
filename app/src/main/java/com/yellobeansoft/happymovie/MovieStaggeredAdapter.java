@@ -96,11 +96,6 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
 //        ImageLoader imageLoader = MyVolleySingleton.getInstance(getContext()).getImageLoader();
 //        imageLoader.get(path, ImageLoader.getImageListener(
 //                viewHolder.imageView, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
-//        if (movie.getIsNew()) {
-//            viewHolder.imgIsNew.setBackgroundResource(R.drawable.ic_new_released);
-//        } else {
-//            viewHolder.imgIsNew.setBackgroundResource(0);
-//        }
 
         // Loading image with Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
@@ -113,9 +108,11 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         //download and display image from url
         imageLoader.displayImage(path, viewHolder.imageView, options);
 
-
-
-
+        if (movie.getIsNew()) {
+            viewHolder.imgIsNew.setBackgroundResource(R.drawable.ic_new_released);
+        } else {
+            viewHolder.imgIsNew.setBackgroundResource(0);
+        }
 
         viewHolder.movieTitle.setText(movie.getMovieTitle());
         viewHolder.movieRating.setText(movie.getRating());
