@@ -41,7 +41,6 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setIcon(R.drawable.ic_launch_hpmv);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
         navSpinner = new ArrayList<SpinnerNavItem>();
@@ -111,17 +110,7 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
                 startActivity(Intent.createChooser(emailIntent, getResources().getString(R.string.feedback_send_action)));
                 return true;
             case R.id.review:
-                Intent reviewIntent = new Intent(Intent.ACTION_VIEW);
-                //Try Google play
-                reviewIntent.setData(Uri.parse(getString(R.string.review_market)));
-                if (!toStartActivity(reviewIntent)) {
-                    //Market (Google play) app seems not installed, let's try to open a webbrowser
-                    reviewIntent.setData(Uri.parse(getString(R.string.review_http)));
-                    if (!toStartActivity(reviewIntent)) {
-                        //Well if this also fails, we have run out of options, inform the user.
-                        Toast.makeText(this, getString(R.string.review_errmsg), Toast.LENGTH_SHORT).show();
-                    }
-                }
+                launchMarket();
                 return true;
             case R.id.aboutus:
                 Intent j = new Intent(getBaseContext(), AboutActivity.class);
@@ -131,6 +120,16 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void launchMarket() {
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(myAppLinkToMarket);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, " unable to find market app", Toast.LENGTH_LONG).show();
+        }
     }
 
     public boolean toStartActivity(Intent intent) {
