@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -319,7 +320,7 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
 
         // Set image
         String path = objMovie.getMovieImg();
-        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+//        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
         // Concatenate showtime
         timeList = showtime.getTimeList();
@@ -348,8 +349,23 @@ public class ShowtimeFragmentAdapter extends BaseExpandableListAdapter {
         // Set Textview (Showtime object)
         mViewHolder.showtimeType.setText(showtime.getType());
         mViewHolder.screen.setText(showtime.getScreen());
-        imageLoader.get(path, ImageLoader.getImageListener(
-                mViewHolder.movieImg, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+
+
+//        imageLoader.get(path, ImageLoader.getImageListener(
+//                mViewHolder.movieImg, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+
+
+        // Loading image with Universal Image Loader
+        com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                .cacheOnDisc(true).resetViewBeforeLoading(true)
+                .showImageForEmptyUri(R.drawable.ic_loadmovie)
+                .showImageOnFail(R.drawable.ic_loadmovie)
+                .showImageOnLoading(R.drawable.ic_loadmovie).build();
+
+        //download and display image from url
+        imageLoader.displayImage(path, mViewHolder.movieImg, options);
+
 
         mShowtimeLayout = (RelativeLayout) convertView.findViewById(R.id.ShowtimeLayout);
         mShowtimeLayout.setOnClickListener(new View.OnClickListener() {

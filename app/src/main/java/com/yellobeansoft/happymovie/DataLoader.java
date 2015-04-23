@@ -278,7 +278,13 @@ public class DataLoader {
                                 objContentValues.put("Url_Info", "");
                                 objContentValues.put("Url_Youtube", jsonMovie.getString("youtube_url"));
                                 objContentValues.put("Date", jsonMovie.getString("create_date"));
-                                objContentValues.put("imdb_rating", jsonMovie.getString("imdb_rating"));
+
+                                if (jsonMovie.getString("imdb_rating").equals("null")) {
+                                    objContentValues.put("imdb_rating", "-");
+                                } else{
+                                    objContentValues.put("imdb_rating", jsonMovie.getString("imdb_rating"));
+                                }
+
                                 objContentValues.put("imdb_url", jsonMovie.getString("imdb_url"));
                                 objContentValues.put("Release_Date", "");
                                 objContentValues.put("ShowTimeCount", jsonMovie.getString("showtime_count"));
@@ -362,7 +368,8 @@ public class DataLoader {
 
                                 if (jsonShowTime.getString("5").equals("")){
                                     objContentValues.put("Screen", "-");
-                                } else {
+                                }
+                                else {
                                     objContentValues.put("Screen", jsonShowTime.getString("5"));
                                 }
 

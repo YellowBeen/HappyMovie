@@ -23,13 +23,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.ImageLoader;
+//import com.android.volley.toolbox.ImageLoader;
 import com.etsy.android.grid.util.DynamicHeightImageView;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static java.lang.Thread.*;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 /**
  * Created by Beboyz on 1/18/15 AD.
@@ -90,19 +93,30 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         String path = movie.getMovieImg();
 
         // Loading image with placeholder and error image ##Volley##
-//        ImageLoader imageLoader = new ImageLoader(Volley.newRequestQueue(getContext()), new BitmapLruCache(
-//                100));
+//        ImageLoader imageLoader = MyVolleySingleton.getInstance(getContext()).getImageLoader();
+//        imageLoader.get(path, ImageLoader.getImageListener(
+//                viewHolder.imageView, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+//        if (movie.getIsNew()) {
+//            viewHolder.imgIsNew.setBackgroundResource(R.drawable.ic_new_released);
+//        } else {
+//            viewHolder.imgIsNew.setBackgroundResource(0);
+//        }
 
-//        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+        // Loading image with Universal Image Loader
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                .cacheOnDisc(true).resetViewBeforeLoading(true)
+                .showImageForEmptyUri(R.drawable.ic_loadmovie)
+                .showImageOnFail(R.drawable.ic_loadmovie)
+                .showImageOnLoading(R.drawable.ic_loadmovie).build();
 
-        ImageLoader imageLoader = MyVolleySingleton.getInstance(getContext()).getImageLoader();
-        imageLoader.get(path, ImageLoader.getImageListener(
-                viewHolder.imageView, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
-        if (movie.getIsNew()) {
-            viewHolder.imgIsNew.setBackgroundResource(R.drawable.ic_new_released);
-        } else {
-            viewHolder.imgIsNew.setBackgroundResource(0);
-        }
+        //download and display image from url
+        imageLoader.displayImage(path, viewHolder.imageView, options);
+
+
+
+
+
         viewHolder.movieTitle.setText(movie.getMovieTitle());
         viewHolder.movieRating.setText(movie.getRating());
         viewHolder.txtTomatoRating.setText(movie.getTomatoRating());

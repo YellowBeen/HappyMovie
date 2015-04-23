@@ -166,9 +166,15 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
             txtTomatoRating.setText(chooseObjMovie.getTomatoRating());
             // Set image
             String path = chooseObjMovie.getMovieImg();
-            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-            imageLoader.get(path, ImageLoader.getImageListener(
-                    imgMovie, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+
+
+
+//            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+//            imageLoader.get(path, ImageLoader.getImageListener(
+//                    imgMovie, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+
+
+
 
             try {
                 addShowtimeData();

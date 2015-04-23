@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -95,9 +96,23 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
             txtRating.setText(chooseObjMovie.getRating());
             // Set image
             String path = chooseObjMovie.getMovieImg();
-            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-            imageLoader.get(path, ImageLoader.getImageListener(
-                    imgMovie, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+
+
+//            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+//            imageLoader.get(path, ImageLoader.getImageListener(
+//                    imgMovie, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
+
+            // Loading image with Universal Image Loader
+            com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                    .cacheOnDisc(true).resetViewBeforeLoading(true)
+                    .showImageForEmptyUri(R.drawable.ic_loadmovie)
+                    .showImageOnFail(R.drawable.ic_loadmovie)
+                    .showImageOnLoading(R.drawable.ic_loadmovie).build();
+
+            //download and display image from url
+            imageLoader.displayImage(path, imgMovie, options);
+
         }
 
         txtShowDate.setText(GetShowtimeUpdatedDate());
