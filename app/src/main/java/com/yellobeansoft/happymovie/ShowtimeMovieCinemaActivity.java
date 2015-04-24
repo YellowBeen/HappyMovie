@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
@@ -173,7 +174,16 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
 //            imageLoader.get(path, ImageLoader.getImageListener(
 //                    imgMovie, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
 
+            // Loading image with Universal Image Loader
+            com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                    .cacheOnDisc(true).resetViewBeforeLoading(true)
+                    .showImageForEmptyUri(R.drawable.ic_loadmovie)
+                    .showImageOnFail(R.drawable.ic_loadmovie)
+                    .showImageOnLoading(R.drawable.ic_loadmovie).build();
 
+            //download and display image from url
+            imageLoader.displayImage(path, imgMovie, options);
 
 
             try {
