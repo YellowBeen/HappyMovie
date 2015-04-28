@@ -60,6 +60,7 @@
     <string name="spin_imdb">Sort By Rating</string>
     <string name="spin_name">Sort By Movie Name</string>
 
+    <string name="tutor_tt0">หน้าหลัก - Setting</string>
     <string name="tutor_tt1">หน้าหลัก - ดูรอบฉายของหนัง</string>
     <string name="tutor_tt2">หน้าหลัก - จัดเรียงโปสเตอร์หนัง</string>
     <string name="tutor_tt3">หน้าหลัก - ดูรอบฉายตามโรง</string>
@@ -70,7 +71,8 @@
     <string name="tutor_tt8">ค้นหารอบฉายจากตำแหน่งใกล้เคียง</string>
 
     <!-- Tutorial TH language-->
-    <string name="tutor_th1">กดเลือกโปสเตอร์หนังที่ต้องการเพื่อดูรอบฉาย</string>
+    <string name="tutor_th0">กดปุ่มสามจุดมุมขวาบนและเลือก Settings เพื่อแสดงหรือไม่แสดงรูปภาพ</string>
+    <string name="tutor_th1">กดเลือกชื่อหนังหรือโปสเตอร์หนังเพื่อดูรอบฉาย</string>
     <string name="tutor_th2">เลือกเรียงลำดับหนังตามวันที่เข้าฉาย,ความนิยม,คะแนนจาก IMDb และ ชื่อหนัง</string>
     <string name="tutor_th3">กดที่ปุ่ม CINEMA เพื่อเลือกดูรอบฉายตามโรงหนังที่สะดวก</string>
     <string name="tutor_th4">กดที่รูปเก้าอี้หน้าชื่อโรงหนังเพื่อเลือกเป็นโรงที่ใช้ประจำ และกดซ้ำเพื่อยกเลิก
@@ -80,6 +82,7 @@
     <string name="tutor_th7">กดที่รูปโทรศัพท์เพื่อโทรหาโรงหนัง และ กดที่รูป Location Icon เพื่อแสดงแผนที่และนำทาง</string>
     <string name="tutor_th8">เปิด GPS เพื่อให้โปรแกรมค้นหาโรงหนังและรอบฉายที่ใกล้ที่สุด 5 โรง</string>
 
+    <string name="tutor_en0">Go to Settings option to enable/disable movie poster</string>
     <string name="tutor_en1">Select a movie to check showtime</string>
     <string name="tutor_en2">You can sort the movie list by release date, popularity, IMDB score and movie name</string>
     <string name="tutor_en3">Select a cinema to see its showtime</string>
