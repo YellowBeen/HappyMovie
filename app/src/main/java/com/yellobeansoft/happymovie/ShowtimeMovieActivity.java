@@ -104,7 +104,8 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
 //                    imgMovie, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
 
             // Loading image with Universal Image Loader
-            mMode = getString(R.string.fmode);
+            AppSetting objSetting = new AppSetting();
+            mMode = objSetting.getmode(ShowtimeMovieActivity.this);
             if (mMode.equalsIgnoreCase(getString(R.string.nmode))) {
                 com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
                 DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)

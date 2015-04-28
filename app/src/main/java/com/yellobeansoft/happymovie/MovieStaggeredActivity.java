@@ -43,7 +43,8 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mode = getString(R.string.fmode);
+        AppSetting objSetting = new AppSetting();
+        mode = objSetting.getmode(MovieStaggeredActivity.this);
         if (mode.equalsIgnoreCase(getString(R.string.nmode))) {
             setContentView(R.layout.layout_staggered);
             getMoviesListAndSetAdapter(getResources().getString(R.string.sort_date));
