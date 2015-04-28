@@ -36,8 +36,8 @@ public class MainActivity extends ActionBarActivity{
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest.Builder adBuilder = new AdRequest.Builder();
         AdRequest adRequest = adBuilder.build();
-        adBuilder.addTestDevice("31E338822F0C538D6154F8600E33F73D"); // BOY
-        adBuilder.addTestDevice("1188663E6F205EBEF8E8C111C2B7C406"); // JACK
+        //adBuilder.addTestDevice("31E338822F0C538D6154F8600E33F73D"); // BOY
+        //adBuilder.addTestDevice("1188663E6F205EBEF8E8C111C2B7C406"); // JACK
         //Location location = new Location("AdMobProvider");
         mAdView.loadAd(adRequest);
 

@@ -2,26 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_selector"
     android:orientation="horizontal"
-    android:padding="5dip" >
+    android:background="@color/all_stoke"
+    android:padding="5dp">
 
     <!--  ListRow Left sied Thumbnail image -->
-    <LinearLayout android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="3dip"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/image_bg"
-        android:layout_marginRight="5dip">
-
-        <ImageView
-            android:id="@+id/imgMovie"
-            android:layout_width="50dip"
-            android:layout_height="70dip"
-            android:src="@drawable/ic_taken3"/>
-
-    </LinearLayout>
 
     <!-- Title Of Song-->
 
@@ -30,20 +15,40 @@
         android:id="@+id/txtMovieNameEN"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#343434"
-        android:textSize="10dip"
-        android:text="Length"
-        android:layout_toRightOf="@+id/image"
-        android:layout_toEndOf="@+id/image" />
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:text="MovieNameEN"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rating"
-        android:id="@+id/txtRating"
-        android:textStyle="bold"
+        android:text="MovieNameTH"
+        android:id="@+id/txtMovieNameTH"
         android:layout_below="@+id/txtMovieNameEN"
-        android:layout_toRightOf="@+id/image" />
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtMovieNameTH">
 
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="19dp"
+            android:id="@+id/imgIMDB"
+            android:src="@drawable/ic_imdb" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Rating"
+            android:id="@+id/txtRating"
+            android:layout_gravity="bottom"
+            android:paddingLeft="5dp"
+            android:textColor="#ffffffff"
+            android:textStyle="bold" />
+    </LinearLayout>
 </RelativeLayout>

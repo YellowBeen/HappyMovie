@@ -44,6 +44,7 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
     private Button btnMap;
     private Button btnPhone;
     private Bundle bundle;
+    private String mode;
     private Cinema chooseObjCinema;
 
     @Override
@@ -177,7 +178,6 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         try {
             convertedDate = dateFromFormat.parse(dateString);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return convertedDate;

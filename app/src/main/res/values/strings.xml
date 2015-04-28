@@ -3,7 +3,7 @@
 
     <!-- Miscellaneous-->
     <string name="app_name">Chaiyo Showtime</string>
-    <string name="version">Version 1.0</string>
+    <string name="version">Version 1.0.1</string>
     <string name="poweredby">Powered By YellowBeanLab</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_cinema_fragment">CinemaFragmentActivity</string>
@@ -30,7 +30,6 @@
     <string name="progress">Loading...</string>
     <string name="banner_ad_unit_id">ca-app-pub-4778817278811442/2583198418</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_showtime_fragment">ShowtimeFragmentActivity</string>
     <string name="title_activity_showtime_cinema">ShowtimeCinemaActivity</string>
 
@@ -53,6 +52,7 @@
     <string name="menu_about">About app</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_review">Rate this app</string>
+    <string name="menu_setting">Settings</string>
 
     <!-- Menu on spinner navigation-->
     <string name="spin_date">Sort By Released Date</string>
@@ -98,6 +98,9 @@
     <string name="feedback_no_mail_app">There is no email application installed.</string>
     <string name="title_activity_instruction">InstructionActivity</string>
     <string name="title_activity_about">AboutActivity</string>
+
+    <string name="fmode">F</string>
+    <string name="nmode">N</string>
 
     <string name="hello_world">Hello world!</string>
 </resources>

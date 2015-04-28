@@ -30,7 +30,7 @@
             android:background="@drawable/image_bg"
             android:padding="3dip"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_taken3"/>
+            android:src="@drawable/ic_loadmovie"/>
 
         <TextView
             android:layout_width="match_parent"

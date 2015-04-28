@@ -132,7 +132,6 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
 
                 Intent intent = new Intent(v.getContext(), ShowtimeMovieActivity.class);
                 movie = mMovies.get(position);
-                Log.d("click", movie.getMovieTitle());
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("chooseMovie", movie);
                 intent.putExtras(bundle);

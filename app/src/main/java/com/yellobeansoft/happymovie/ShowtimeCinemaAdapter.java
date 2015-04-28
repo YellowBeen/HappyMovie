@@ -35,7 +35,7 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
     private String showtimeConcat;
     private String nextTime;
     private ArrayList<String> timeList = new ArrayList<String>();
-
+    private String mMode;
     protected static int timeDigit = 5;
 
     public ShowtimeCinemaAdapter(Context context, ArrayList<ShowTime> lists) {
@@ -119,21 +119,22 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
         mViewHolder.showtimeType.setText(mShowtimeList.get(position).getType());
         mViewHolder.screen.setText(mShowtimeList.get(position).getScreen());
 
-
 //        imageLoader.get(path, ImageLoader.getImageListener(
 //                mViewHolder.movieImg, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
 
         // Loading image with Universal Image Loader
-        com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                .cacheOnDisc(true).resetViewBeforeLoading(true)
-                .showImageForEmptyUri(R.drawable.ic_loadmovie)
-                .showImageOnFail(R.drawable.ic_loadmovie)
-                .showImageOnLoading(R.drawable.ic_loadmovie).build();
+        mMode = mContext.getString(R.string.fmode);
+        if (mMode.equalsIgnoreCase(mContext.getString(R.string.nmode))) {
+            com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                    .cacheOnDisc(true).resetViewBeforeLoading(true)
+                    .showImageForEmptyUri(R.drawable.ic_loadmovie)
+                    .showImageOnFail(R.drawable.ic_loadmovie)
+                    .showImageOnLoading(R.drawable.ic_loadmovie).build();
 
-        //download and display image from url
-        imageLoader.displayImage(path, mViewHolder.movieImg, options);
-
+            //download and display image from url
+            imageLoader.displayImage(path, mViewHolder.movieImg, options);
+        }
 
 
 

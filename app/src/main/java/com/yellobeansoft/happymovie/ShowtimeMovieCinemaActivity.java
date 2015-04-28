@@ -50,7 +50,7 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
     private Bundle bundle;
     private Cinema chooseObjCinema;
     private Movies chooseObjMovie;
-
+    private String mMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,16 +175,18 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
 //                    imgMovie, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
 
             // Loading image with Universal Image Loader
-            com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
-            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                    .cacheOnDisc(true).resetViewBeforeLoading(true)
-                    .showImageForEmptyUri(R.drawable.ic_loadmovie)
-                    .showImageOnFail(R.drawable.ic_loadmovie)
-                    .showImageOnLoading(R.drawable.ic_loadmovie).build();
+            mMode = getString(R.string.fmode);
+            if (mMode.equalsIgnoreCase(getString(R.string.nmode))) {
+                com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                        .cacheOnDisc(true).resetViewBeforeLoading(true)
+                        .showImageForEmptyUri(R.drawable.ic_loadmovie)
+                        .showImageOnFail(R.drawable.ic_loadmovie)
+                        .showImageOnLoading(R.drawable.ic_loadmovie).build();
 
-            //download and display image from url
-            imageLoader.displayImage(path, imgMovie, options);
-
+                //download and display image from url
+                imageLoader.displayImage(path, imgMovie, options);
+            }
 
             try {
                 addShowtimeData();
@@ -214,7 +216,6 @@ public class ShowtimeMovieCinemaActivity extends ActionBarActivity {
         try {
             convertedDate = dateFromFormat.parse(dateString);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return convertedDate;

@@ -33,7 +33,7 @@
                     android:layout_width="70dip"
                     android:layout_height="100dip"
                     android:layout_alignParentLeft="true"
-                    android:src="@drawable/ic_taken3"/>
+                    android:src="@drawable/ic_cyst_mini"/>
 
             </LinearLayout>
 

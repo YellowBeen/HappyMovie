@@ -3,6 +3,7 @@ package com.yellobeansoft.happymovie;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Movie;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
@@ -30,14 +32,26 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
 
     private StaggeredGridView mGridView;
     private MovieStaggeredAdapter mAdapter;
+    private MovieAdapter mAdapterFast;
     private ActionBar actionBar;
+    private ListView mListView;
     private static long back_pressed;
     private ArrayList<SpinnerNavItem> navSpinner;
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_staggered);
+
+        mode = getString(R.string.fmode);
+        if (mode.equalsIgnoreCase(getString(R.string.nmode))) {
+            setContentView(R.layout.layout_staggered);
+            getMoviesListAndSetAdapter(getResources().getString(R.string.sort_date));
+        }else {
+            setContentView(R.layout.layout_movie);
+            getMoviesListAndSetAdapterFast(getString(R.string.sort_date));
+        }
+
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
@@ -49,16 +63,28 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
         navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_imdb)));
         navSpinner.add(new SpinnerNavItem(getResources().getString(R.string.spin_name)));
 
-
         // title drop down adapter
         SpinnerNavAdapter spinneradapter = new SpinnerNavAdapter(getApplicationContext(), navSpinner);
         // assigning the spinner navigation
         actionBar.setListNavigationCallbacks(spinneradapter, this);
-        // Sort default by Movie Release Date
-        getMoviesListAndSetAdapter(getResources().getString(R.string.sort_date));
-
 
     }
+
+    private void getMoviesListAndSetAdapterFast(String sortby) {
+
+        MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
+        ArrayList<Movies> movieList = new ArrayList<Movies>();
+        try {
+            movieList = objMovieTab.getAllMoviesSortBy(sortby);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        mListView = (ListView) findViewById(R.id.lvMovie);
+        mAdapterFast = new MovieAdapter(MovieStaggeredActivity.this, movieList);
+        mListView.setAdapter(mAdapterFast);
+    }
+
+
     private void getMoviesListAndSetAdapter(String sortby) {
 
         MovieTable objMovieTab = new MovieTable(MovieStaggeredActivity.this);
@@ -83,7 +109,11 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
             case 2: sortby = getResources().getString(R.string.sort_imdb); break;
             case 3: sortby = getResources().getString(R.string.sort_name); break;
         }
-        getMoviesListAndSetAdapter(sortby);
+        if (mode.equalsIgnoreCase(getString(R.string.nmode))) {
+            getMoviesListAndSetAdapter(sortby);
+        }else{
+            getMoviesListAndSetAdapterFast(sortby);
+        }
         return true;
     }
 
@@ -116,7 +146,10 @@ public class MovieStaggeredActivity extends ActionBarActivity implements ActionB
                 Intent j = new Intent(getBaseContext(), AboutActivity.class);
                 startActivity(j);
                 return true;
-
+            case R.id.settings:
+                Intent l = new Intent(getBaseContext(), SettingsActivity.class);
+                startActivity(l);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
