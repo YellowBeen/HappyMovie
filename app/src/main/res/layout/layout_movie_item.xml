@@ -13,12 +13,22 @@
     <!-- Artist Name -->
     <TextView
         android:id="@+id/txtMovieNameEN"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:text="MovieNameEN"
         android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="10dp"
+        android:id="@+id/imgIsNew"
+        android:focusableInTouchMode="false"
+        android:background="@drawable/ic_new_released_fast"
+        android:layout_toRightOf="@+id/txtMovieNameEN"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp" />
 
     <TextView
         android:layout_width="wrap_content"

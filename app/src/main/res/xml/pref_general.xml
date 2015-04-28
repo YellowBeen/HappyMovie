@@ -2,5 +2,6 @@
     <CheckBoxPreference
         android:key="ch_mode"
         android:title="@string/pref_mode"
-        android:defaultValue="true" />
+        android:summary="@string/pref_mode_noti"
+        android:defaultValue="false" />
 </PreferenceScreen>

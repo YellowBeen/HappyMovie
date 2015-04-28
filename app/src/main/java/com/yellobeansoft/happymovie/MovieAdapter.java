@@ -59,6 +59,7 @@ public class MovieAdapter extends BaseAdapter{
             mViewHolder.txtMovieNameEN = (TextView) convertView.findViewById(R.id.txtMovieNameEN);
             mViewHolder.txtMovieNameTH = (TextView) convertView.findViewById(R.id.txtMovieNameTH);
             mViewHolder.txtRating = (TextView) convertView.findViewById(R.id.txtRating);
+            mViewHolder.imgIsNew = (ImageView) convertView.findViewById(R.id.imgIsNew);
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
@@ -67,6 +68,13 @@ public class MovieAdapter extends BaseAdapter{
         mViewHolder.txtMovieNameEN.setText(mMovieList.get(position).getMovieTitle());
         mViewHolder.txtMovieNameTH.setText(mMovieList.get(position).getMovieTitleTH());
         mViewHolder.txtRating.setText(mMovieList.get(position).getRating());
+
+        if (mMovieList.get(position).getIsNew()) {
+            mViewHolder.imgIsNew.setBackgroundResource(R.drawable.ic_new_released_fast);
+        } else {
+            mViewHolder.imgIsNew.setBackgroundResource(0);
+        }
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +102,7 @@ public class MovieAdapter extends BaseAdapter{
         public TextView txtMovieNameEN;
         public TextView txtMovieNameTH;
         public TextView txtRating;
+        public ImageView imgIsNew;
     }// class ViewHolder
 
     class WaitDialog extends AsyncTask<String, Integer, String> {

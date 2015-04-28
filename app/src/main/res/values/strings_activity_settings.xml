@@ -6,5 +6,6 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_mode">แสดงภาพโปสเตอร์หนัง</string>
+    <string name="pref_mode_noti">จะมีผลเมื่อเปิดโปรแกรมในครั้งถัดไป</string>
 
 </resources>
