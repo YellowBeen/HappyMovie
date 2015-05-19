@@ -14,6 +14,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,11 +58,10 @@ public class ShowtimeExpandAdapter extends BaseExpandableListAdapter {
         return childPosition;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild,
                              View view, ViewGroup parent) {
-
 
 
         ShowTime showtime = (ShowTime) getChild(groupPosition, childPosition);
@@ -69,13 +69,11 @@ public class ShowtimeExpandAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.layout_showtime_movie_item, null);
         }
-
         TextView txtShowtime = (TextView) view.findViewById(R.id.txtShowtime);
         TextView txtScreen = (TextView) view.findViewById(R.id.txtScreen);
         TextView txtType = (TextView) view.findViewById(R.id.txtType);
 
         objShowtime = showtimeGroupList.get(groupPosition).getShowtime().get(childPosition);
-
         txtScreen.setText("Screen: "+showtime.getScreen());
         txtType.setText(showtime.getType());
 
@@ -85,8 +83,6 @@ public class ShowtimeExpandAdapter extends BaseExpandableListAdapter {
 
         Spannable showtimeSpan = new SpannableString(showtimeConcat);
         showtimeSpan.setSpan(new ForegroundColorSpan(Color.RED), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
         try {
             nextTime = showtime.getNextTime();
         } catch (ParseException e) {

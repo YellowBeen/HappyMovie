@@ -39,7 +39,6 @@ public class ShowtimeFavFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("onCreateView", "FavShowtime");
         // Inflate layout
         View view = inflater.inflate(R.layout.layout_showtime_movie_expand,container,false);
         lvExpShowtime = (ExpandableListView) view.findViewById(R.id.lvExpShowtime);
@@ -50,7 +49,6 @@ public class ShowtimeFavFragment extends Fragment {
         addShowtimeData();
         try {
             setupShowtimeAdapter();
-            expandAll();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -60,13 +58,25 @@ public class ShowtimeFavFragment extends Fragment {
     }
 
 
+    @Override
+    public void onResume()
+    {
+        try {
+            setupShowtimeAdapter();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        super.onResume();
+    }
+
     private void setupShowtimeAdapter() throws ParseException {
         showtimeExpandAdapter = new ShowtimeExpandAdapter(getActivity(),showtimeGroups);
         lvExpShowtime.setAdapter(showtimeExpandAdapter);
-
+        expandAll();
     }
 
     private void addShowtimeData() {
+        showtimeGroups.clear();
         objCinemaFav = new CinemaFavorite();
         ArrayList<Cinema> cinemas = objCinemaFav.getFavorites(getActivity());
         if ( cinemas.size() == 0 ) {

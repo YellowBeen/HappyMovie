@@ -25,6 +25,7 @@ public class ShowtimeAllExpandAdapter extends BaseExpandableListAdapter {
     private ArrayList<CinemaGroup> cinemaGroupOriList;
     private Cinema objCinema;
     private Movies objChooseMovie;
+    private CinemaFavorite objCinemaFav;
 
     public ShowtimeAllExpandAdapter(Context context, ArrayList<CinemaGroup> cinemaGroupList, Movies chooseMovies) {
         this.context = context;
@@ -62,6 +63,7 @@ public class ShowtimeAllExpandAdapter extends BaseExpandableListAdapter {
         TextView name = (TextView) view.findViewById(R.id.txtCinema);
         TextView nameTH = (TextView) view.findViewById(R.id.txtCinemaTH);
         TextView distance = (TextView) view.findViewById(R.id.txtDistance);
+        Button favImg = (Button) view.findViewById(R.id.btnFavourite);
         name.setText(cinema.getName().trim());
         nameTH.setText(cinema.getNameTH());
 
@@ -70,6 +72,22 @@ public class ShowtimeAllExpandAdapter extends BaseExpandableListAdapter {
         String txtDistance = String.format("%.2f", dist);
         if (dist > 0){
             distance.setText(txtDistance+"km");
+        }
+
+        objCinemaFav = new CinemaFavorite();
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if (objCinemaFav.checkExist(context, objCinema)){
+            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                favImg.setBackgroundDrawable(favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
+            } else {
+                favImg.setBackground(favImg.getContext().getResources().getDrawable(R.drawable.ic_favon));
+            }
+        } else {
+            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                favImg.setBackgroundDrawable(favImg.getContext().getResources().getDrawable(R.drawable.ic_favoff));
+            } else {
+                favImg.setBackground(favImg.getContext().getResources().getDrawable(R.drawable.ic_favoff));
+            }
         }
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +102,21 @@ public class ShowtimeAllExpandAdapter extends BaseExpandableListAdapter {
                 intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
 
+            }
+        });
+
+        favImg.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View v) {
+                objCinema = cinemaGroupList.get(groupPosition).getCinema().get(childPosition);
+                if (objCinemaFav.checkExist(context, objCinema)) {
+                    objCinemaFav.removeFavorite(context, objCinema);
+                } else {
+                    objCinemaFav.addFavorite(context, objCinema);
+                }
+
+                notifyDataSetChanged();
             }
         });
 

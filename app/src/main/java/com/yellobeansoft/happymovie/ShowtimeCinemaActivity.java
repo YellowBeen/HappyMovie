@@ -192,7 +192,6 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
 
     private void addShowtimeData() throws ParseException {
 
-
         // Set Default Tab
         Intent intent = getIntent();
         if (!chooseObjCinema.getName().equalsIgnoreCase(null)) {

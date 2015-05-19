@@ -3,5 +3,5 @@
         android:key="ch_mode"
         android:title="@string/pref_mode"
         android:summary="@string/pref_mode_noti"
-        android:defaultValue="false" />
+        android:defaultValue="true" />
 </PreferenceScreen>

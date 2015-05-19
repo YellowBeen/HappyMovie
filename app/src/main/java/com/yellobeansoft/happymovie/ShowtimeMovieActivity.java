@@ -1,9 +1,11 @@
 package com.yellobeansoft.happymovie;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
@@ -13,6 +15,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +28,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -75,7 +80,7 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
         txtTomatoRating = (TextView) findViewById(R.id.txtTomatoRating);
         txtRating = (TextView) findViewById(R.id.txtRating);
         txtShowDate = (TextView) findViewById(R.id.txtShowDate);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),getBaseContext());
 
         // Set up the ViewPager with the sections adapter.
 
@@ -129,7 +134,12 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
-                Log.d("onPageSelect",Integer.toString(position));
+                Fragment fragment = ((SectionsPagerAdapter)mViewPager.getAdapter()).getFragment(position);
+
+                if (position ==1 && fragment != null)
+                {
+                    fragment.onResume();
+                }
             }
         });
 
@@ -237,11 +247,17 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
      * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
         private final int PAGE_TOTAL = 3;
+        private Map<Integer,String> mFragmentTags;
+        private FragmentManager mFragmentManager;
+        private Context mContext;
+        public SectionsPagerAdapter(FragmentManager fm, Context context) {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            mFragmentManager = fm;
+            mFragmentTags = new HashMap<Integer,String>();
+            mContext = context;
         }
 
         @Override
@@ -266,6 +282,25 @@ public class ShowtimeMovieActivity extends ActionBarActivity implements ActionBa
         @Override
         public int getCount() {
             return PAGE_TOTAL;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Object obj = super.instantiateItem(container, position);
+            if (obj instanceof Fragment) {
+                // record the fragment tag here.
+                Fragment f = (Fragment) obj;
+                String tag = f.getTag();
+                mFragmentTags.put(position, tag);
+            }
+            return obj;
+        }
+
+        public Fragment getFragment(int position) {
+            String tag = mFragmentTags.get(position);
+            if (tag == null)
+                return null;
+            return mFragmentManager.findFragmentByTag(tag);
         }
 
         @Override
