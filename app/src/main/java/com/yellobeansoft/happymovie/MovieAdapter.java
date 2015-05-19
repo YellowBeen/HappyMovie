@@ -1,6 +1,5 @@
 package com.yellobeansoft.happymovie;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -80,11 +79,8 @@ public class MovieAdapter extends BaseAdapter{
             public void onClick(View v) {
 
                 mContext = v.getContext();
-                GPSTracker objGPS = new GPSTracker(mContext);
 
-                if (objGPS.isGPSEnabled) {
-                    new WaitDialog().execute();
-                }
+                new LoadingDialog().execute();
 
                 Intent intent = new Intent(v.getContext(), ShowtimeMovieActivity.class);
                 Bundle bundle = new Bundle();
@@ -105,7 +101,7 @@ public class MovieAdapter extends BaseAdapter{
         public ImageView imgIsNew;
     }// class ViewHolder
 
-    class WaitDialog extends AsyncTask<String, Integer, String> {
+    class LoadingDialog extends AsyncTask<String, Integer, String> {
 
         private ProgressDialog mProgress;
 
@@ -122,7 +118,11 @@ public class MovieAdapter extends BaseAdapter{
         @Override
         protected String doInBackground(String... params) {
             try {
-                sleep(1000);
+                DataLoader objLoader = new DataLoader(mContext);
+                objLoader.syncAll();
+                sleep(500);
+                while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone() || !objLoader.checkMovieSyncDone()) {
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -133,7 +133,6 @@ public class MovieAdapter extends BaseAdapter{
         protected void onProgressUpdate(Integer... integers) {
             super.onProgressUpdate(integers);
         }
-
 
         @Override
         protected void onPostExecute(String testStr) {
