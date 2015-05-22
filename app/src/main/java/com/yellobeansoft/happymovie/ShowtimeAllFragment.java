@@ -30,7 +30,7 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
     private ArrayList<Cinema> cinemaList;
     private static Movies mChooseObjMovie;
     private CinemaGroup cinemaGroup;
-
+    // ShowtimeAllFragment
     public static ShowtimeAllFragment newInstance(Movies chooseObjMovie) {
         ShowtimeAllFragment fragment = new ShowtimeAllFragment();
         mChooseObjMovie = chooseObjMovie;
