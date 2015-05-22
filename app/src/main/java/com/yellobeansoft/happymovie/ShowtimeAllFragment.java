@@ -75,6 +75,7 @@ public class ShowtimeAllFragment extends Fragment implements SearchView.OnQueryT
     }
 
     private void addShowtimeData() {
+            cinemaGroups.clear();
         if (!mChooseObjMovie.getMovieTitle().equalsIgnoreCase(null)) {
             CinemaTABLE objCinemaTABLE = new CinemaTABLE(getActivity());
             try {
