@@ -1,19 +1,23 @@
 package com.yellobeansoft.happymovie;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Created by Beboyz on 1/22/15 AD.
@@ -25,9 +29,11 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
     private ArrayList<CinemaGroup> cinemaGroupOriList;
     private Cinema objCinema;
     private CinemaFavorite objCinemaFav;
+    private Context mContext;
 
     public CinemaExpandAdapter(Context context, ArrayList<CinemaGroup> cinemaGroupList) {
         this.context = context;
+        mContext = context;
         this.cinemaGroupList = new ArrayList<CinemaGroup>();
         this.cinemaGroupList.addAll(cinemaGroupList);
         this.cinemaGroupOriList = new ArrayList<CinemaGroup>();
@@ -96,6 +102,9 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
                 objCinema = cinemaGroupList.get(groupPosition).getCinema().get(childPosition);
 //                Toast.makeText(context, objCinema.getName(),
 //                        Toast.LENGTH_SHORT).show();
+
+                new LoadingDialog().execute();
+
                 Intent intent = new Intent(v.getContext(), ShowtimeCinemaActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("chooseCinema",objCinema);
@@ -202,6 +211,50 @@ public class CinemaExpandAdapter extends BaseExpandableListAdapter {
             }
         }
         notifyDataSetChanged();
+
+    }
+
+    class LoadingDialog extends AsyncTask<String, Integer, String> {
+
+        private ProgressDialog mProgress;
+
+        @Override
+        protected void onPreExecute() {
+            mProgress = new ProgressDialog(mContext, R.style.Happy_Dialog_Style);
+            mProgress.setMessage("Loading...");
+            mProgress.setCancelable(true);
+            mProgress.setIndeterminate(true);
+            mProgress.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                Log.d("CINEMA-TEST", "Start Sync");
+                DataLoader objLoader = new DataLoader(mContext);
+                objLoader.syncAll();
+                Log.d("CINEMA-TEST", "Execute Sync");
+                sleep(500);
+                while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone() || !objLoader.checkMovieSyncDone()) {
+                }
+                Log.d("CINEMA-TEST", "Finish Sync");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... integers) {
+            super.onProgressUpdate(integers);
+        }
+
+        @Override
+        protected void onPostExecute(String testStr) {
+            mProgress.dismiss();
+
+        }
 
     }
 

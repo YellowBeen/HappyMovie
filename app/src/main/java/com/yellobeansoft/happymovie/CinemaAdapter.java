@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,11 +164,14 @@ public class CinemaAdapter extends BaseAdapter{
         @Override
         protected String doInBackground(String... params) {
             try {
+                Log.d("CINEMA-TEST", "Start Sync");
                 DataLoader objLoader = new DataLoader(mContext);
                 objLoader.syncAll();
+                Log.d("CINEMA-TEST", "Execute Sync");
                 sleep(500);
                 while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone() || !objLoader.checkMovieSyncDone()) {
                 }
+                Log.d("CINEMA-TEST", "Finish Sync");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

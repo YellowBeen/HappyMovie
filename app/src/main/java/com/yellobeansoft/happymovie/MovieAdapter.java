@@ -1,9 +1,7 @@
 package com.yellobeansoft.happymovie;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import static java.lang.Thread.sleep;
 
 /**
  * Created by Beboyz on 1/15/15 AD.
@@ -80,8 +76,6 @@ public class MovieAdapter extends BaseAdapter{
 
                 mContext = v.getContext();
 
-                new LoadingDialog().execute();
-
                 Intent intent = new Intent(v.getContext(), ShowtimeMovieActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("chooseMovie", mMovieList.get(position));
@@ -101,45 +95,7 @@ public class MovieAdapter extends BaseAdapter{
         public ImageView imgIsNew;
     }// class ViewHolder
 
-    class LoadingDialog extends AsyncTask<String, Integer, String> {
 
-        private ProgressDialog mProgress;
 
-        @Override
-        protected void onPreExecute() {
-            mProgress = new ProgressDialog(mContext, R.style.Happy_Dialog_Style);
-            mProgress.setMessage("Loading...");
-            mProgress.setCancelable(true);
-            mProgress.setIndeterminate(true);
-            mProgress.show();
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                DataLoader objLoader = new DataLoader(mContext);
-                objLoader.syncAll();
-                sleep(500);
-                while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone() || !objLoader.checkMovieSyncDone()) {
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... integers) {
-            super.onProgressUpdate(integers);
-        }
-
-        @Override
-        protected void onPostExecute(String testStr) {
-            mProgress.dismiss();
-
-        }
-
-    }
 
 }

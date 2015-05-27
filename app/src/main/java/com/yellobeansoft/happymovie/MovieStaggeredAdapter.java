@@ -1,38 +1,29 @@
 package com.yellobeansoft.happymovie;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-//import com.android.volley.toolbox.ImageLoader;
 import com.etsy.android.grid.util.DynamicHeightImageView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static java.lang.Thread.*;
+import static java.lang.Thread.sleep;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+//import com.android.volley.toolbox.ImageLoader;
 
 /**
  * Created by Beboyz on 1/18/15 AD.
@@ -126,9 +117,11 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
                 mContext = v.getContext();
                 GPSTracker objGPS = new GPSTracker(mContext);
 
-                if (objGPS.isGPSEnabled) {
-                    new WaitDialog().execute();
-                }
+                new LoadingDialog().execute();
+
+//                if (objGPS.isGPSEnabled) {
+//                    new WaitDialog().execute();
+//                }
 
                 Intent intent = new Intent(v.getContext(), ShowtimeMovieActivity.class);
                 movie = mMovies.get(position);
@@ -160,7 +153,8 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         return (mRandom.nextDouble() / 2.0) + 1.0; // height will be 1.0 - 1.5 the width
     }
 
-    class WaitDialog extends AsyncTask<String, Integer, String> {
+
+    class LoadingDialog extends AsyncTask<String, Integer, String> {
 
         private ProgressDialog mProgress;
 
@@ -177,7 +171,11 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         @Override
         protected String doInBackground(String... params) {
             try {
-                sleep(1000);
+                DataLoader objLoader = new DataLoader(mContext);
+                objLoader.syncAll();
+                sleep(500);
+                while (!objLoader.checkShowTimeSyncDone() || !objLoader.checkMovieSyncDone() || !objLoader.checkMovieSyncDone()) {
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -188,7 +186,6 @@ public class MovieStaggeredAdapter extends ArrayAdapter<Movies> {
         protected void onProgressUpdate(Integer... integers) {
             super.onProgressUpdate(integers);
         }
-
 
         @Override
         protected void onPostExecute(String testStr) {
