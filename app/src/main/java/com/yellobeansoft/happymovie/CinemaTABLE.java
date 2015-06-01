@@ -2,13 +2,11 @@ package com.yellobeansoft.happymovie;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.util.Log;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -67,7 +65,9 @@ public class CinemaTABLE {
 
             gps = new GPSTracker(sContext);
             if (gps.canGetLocation()) {
+
                 this.updateDistance(gps.getLocation());
+
                 allCinemaList = this.getAll("NEAR");
 
                 for (int i = 0; i < allCinemaList.size(); i++) {
@@ -230,33 +230,40 @@ public class CinemaTABLE {
 
     //updateDistance
     private void updateDistance(Location locMe) {
-
         ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
         cinemaList = this.getAll("");
+        LocationCheck objLocCheck = new LocationCheck(sContext);
 
-        writeSQLite = objMyOpenHelper.getWritableDatabase();
+        if (objLocCheck.shouldUpdateDistance(locMe)) {
+            writeSQLite = objMyOpenHelper.getWritableDatabase();
+            writeSQLite.beginTransaction();
+            try {
+                for (int i = 0; i < cinemaList.size(); i++) {
+                    Cinema objCinema = (Cinema) cinemaList.get(i);
 
-        for (int i = 0; i < cinemaList.size(); i++) {
-            Cinema objCinema = (Cinema) cinemaList.get(i);
+                    if (!objCinema.getLatitude().equals("null") && !objCinema.getLongtitude().equals("null")){
+                        Location locCinema = new Location("Cinema");
+                        locCinema.setLatitude(Double.parseDouble(objCinema.getLatitude()));
+                        locCinema.setLongitude(Double.parseDouble(objCinema.getLongtitude()));
 
-            if (!objCinema.getLatitude().equals("null") && !objCinema.getLongtitude().equals("null")){
-                Location locCinema = new Location("Cinema");
-                locCinema.setLatitude(Double.parseDouble(objCinema.getLatitude()));
-                locCinema.setLongitude(Double.parseDouble(objCinema.getLongtitude()));
+                        float distance = locMe.distanceTo(locCinema);
+                        distance = distance / 1000;
 
-                float distance = locMe.distanceTo(locCinema);
-                distance = distance / 1000;
+                        writeSQLite.execSQL("UPDATE " + TABLE_CINEMA + " SET " + COLUMN_DIST + " = " + distance + " WHERE " +
+                                COLUMN_NAME + " = '" + objCinema.getName() + "'");
 
-                writeSQLite.execSQL("UPDATE " + TABLE_CINEMA + " SET " + COLUMN_DIST + " = " + distance + " WHERE " +
-                        COLUMN_NAME + " = '" + objCinema.getName() + "'");
+                    }else {
+                        writeSQLite.execSQL("UPDATE " + TABLE_CINEMA + " SET " + COLUMN_DIST + " = " + 99999999 + " WHERE " +
+                                COLUMN_NAME + " = '" + objCinema.getName() + "'");
+                    }
+                }
+                writeSQLite.setTransactionSuccessful();
 
-            }else {
-                writeSQLite.execSQL("UPDATE " + TABLE_CINEMA + " SET " + COLUMN_DIST + " = " + 99999999 + " WHERE " +
-                        COLUMN_NAME + " = '" + objCinema.getName() + "'");
+            } catch (Exception e) {
+            } finally {
+                writeSQLite.endTransaction();
             }
         }
-
-        writeSQLite.close();
 
     }//updateDistance
 
