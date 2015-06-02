@@ -229,7 +229,7 @@ public class CinemaTABLE {
 
 
     //updateDistance
-    private void updateDistance(Location locMe) {
+    public void updateDistance(Location locMe) {
         ArrayList<Cinema> cinemaList = new ArrayList<Cinema>();
         cinemaList = this.getAll("");
         LocationCheck objLocCheck = new LocationCheck(sContext);

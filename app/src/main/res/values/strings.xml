@@ -75,7 +75,7 @@
     <string name="tutor_th1">กดเลือกชื่อหนังหรือโปสเตอร์หนังเพื่อดูรอบฉาย</string>
     <string name="tutor_th2">เลือกเรียงลำดับหนังตามวันที่เข้าฉาย,ความนิยม,คะแนนจาก IMDb และ ชื่อหนัง</string>
     <string name="tutor_th3">กดที่ปุ่ม CINEMA เพื่อเลือกดูรอบฉายตามโรงหนังที่สะดวก</string>
-    <string name="tutor_th4">กดที่รูปเก้าอี้หน้าชื่อโรงหนังเพื่อเลือกเป็นโรงที่ใช้ประจำ และกดซ้ำเพื่อยกเลิก
+    <string name="tutor_th4">กดที่รูปดาวหน้าชื่อโรงหนังเพื่อเลือกเป็นโรงที่ใช้ประจำ และกดซ้ำเพื่อยกเลิก
 	โดยโรงหนังที่เลือกจะไปแสดงอยู่ในส่วน FAVOURITE </string>
     <string name="tutor_th5">ค้นหาโรงหนังที่ต้องการจากส่วนหนึ่งส่วนใดของชื่อโรง</string>
     <string name="tutor_th6">กดที่รูปนาฬิกามุมขวาบนเพื่อเลือกแสดงรอบฉายเฉพาะเวลาที่สะดวก</string>
@@ -86,7 +86,7 @@
     <string name="tutor_en1">Select a movie to check showtime</string>
     <string name="tutor_en2">You can sort the movie list by release date, popularity, IMDB score and movie name</string>
     <string name="tutor_en3">Select a cinema to see its showtime</string>
-    <string name="tutor_en4">Select the chair icon in front of the cinema to save as your favourite cinema, and select it again to cancel</string>
+    <string name="tutor_en4">Select the star icon in front of the cinema to save as your favourite cinema, and select it again to cancel</string>
     <string name="tutor_en5">Search for a cinema by any part of its name</string>
     <string name="tutor_en6">Select the clock icon to filter showtime by time</string>
     <string name="tutor_en7">Select at phone icon to call cinema, and select at location icon to navigate</string>

@@ -35,13 +35,13 @@ public class LocationCheck {
 
     public Boolean shouldUpdateDistance(Location locMe) {
 
-        Location locLast = getLastLoc();
-        float distance = locMe.distanceTo(locLast);
+        Location lastLoc = getLastLoc();
+        Float distance = locMe.distanceTo(lastLoc);
         distance = distance / 1000;
 
         setLoc(locMe.getLatitude(),locMe.getLongitude());
 
-        if (distance > 2) {
+        if (distance > 1) {
             return true;
         } else {
             return false;
