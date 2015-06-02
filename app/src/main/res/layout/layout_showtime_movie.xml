@@ -56,7 +56,7 @@
                 android:layout_below="@+id/txtMovieNameEN"
                 android:textStyle="bold"
                 android:textSize="15dp"
-                android:textColor="#ffff000a"
+                android:textColor="@color/group_head"
                 android:layout_toRightOf="@+id/vLayout" />
 
             <TextView
