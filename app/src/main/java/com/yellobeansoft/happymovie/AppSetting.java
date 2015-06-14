@@ -16,7 +16,7 @@ public class AppSetting {
 
     public String getmode(Context context) {
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean bMode = SP.getBoolean("ch_mode",true);
+        boolean bMode = SP.getBoolean("ch_mode",false);
 
         if (bMode) {
             return context.getString(R.string.nmode);

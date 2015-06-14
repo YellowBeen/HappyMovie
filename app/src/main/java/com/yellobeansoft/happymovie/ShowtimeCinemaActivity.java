@@ -11,9 +11,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +25,8 @@ import android.widget.Toast;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -187,7 +192,41 @@ public class ShowtimeCinemaActivity extends ActionBarActivity {
         if (showTimesList != null) {
             lvShowtimeAdapter = new ShowtimeCinemaAdapter(getBaseContext(), showTimesList);
             lvShowtime.setAdapter(lvShowtimeAdapter);
+            lvShowtime.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    String showtimeConcat;
+                    ArrayList<String> timeList = new ArrayList<String>();
+                    // Concatenate showtime
+                    ShowTime currShowtime = showTimesList.get(position);
+                    timeList = currShowtime.getTimeList();
+                    showtimeConcat = ShowtimeCinemaAdapter.JoinArray(timeList, "   ");
+                    String shareShowtime =
+                    buildShareShowtime(currShowtime.getName(), currShowtime.getMovieTitle(), showtimeConcat);
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, shareShowtime);
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+                    return true;
+                }
+            });
         }
+    }
+
+    private String buildShareShowtime(String cinema, String movie, String showtime){
+
+        String shareShowtime = "";
+        shareShowtime += movie;
+        shareShowtime += "\n";
+        shareShowtime += cinema;
+        shareShowtime += "\n";
+        shareShowtime += showtime;
+        shareShowtime += "\n";
+
+        String app = "See more for android... http://play.google.com/store/apps/details?id=" + getPackageName();
+        shareShowtime += app;
+        return shareShowtime;
     }
 
     private void addShowtimeData() throws ParseException {

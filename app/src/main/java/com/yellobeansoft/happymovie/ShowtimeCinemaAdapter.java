@@ -1,12 +1,20 @@
 package com.yellobeansoft.happymovie;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.LabeledIntent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,6 +127,8 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
         mViewHolder.showtimeType.setText(mShowtimeList.get(position).getType());
         mViewHolder.screen.setText(mShowtimeList.get(position).getScreen());
 
+
+
 //        imageLoader.get(path, ImageLoader.getImageListener(
 //                mViewHolder.movieImg, R.drawable.ic_loadmovie, R.drawable.ic_loadmovie));
 
@@ -138,10 +148,9 @@ public class ShowtimeCinemaAdapter extends BaseAdapter{
         }
 
 
-
-
         return convertView;
     }// method getView
+
 
     private void setShowtimeColor(TextView view, String fullShowtime, String currentTime, int eColor, int cColor, int lColor) {
 

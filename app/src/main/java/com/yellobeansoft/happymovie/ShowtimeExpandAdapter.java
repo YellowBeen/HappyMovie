@@ -64,7 +64,7 @@ public class ShowtimeExpandAdapter extends BaseExpandableListAdapter {
                              View view, ViewGroup parent) {
 
 
-        ShowTime showtime = (ShowTime) getChild(groupPosition, childPosition);
+        final ShowTime showtime = (ShowTime) getChild(groupPosition, childPosition);
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.layout_showtime_movie_item, null);
@@ -252,6 +252,7 @@ public class ShowtimeExpandAdapter extends BaseExpandableListAdapter {
 
             }
         });
+
         return view;
     }
 

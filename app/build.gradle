@@ -8,8 +8,8 @@ android {
         applicationId "com.yellobeansoft.happymovie"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 8
-        versionName "1.0.3"
+        versionCode 9
+        versionName "1.0.4"
     }
     repositories {
         mavenCentral()
